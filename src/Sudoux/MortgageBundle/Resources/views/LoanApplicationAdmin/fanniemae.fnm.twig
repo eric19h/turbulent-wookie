@@ -1,0 +1,221 @@
+EH                                {{ application.created|date('Ymd') }}   ENV1     
+TH T100099-002TRAN1    
+TPI1.00 01                              N
+0001  3.20 W
+00ANN
+01A01{{ emptyString|strPad(125) }}{{ application.loanAmount|strPad(15) }}{{ '0.000'|strPad(7) }}{{ application.loanTerm * 12|strPad(3) }}05
+{% if application.propertyLocation %}02A{{ application.propertyLocation.address1|ucwords|strPad(50) }}{{ application.propertyLocation.city|ucwords|strPad(35) }}{{ application.propertyLocation.state.abbreviation|upper|strPad(2) }}{{ application.propertyLocation.zipcode|strPad(5) }}{% else %}{{ emptyString|strPad(92) }}{% endif %}    {{ application.numUnits|strPad(3) }}F1SEE PRELIMINARY TITLE REPORT                                                    {{ application.propertyYearBuilt|ucwords|strPad(4) }}
+{% if application.loanType %}02B  {% if application.loanType == 1 %}05{% else %}16{% endif %}{% endif %}                                                                   {% if application.residencyType == 0 or application.residencyType == 1 %}{{ application.residencyType + 1 }}{% else %}D{% endif %}{{ application.titleManner|strPad(60) }}1
+{% if application.titleCompany1 %}
+02C{{ application.titleCompany1|strPad(60) }}
+{% endif %}
+{% if application.titleCompany2 %}
+02C{{ application.titleCompany2|strPad(60) }}
+{% endif %}
+{% if application.loanType %}
+{% if application.loanType == 1 %}
+{% if application.refinancePurpose == 0 %}{% set refinancePurpose = '11' %}{% elseif application.refinancePurpose == 1 %}{% set refinancePurpose = '04' %}{% elseif application.refinancePurpose == 2 %}{% set refinancePurpose = '01' %}{% else %}{% set refinancePurpose = 'F1' %}{% endif %}
+02D{{ application.refinanceYearAquired|strPad(4) }}{{ application.refinanceOriginalCost|strPad(15) }}{{ application.refinanceExistingLiens|strPad(45) }}{{ refinancePurpose }}
+{% endif %}
+{% endif %}
+03ABW{{ application.borrower.ssn|toInteger|strPad(9) }}{{ application.borrower.firstName|ucfirst|strPad(35) }}{{ application.borrower.middleInitial|ucfirst|strPad(35) }}{{ application.borrower.lastName|ucfirst|strPad(35) }}{{ application.borrower.suffix|upper|strPad(4) }}{{ application.borrower.phoneHome|toInteger|strPad(10) }}{{ application.borrower.age|strPad(3) }}{{ application.borrower.yearsOfSchool|strPad(2) }}{% if application.borrower.maritalStatus == 0 %}M{% elseif application.borrower.maritalStatus == 1 %}U{% elseif application.borrower.maritalStatus == 2 %}S{% else %}U{% endif %}{% if application.borrower.dependents %}{{ application.borrower.dependentsNumber|strPad(2) }}{% else %}  {% endif %} {% if application.coborrower|length > 0 %}{{ application.coborrower[0].ssn|toInteger|strPad(9)}}{% else %}{{ emptyString|strPad(9) }}{% endif %}{{ application.borrower.birthDate|date('Ymd') }}{{ application.borrower.email|lower|strPad(80) }}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower %}
+03AQZ{{ coborrower.ssn|toInteger|strPad(9) }}{{ coborrower.firstName|ucfirst|strPad(35) }}{{ coborrower.middleInitial|ucfirst|strPad(35) }}{{ coborrower.lastName|ucfirst|strPad(35) }}{{ coborrower.suffix|upper|strPad(4) }}{{ coborrower.phoneHome|toInteger|strPad(10) }}{{ coborrower.age|strPad(3) }}{{ coborrower.yearsOfSchool|strPad(2) }}{% if coborrower.maritalStatus == 0 %}M{% elseif coborrower.maritalStatus == 1 %}U{% elseif coborrower.maritalStatus == 2 %}S{% else %}U{% endif %}{% if coborrower.dependents %}{{ coborrower.dependentsNumber|strPad(2) }}{% else %}   {% endif %}{{ application.borrower.ssn|toInteger|strPad(9) }}{{ coborrower.birthDate|date('Ymd') }}{{ coborrower.email|lower|strPad(80) }}
+{% endfor %}
+{% endif %}
+{% if application.borrower.dependents %}
+{% set dependentAges = application.borrower.dependentsAges|split(',') %}
+{% for age in dependentAges %}
+03B{{ application.borrower.ssn|toInteger|strPad(9) }} {{ age|strPad(3) }}
+{% endfor %}
+{% endif %}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower if coborrower.dependents %} 
+{% set dependentAges = coborrower.dependentsAges|split(',') %}
+{% for age in dependentAges %}
+03B{{ coborrower.ssn|toInteger|strPad(9) }} {{ age|strPad(3) }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+03C{{ application.borrower.ssn|toInteger|strPad(9)}}ZG{{ application.borrower.location.location.address1|ucwords|strPad(50) }}{{ application.borrower.location.location.city|ucwords|strPad(35) }}{{ application.borrower.location.location.state.abbreviation|ucfirst|strPad(2) }}{{ application.borrower.location.location.zipcode|strPad(9) }}{% if application.borrower.location.ownResidence %}O{% else %}R{% endif %}{{ application.borrower.location.yearsAtLocation|strPad(2) }}{{ application.borrower.location.monthsAtLocation|strPad(2) }}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower %}
+03C{{ coborrower.ssn|toInteger|strPad(9)}}ZG{{ coborrower.location.location.address1|ucwords|strPad(50) }}{{ coborrower.location.location.city|ucwords|strPad(35) }}{{ coborrower.location.location.state.abbreviation|ucfirst|strPad(2) }}{{ coborrower.location.location.zipcode|strPad(9) }}{% if coborrower.location.ownResidence %}O{% else %}R{% endif %}{{ coborrower.location.yearsAtLocation|strPad(2) }}{{ coborrower.location.monthsAtLocation|strPad(2) }}
+{% endfor %}
+{% endif %}
+{% if application.borrower.previousLocation|length > 0 %}
+{% for location in application.borrower.previousLocation %}
+03C{{ application.borrower.ssn|toInteger|strPad(9)}}F4{{ location.location.address1|ucwords|strPad(50) }}{{ location.location.city|ucwords|strPad(35) }}{{ location.location.state.abbreviation|ucfirst|strPad(2) }}{{ location.location.zipcode|strPad(9) }}{% if location.ownResidence %}O{% else %}R{% endif %}{{ location.yearsAtLocation|strPad(2) }}{{ location.monthsAtLocation|strPad(2) }}
+{% endfor %}
+{% endif %}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower %}
+{% for location in coborrower.previousLocation %}
+03C{{ coborrower.ssn|toInteger|strPad(9)}}F4{{ location.location.address1|ucwords|strPad(50) }}{{ location.location.city|ucwords|strPad(35) }}{{ location.location.state.abbreviation|ucfirst|strPad(2) }}{{ location.location.zipcode|strPad(9) }}{% if location.ownResidence %}O{% else %}R{% endif %}{{ location.yearsAtLocation|strPad(2) }}{{ location.monthsAtLocation|strPad(2) }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% for employment in application.borrower.employment %}
+{% if loop.index0 == 0 %}
+04A{{ application.borrower.ssn|toInteger|strPad(9)}}{{ employment.employerName|strPad(35) }}{{ employment.location.address1|ucwords|strPad(35) }}{{ employment.location.city|ucwords|strPad(35) }}{{ employment.location.state.abbreviation|strPad(2) }}{{ employment.location.zipcode|strPad(9) }}{% if employment.selfEmployed %}Y{% else %}N{% endif %}{{ employment.timeAtJob.years|strPad(2) }}{{ employment.timeAtJob.months|strPad(2) }}{{ employment.yearsEmployed|strPad(2) }}{{ employment.title|strPad(25)|truncate(25) }} {{ employment.employerPhone|toInteger|strPad(10) }}
+{% endif %}
+{% endfor %}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower %}
+{% for employment in coborrower.employment %}
+{% if loop.index0 == 0 %}
+04A{{ coborrower.ssn|toInteger|strPad(9)}}{{ employment.employerName|strPad(35) }}{{ employment.location.address1|ucwords|strPad(35) }}{{ employment.location.city|ucwords|strPad(35) }}{{ employment.location.state.abbreviation|strPad(2) }}{{ employment.location.zipcode|strPad(9) }}{% if employment.selfEmployed %}Y{% else %}N{% endif %}{{ employment.timeAtJob.years|strPad(2) }}{{ employment.timeAtJob.months|strPad(2) }}{{ employment.yearsEmployed|strPad(2) }}{{ employment.title|strPad(25)|truncate(25) }} {{ employment.employerPhone|toInteger|strPad(10) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{% for employment in application.borrower.employment %}
+{% if loop.index0 > 0 %}
+04B{{ application.borrower.ssn|toInteger|strPad(9)}}{{ employment.employerName|strPad(35) }}{{ employment.location.address1|ucwords|strPad(35) }}{{ employment.location.city|ucwords|strPad(35) }}{{ employment.location.state.abbreviation|strPad(2) }}{{ employment.location.zipcode|strPad(9) }}{% if employment.selfEmployed %}Y{% else %}N{% endif %}N{{ employment.startDate|date('Ymd') }}{{ employment.endDate|date('Ymd') }}{{ emptyString|strPad('15') }}{{ employment.title|strPad(25)|truncate(25) }} {{ employment.employerPhone|toInteger|strPad(10) }}
+{% endif %}
+{% endfor %}
+{% if application.coborrower|length > 0 %}
+{% for coborrower in application.coborrower %}
+{% for employment in coborrower.employment %}
+{% if loop.index0 > 0 %}
+04B{{ coborrower.ssn|toInteger|strPad(9)}}{{ employment.employerName|strPad(35) }}{{ employment.location.address1|ucwords|strPad(35) }}{{ employment.location.city|ucwords|strPad(35) }}{{ employment.location.state.abbreviation|strPad(2) }}{{ employment.location.zipcode|strPad(9) }}{% if employment.selfEmployed %}Y{% else %}N{% endif %}N{{ employment.startDate|date('Ymd') }}{{ employment.endDate|date('Ymd') }}{{ emptyString|strPad('15') }}{{ employment.title|strPad(25)|truncate(25) }} {{ employment.employerPhone|toInteger|strPad(10) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}125{{ application.expenseHousing.rent|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}126{{ application.expenseHousing.mortgage|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}122{{ application.expenseHousing.otherFinancial|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}101{{ application.expenseHousing.insuranceHazard|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}114{{ application.expenseHousing.taxRealEstate|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}102{{ application.expenseHousing.insuranceMortgage|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}106{{ application.expenseHousing.hoaDues|strPad(15, 'left') }}
+05H{{ application.borrower.ssn|toInteger|strPad(9)}}123{{ application.expenseHousing.other|strPad(15, 'left') }}
+{% for income in application.incomeMonthly %}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}20{{ income.base|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}09{{ income.overtime|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}08{{ income.bonus|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}10{{ income.commission|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}17{{ income.interest|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}33{{ income.rentNet|strPad(15, 'left') }}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}45{{ income.other|strPad(15, 'left') }}
+{% endfor %}
+{% for income in application.incomeOther %}
+05I{{ income.borrower.ssn|toInteger|strPad(9)}}45{{ income.income|strPad(15, 'left') }}
+{% endfor %}
+{% for asset in application.assetAccount %}
+{% if asset.type == 0 %}{% set assetType = '03' %}{% elseif asset.type == 1 %}{% set assetType = 'SG' %}{% elseif asset.type == 2 %}{% set assetType = 'F3' %}{% elseif asset.type == 3 %}{% set assetType = '01' %}{% elseif asset.type == 4 %}{% set assetType = 'F4' %}{% elseif asset.type == 5 %}{% set assetType = '08' %}{% else %}OL{% endif %}
+06C{{ asset.borrower.ssn|toInteger|strPad(9)}}{{ assetType }} {{ asset.institutionName|ucfirst|strPad(35)|truncate(35) }}{{ emptyString|strPad(35) }}{{ emptyString|strPad(35) }}{{ emptyString|strPad(2) }}{{ emptyString|strPad(5) }}{{ emptyString|strPad(4) }} {{ asset.accountNumber|strPad(30) }}{{ asset.balance|strPad(15) }}
+{% endfor %}
+{% for asset in application.assetRealEstate %}
+06G{{ asset.borrower.ssn|toInteger|strPad(9)}}{{ asset.location.address1|truncate(35)|strPad(35) }}{{ asset.location.city|truncate(35)|strPad(35) }}{{ asset.location.state.abbreviation }}{{ asset.location.zipcode|strPad(9) }}H  {{ asset.marketValue|strPad(15) }}{{ asset.mortgageAmount|strPad(15) }}{{ asset.rentGrossIncome|strPad(15) }}{{ asset.mortgagePayment|strPad(15) }}{{ asset.insTaxExp|strPad(15) }}{{ asset.rentNetIncome|strPad(15) }}NN {{ loop.index }}
+{% endfor %}
+{% if application.borrower.declarationAlimonyChildSupportAlimony %}06F{{ application.borrower.ssn|toInteger|strPad(9)}}DR {{ application.borrower.declarationAlimonyChildSupportAlimony|strPad(15, 'left') }}{% endif %}
+{% if application.borrower.declarationAlimonyChildSupportChildSupport %}06F{{ application.borrower.ssn|toInteger|strPad(9)}}DT {{ application.borrower.declarationAlimonyChildSupportChildSupport|strPad(15, 'left') }}{% endif %}
+{% if application.borrower.declarationAlimonyChildSupportSeparateMaintenance %}06F{{ application.borrower.ssn|toInteger|strPad(9)}}DV {{ application.borrower.declarationAlimonyChildSupportSeparateMaintenance|strPad(15, 'left') }}{% endif %}
+{% if application.coBorrower|length > 0 %}
+{% for coborrower in application.coBorrower %}
+{% if coborrower.declarationAlimonyChildSupportAlimony %}06F{{ coborrower.ssn|toInteger|strPad(9)}}DR {{ coborrower.declarationAlimonyChildSupportAlimony|strPad(15, 'left') }}{% endif %}
+{% if coborrower.declarationAlimonyChildSupportChildSupport %}06F{{ coborrower.ssn|toInteger|strPad(9)}}DT {{ coborrower.declarationAlimonyChildSupportChildSupport|strPad(15, 'left') }}{% endif %}
+{% if coborrower.declarationAlimonyChildSupportSeparateMaintenance %}06F{{ coborrower.ssn|toInteger|strPad(9)}}DV {{ coborrower.declarationAlimonyChildSupportSeparateMaintenance|strPad(15, 'left') }}{% endif %}
+{% endfor %}
+{% endif %}
+{% if application.salePrice is not empty %}
+07A{{ application.salePrice|strPad(15) }}
+{% endif %}
+08A{{ application.borrower.ssn|toInteger|strPad(9)}}{{ application.borrower.declarationOutstandingJudgement|boolToYN }}{{ application.borrower.declarationBankruptcy|boolToYN }}{{ application.borrower.declarationForclosure|boolToYN }}{{ application.borrower.declarationLawsuit|boolToYN }}{{ application.borrower.declarationForclosureObligation|boolToYN }}{{ application.borrower.declarationInDefault|boolToYN }}{{ application.borrower.declarationAlimonyChildSupport|boolToYN }}{{ application.borrower.declarationDownPaymentBorrowed|boolToYN }}{{ application.borrower.declarationNoteEndorser|boolToYN }}{% if application.borrower.declarationUsCitizen %}01{% elseif application.borrower.declarationResidentAlien %}03{% endif %}{{ application.borrower.declarationPrimaryResidence|boolToYN }}{{ application.borrower.declarationOwnershipWithinThreeYears|boolToYN }}{% if application.borrower.declarationOwnershipWithinThreeYears %}{% if application.borrower.declarationOwnershipWithinThreeYearsPropertyType == 0 %}1{% elseif application.borrower.declarationOwnershipWithinThreeYearsPropertyType == 1 %}2{% elseif application.borrower.declarationOwnershipWithinThreeYearsPropertyType == 2 %}D{% endif %}{% if application.borrower.declarationOwnershipWithinThreeYearsPropertyTitle == 0 %}01{% elseif application.borrower.declarationOwnershipWithinThreeYearsPropertyTitle == 1 %}25{% elseif application.borrower.declarationOwnershipWithinThreeYearsPropertyTitle == 2 %}26{% endif %}{% endif %}
+{% if application.coBorrower|length > 0 %}
+{% for coborrower in application.coBorrower %}
+
+08A{{ coborrower.ssn|toInteger|strPad(9)}}{{ coborrower.declarationOutstandingJudgement|boolToYN }}{{ coborrower.declarationBankruptcy|boolToYN }}{{ coborrower.declarationForclosure|boolToYN }}{{ coborrower.declarationLawsuit|boolToYN }}{{ coborrower.declarationForclosureObligation|boolToYN }}{{ coborrower.declarationInDefault|boolToYN }}{{ coborrower.declarationAlimonyChildSupport|boolToYN }}{{ coborrower.declarationDownPaymentBorrowed|boolToYN }}{{ coborrower.declarationNoteEndorser|boolToYN }}{% if coborrower.declarationUsCitizen %}01{% elseif coborrower.declarationResidentAlien %}03{% endif %}{{ coborrower.declarationPrimaryResidence|boolToYN }}{{ coborrower.declarationOwnershipWithinThreeYears|boolToYN }}{% if coborrower.declarationOwnershipWithinThreeYears %}{% if coborrower.declarationOwnershipWithinThreeYearsPropertyType == 0 %}1{% elseif coborrower.declarationOwnershipWithinThreeYearsPropertyType == 1 %}2{% elseif coborrower.declarationOwnershipWithinThreeYearsPropertyType == 2 %}D{% endif %}{% if coborrower.declarationOwnershipWithinThreeYearsPropertyTitle == 0 %}01{% elseif coborrower.declarationOwnershipWithinThreeYearsPropertyTitle == 1 %}25{% elseif coborrower.declarationOwnershipWithinThreeYearsPropertyTitle == 2 %}26{% endif %}{% endif %}
+
+{% endfor %}
+{% endif %}
+{% if application.borrower.declarationOutstandingJudgement %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}91{{ application.borrower.declarationOutstandingJudgementDetails }}
+{% endif %}
+{% if application.borrower.declarationBankruptcy %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}92{{ application.borrower.declarationBankruptcyDetails }}
+{% endif %}
+{% if application.borrower.declarationForclosure %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}93{{ application.borrower.declarationForclosureDetails }}
+{% endif %}
+{% if application.borrower.declarationLawsuit %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}94{{ application.borrower.declarationLawsuitDetails }}
+{% endif %}
+{% if application.borrower.declarationForclosureObligation %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}95{{ application.borrower.declarationForclosureObligationDetails }}
+{% endif %}
+{% if application.borrower.declarationInDefault %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}96{{ application.borrower.declarationInDefaultDetails }}
+{% endif %}
+{% if application.borrower.declarationAlimonyChildSupport %}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}97{{ application.borrower.declarationAlimonyChildSupportDetails }}
+{% endif %}
+{% if application.borrower.declarationDownPaymentBorrowed%}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}98{{ application.borrower.declarationDownPaymentBorrowedDetails }}
+{% endif %}
+{% if application.borrower.declarationNoteEndorser%}
+08B{{ application.borrower.ssn|toInteger|strPad(9)}}99{{ application.borrower.declarationNoteEndorserDetails }}
+{% endif %}
+{% if application.coBorrower|length > 0 %}
+{% for coborrower in application.coBorrower %}
+{% if coborrower.declarationOutstandingJudgement %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}91{{ coborrower.declarationOutstandingJudgementDetails }}
+{% endif %}
+{% if coborrower.declarationBankruptcy %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}92{{ coborrower.declarationBankruptcyDetails }}
+{% endif %}
+{% if coborrower.declarationForclosure %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}93{{ coborrower.declarationForclosureDetails }}
+{% endif %}
+{% if coborrower.declarationLawsuit %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}94{{ coborrower.declarationLawsuitDetails }}
+{% endif %}
+{% if coborrower.declarationForclosureObligation %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}95{{ coborrower.declarationForclosureObligationDetails }}
+{% endif %}
+{% if coborrower.declarationInDefault %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}96{{ coborrower.declarationInDefaultDetails }}
+{% endif %}
+{% if coborrower.declarationAlimonyChildSupport %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}97{{ coborrower.declarationAlimonyChildSupportDetails }}
+{% endif %}
+{% if coborrower.declarationDownPaymentBorrowed %}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}98{{ coborrower.declarationDownPaymentBorrowedDetails }}
+{% endif %}
+{% if coborrower.declarationNoteEndorser%}
+08B{{ coborrower.ssn|toInteger|strPad(9)}}99{{ coborrower.declarationNoteEndorserDetails }}
+{% endif %}
+{% endfor %}
+{% endif %}}
+
+10A{{ application.borrower.ssn|toInteger|strPad(9)}}{% if application.borrower.govtMonitoringOptOut %}Y{% else %}N{% endif %}{% if application.borrower.ethnicity is not null %}{{ (application.borrower.ethnicity + 1)|strPad(31) }}{% else %}{{ '3'|strPad(31) }}{% endif %}{% if application.borrower.govtMonitoringOptOut %}I{% elseif application.borrower.isMale %}M{% else %}F{% endif %}
+{% if application.coBorrower|length > 0 %}
+{% for coborrower in application.coBorrower %}
+
+10A{{ coborrower.ssn|toInteger|strPad(9)}}{% if coborrower.govtMonitoringOptOut %}Y{% else %}N{% endif %}{% if coborrower.ethnicity is not null %}{{ (coborrower.ethnicity + 1)|strPad(31) }}{% else %}{{ '3'|strPad(31) }}{% endif %}{% if coborrower.govtMonitoringOptOut %}I{% elseif coborrower.isMale %}M{% else %}F{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if application.borrower.race is not null %}10R{{ application.borrower.ssn|toInteger|strPad(9)}} {{ application.borrower.race + 1 }}{% endif %}
+
+{% if application.coBorrower|length > 0 %}
+{% for coborrower in application.coBorrower %}
+{% if coborrower.race is not null %}10R{{ coborrower.ssn|toInteger|strPad(9)}} {{ coborrower.race + 1 }}{% endif %}
+{% endfor %}
+{% endif %}
+
+00070 3.20 
+99BNF1
+00011 3.20 
+LNC1 {% if application.propertyType == 0 %}01{% elseif application.propertyType == 1 %}02{% elseif application.propertyType == 2 %}03{% elseif application.propertyType == 3 %}04{% elseif application.propertyType == 4 %}05{% elseif application.propertyType == 5 %}07{% elseif application.propertyType == 6 %}08{% elseif application.propertyType == 7 %}09{% else %}10{% endif %}{{ emptyString|strPad(17) }}N{{ emptyString|strPad(32) }}N{{ emptyString|strPad(31) }}NN
+PID                              {{ application.loanTerm }}YRFixed           
+PCH    01  N 
+00030 3.20 
+LMD                                                                                NN           0.00              0           0.00
+
+TT TRAN1    
+ET ENV1{{ emptyString|strPad(5) }}
+

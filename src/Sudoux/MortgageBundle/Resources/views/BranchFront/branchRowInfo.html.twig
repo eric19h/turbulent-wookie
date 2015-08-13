@@ -1,0 +1,22 @@
+{% if branch.location %}
+    <div class="location">
+      <span>{{ branch.location.address1 }}<br>
+          <a href="{{ path('sudoux_mortgage_branch_city', { state: branch.location.state.abbreviation|lower, city: branch.location.city|lower }) }}">{{ branch.location.city }}</a>, <a href="{{ path('sudoux_mortgage_branch_state', { state: branch.location.state.abbreviation|lower }) }}">{{ branch.location.state.abbreviation }}</a> {{ branch.location.zipcode }}</span>
+    </div>
+{% endif %}
+<div class="contact-info">
+    {% if branch.nmlsId %}<span><b>NMLS #:</b> {{ branch.nmlsId }}</span><br>{% endif %}
+    {% if branch.branchManager %}<span><b>Manager:</b> <a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: branch.branchManager.id }) }}">{{ branch.branchManager.fullname }}</a></span><br>{% endif %}
+    {% if branch.phone %}<span><i class="fa fa-fw fa-phone"></i>{{ branch.phone }}</span><br>{% endif %}
+    {% if branch.fax %}<span><i class="fa fa-fw fa-fax"></i>{{ branch.fax  }}</span><br>{% endif %}
+    {% if branch.email %}<span><i class="fa fa-fw fa-envelope"></i><a href="mailto:{{ branch.email }}">Send Message</a> </span>{% endif %}
+</div>
+<div class="view-detail">
+    <a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id, alias: branch.alias }) }}" class="btn btn-default">View Info</a>
+    <a href="{{ path('sudoux_mortgage_loan_officer', { branch: branch.id }) }}" class="btn btn-default">View Loan Officers</a>
+    {% if branch.hasSite %}
+        {% if site.id != branch.branchSite.id %}
+            <a href="http://{{ branch.branchSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a>
+        {% endif %}
+    {% endif %}
+</div>

@@ -1,0 +1,23 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Upload NMLS Branches{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_branch') }}">Branches</a> <span class="divider">/</span></li>
+		<li class="active">Upload NMLS Branches</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<form action="{{ path('sudoux_mortgage_admin_branch_nmls_upload') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{{ form_label(form.nmls_file) }}
+		{{ form_widget(form.nmls_file) }}
+		<div class="hide">
+			{{ form_rest(form) }}
+		</div>
+		<div class="submit-wrapper clearfix">
+	    	<input type="submit" value="Upload Branches" class="btn">
+	    </div>
+	</form>
+{% endblock %}

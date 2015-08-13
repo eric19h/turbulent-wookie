@@ -1,0 +1,7 @@
+parameters:
+#    sudoux_mortgage_site.example.class: Sudoux\MortgageSiteBundle\Example
+
+services:
+#    sudoux_mortgage_site.example:
+#        class: %sudoux_mortgage_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

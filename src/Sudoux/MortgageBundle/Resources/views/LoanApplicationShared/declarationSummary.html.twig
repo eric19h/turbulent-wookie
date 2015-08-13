@@ -1,0 +1,61 @@
+<h4>{{ borrower.fullName }}</h4>
+<div class="declaration-summary form-inline">
+	<p>
+		<b>{{ borrower.declarationOutstandingJudgement|boolToYesNo }}:</b> {{ form_label(form.declaration_outstanding_judgement) }}
+		{% if borrower.declarationOutstandingJudgementDetails %}<br><small>Details: {{ borrower.declarationOutstandingJudgementDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationBankruptcy|boolToYesNo }}:</b> {{ form_label(form.declaration_bankruptcy) }}
+		{% if borrower.declarationBankruptcyDetails %}<br><small>Details: {{ borrower.declarationBankruptcyDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationForclosure|boolToYesNo }}:</b> {{ form_label(form.declaration_forclosure) }}
+		{% if borrower.declarationForclosureDetails %}<br><small>Details: {{ borrower.declarationForclosureDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationLawsuit|boolToYesNo }}:</b> {{ form_label(form.declaration_lawsuit) }}
+		{% if borrower.declarationLawsuitDetails %}<br><small>Details: {{ borrower.declarationLawsuitDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationForclosureObligation|boolToYesNo }}:</b> {{ form_label(form.declaration_forclosure_obligation) }}
+		{% if borrower.declarationForclosureObligationDetails %}<br><small>Details: {{ borrower.declarationForclosureObligationDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationInDefault|boolToYesNo }}:</b> {{ form_label(form.declaration_in_default) }}
+		{% if borrower.declarationInDefaultDetails %}<br><small>Details: {{ borrower.declarationInDefaultDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationAlimonyChildSupport|boolToYesNo }}:</b> {{ form_label(form.declaration_alimony_child_support) }}
+		<br>
+		{% if borrower.declarationAlimonyChildSupport %}
+			<small>Alimony: ${{ borrower.declarationAlimonyChildSupportAlimony|number_format }}</small><br>
+			<small>Child Support: ${{ borrower.declarationAlimonyChildSupportChildSupport|number_format }}</small><br>
+			<small>Separate Maintenance: ${{ borrower.declarationAlimonyChildSupportSeparateMaintenance|number_format }}</small>
+		{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationDownPaymentBorrowed|boolToYesNo }}:</b> {{ form_label(form.declaration_down_payment_borrowed) }}
+		{% if borrower.declarationDownPaymentBorrowedDetails %}<br><small>Details: {{ borrower.declarationDownPaymentBorrowedDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationNoteEndorser|boolToYesNo }}:</b> {{ form_label(form.declaration_note_endorser) }}
+		{% if borrower.declarationNoteEndorserDetails %}<br><small>Details: {{ borrower.declarationNoteEndorserDetails }}</small>{% endif %}
+	</p>
+	<p>
+		<b>{{ borrower.declarationUsCitizen|boolToYesNo }}:</b> {{ form_label(form.declaration_us_citizen) }}
+	</p>
+	<p>
+		<b>{{ borrower.declarationResidentAlien|boolToYesNo }}:</b> {{ form_label(form.declaration_resident_alien) }}
+	</p>
+	<p>
+		<b>{{ borrower.declarationPrimaryResidence|boolToYesNo }}:</b> {{ form_label(form.declaration_primary_residence) }}
+	</p>
+	<p>
+		<b>{{ borrower.declarationOwnershipWithinThreeYears|boolToYesNo }}:</b> {{ form_label(form.declaration_ownership_within_three_years) }}
+		{% if borrower.declarationOwnershipWithinThreeYears %}
+			<br>
+			<small>What type of property did you own?: {{ borrower.declarationOwnershipWithinThreeYearsPropertyTypeName }}</small><br>
+			<small>How did you hold the title to the home?: {{ borrower.declarationOwnershipWithinThreeYearsPropertyTitleName }}</small>
+		{% endif %}
+	</p>
+</div>

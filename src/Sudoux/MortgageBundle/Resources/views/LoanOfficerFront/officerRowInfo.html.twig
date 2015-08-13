@@ -1,0 +1,24 @@
+<div class="contact-info">
+    {% if officer.title %}<span><b>Title:</b> {{ officer.title }}</span><br>{% endif %}
+	{% if officer.nmlsId %}<span><b>NMLS #:</b> {{ officer.nmlsId }}</span><br>{% endif %}
+	{% if officer.phoneOffice %}<span><i class="fa fa-fw fa-phone"></i>{{ officer.phoneOffice }}</span><br>{% endif %}
+	{% if officer.phoneMobile %}<span><i class="fa fa-fw fa-mobile"></i>{{ officer.phoneMobile }}</span><br>{% endif %}
+	{% if officer.fax %}<span><i class="fa fa-fw fa-fax"></i>{{ officer.fax }}</span><br>{% endif %}
+
+    {% if officer.hasSite %}
+        {% if officer.officerSite.id == site.id %}
+            {% if officer.email %}<span><i class="fa fa-fw fa-envelope"></i> <a href="mailto:{{ officer.email }}">Send Message</a></span><br>{% endif %}
+        {% else %}
+            <a href="https://{{ officer.officerSite.primaryDomain.domain }}{{ path('sudoux_cms_form_contact') }}" target="_blank">Contact Me</a>
+        {% endif %}
+    {% endif %}
+
+</div>
+<div class="view-detail">
+	<a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id, alias: officer.alias }) }}" class="btn btn-default">View Info</a>
+	{% if officer.hasSite %}
+        {% if site.id != officer.officerSite.id %}
+		    <a href="http://{{ officer.officerSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a>
+        {% endif %}
+	{% endif %}
+</div>

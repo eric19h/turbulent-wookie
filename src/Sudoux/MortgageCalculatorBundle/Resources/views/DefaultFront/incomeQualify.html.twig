@@ -1,0 +1,96 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}How Much Income do I Need to Qualify?{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_calculator') }}">Mortgage Calculators</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<iframe id="iframe_calculator" width="100%" height="1200" style="border: 0px" scrolling="yes" frameborder="0" src="{{ calculator_url }}/website/includes/plugins/calculators/how-much-income-do-i-need-to-qualify.php"></iframe>
+    {#<form action="{{ path('sudoux_mortgage_calculator_affordability') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+        <div class="row">
+            <div class="span6">
+
+                <div class="form-horizontal">
+                    <h3>Property Information</h3>
+                    <div class="control-group">
+                        {{ form_label(form.home_value, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.home_value) }}
+                        </div>
+                    </div>
+
+                    <h3>Loan Information</h3>
+                    <div class="control-group">
+                        {{ form_label(form.down_payment, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.down_payment) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.interest_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.interest_rate) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.length, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.length) }} Yrs
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.estimated_front_ratio, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.estimated_front_ratio) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.estimated_back_ratio, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.estimated_back_ratio) }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <h3>Taxes and Insurance Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.annual_taxes, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_taxes) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_insurance, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_insurance) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_pmi, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_pmi) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="submit-wrapper text-center">
+                    <div class="hide">{{ form_rest(form) }}</div>
+                    <input type="submit" value="Calculate" class="btn">
+                </div>
+            </div>
+        </div>
+    </form>#}
+{% endblock %}

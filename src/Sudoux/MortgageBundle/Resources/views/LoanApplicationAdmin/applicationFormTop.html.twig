@@ -1,0 +1,17 @@
+<div id="application-form-top" class="well clearfix">
+	<div class="pull-left item">
+		{{ form_label(form.status) }} {{ form_widget(form.status) }}
+	</div>
+    {% set show_lo_widget = true %}
+    {% if site.siteType %}
+        {% if site.siteType.keyName == 'loan_officer' %}
+            {% set show_lo_widget = false %}
+        {% endif %}
+    {% endif %}
+    {% if show_lo_widget %}
+        <div class="pull-left item">
+            <label>Select a loan officer</label>
+            {{ form_widget(form.loan_officer) }}
+        </div>
+    {% endif %}
+</div>

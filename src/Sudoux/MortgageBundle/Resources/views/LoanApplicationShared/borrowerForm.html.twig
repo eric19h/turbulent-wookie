@@ -1,0 +1,135 @@
+
+<header>
+	<h3>{% if deletable %}<a href="#" class="icon-remove delete-borrower-form"></a> {% endif %}{{ title }}</h3>
+	{% if description is defined %}<p>{{ description }}</p>{% endif %}
+</header>
+
+<div class="form-horizontal clearfix">
+	<div class="span-half">
+		<div class="control-group">
+			{{ form_label(form.first_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.first_name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.middle_initial, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.middle_initial) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.last_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.last_name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.suffix, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.suffix) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.location.address1) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.location.city) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.location.state) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.location.zipcode) }}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Time at Residence <span class="required-asterisk">*</span></label>
+			<div class="controls">
+				{{ form_widget(form.location.years_at_location) }}
+				{{ form_label(form.location.years_at_location, label|default(null), { 'label_attr': { 'class': 'inline-block' } }) }}
+				{{ form_widget(form.location.months_at_location) }}
+				{{ form_label(form.location.months_at_location, label|default(null), { 'label_attr': { 'class': 'inline-block' } }) }}
+			</div>
+		</div>
+	</div>
+	<div class="span-half">
+		<div class="control-group">
+			{{ form_label(form.phone_home, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone_home) }}
+			</div>
+		</div>
+		<div class="control-group hide">
+			{{ form_label(form.phone_mobile, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone_mobile) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.email) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.ssn, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.ssn) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.birth_date, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.birth_date) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.years_of_school, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.years_of_school) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.marital_status, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.marital_status) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.own_residence, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.own_residence, { 'attr' : { 'class': 'radio-group' } }) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.dependents, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.dependents, { 'attr' : { 'class': 'radio-group has-dependents' } }) }}
+				<div class="dependent-info {% if borrower is defined %}{% if borrower.dependents == false %}hide{% endif %}{% else %}hide{% endif %}">
+					<p>{{ form_label(form.dependents_number) }} {{ form_widget(form.dependents_number) }}</p>
+					<p>{{ form_label(form.dependents_ages) }} {{ form_widget(form.dependents_ages, { help: 'Enter ages seperated by a comma. eg (16,14)'}) }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="borrower-previous-location-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerPreviousLocationForm.html.twig' with { form: form.previous_location.vars.prototype } %}{% endfilter %}">
+	{% for borrower_location in form.previous_location %}
+		<div class="borrower-previous-location-form">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerPreviousLocationForm.html.twig' with { form: borrower_location } %}
+		</div>
+	{% endfor %}
+</div>

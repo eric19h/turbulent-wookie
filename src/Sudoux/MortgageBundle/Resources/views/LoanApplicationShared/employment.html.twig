@@ -1,0 +1,36 @@
+<div id="employment-wrapper">	
+	{% set additionalEmploymentDescription = '<p class="error"><small>* You are required to provide 2 years of employment history.</small></p>' %}	
+	<div class="employment-form-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:employmentForm.html.twig' with { borrower: application.borrower, form: form.borrower.employment.vars.prototype, title: 'Borrower Additional Employment', deletable: true, description: additionalEmploymentDescription } %}{% endfilter %}">
+		<h3>Borrower Employment</h3>
+        <div class="form-inline text-center borrower-employed well well-small">
+			{{ form_label(form.borrower.employed) }} {{ form_widget(form.borrower.employed, { 'attr' : { 'class': 'radio-group' } }) }}
+		</div>
+		{% for employment in form.borrower.employment %}
+			{% if loop.index0 == 0 %}
+				{% set title = null %}
+			{% else %}
+				{% set title = 'Borrower Additional Employment' %}
+			{% endif %}	
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:employmentForm.html.twig' with { borrower: application.borrower, form: employment, title: title, deletable: false } %}
+
+		{% endfor %}
+	</div>
+	{% for coBorrowerForm in form.co_borrower %}
+		{% set coBorrowerIndex = loop.index0 %}
+		<div class="employment-form-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:employmentForm.html.twig' with { borrower: application.coBorrower[coBorrowerIndex], form: coBorrowerForm.employment.vars.prototype, title: application.coBorrower[coBorrowerIndex].fullName ~ "'s Additional Employment (Co-Borrower)", deletable: true, description: additionalEmploymentDescription } %}{% endfilter %}">
+			<h3>{{ application.coBorrower[coBorrowerIndex].fullName ~ "'s Employment (Co-Borrower)" }}</h3>
+            <div class="form-inline text-center borrower-employed well well-small">
+				{{ form_label(coBorrowerForm.employed) }} {{ form_widget(coBorrowerForm.employed, { 'attr' : { 'class': 'radio-group' } }) }}
+			</div>
+			{% for employment in coBorrowerForm.employment %}
+				{% if coBorrowerIndex == 0 %}
+					{% set title = null %}
+				{% else %}
+					{% set title = application.coBorrower[coBorrowerIndex].fullName ~ "'s Additional Employment (Co-Borrower)" %}
+				{% endif %}
+
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:employmentForm.html.twig' with { borrower: application.coBorrower[coBorrowerIndex], form: employment, title: title, deletable: false } %}
+			{% endfor %}
+		</div>
+	{% endfor %}
+</div>

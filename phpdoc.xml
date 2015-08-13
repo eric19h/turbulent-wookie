@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>MortgageWare</title>
+    <parser>
+        <target>/var/www/doc/output</target>
+        <encoding>utf8</encoding>
+        <markers>
+            <item>TODO</item>
+            <item>FIXME</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+            <extension>php3</extension>
+            <extension>phtml</extension>
+        </extensions>
+        <visibility></visibility>
+    </parser>
+    <transformer>
+        <target>/var/www/doc/output</target>
+    </transformer>
+    <logging>
+        <level>warn</level>
+        <paths>
+            <default>/var/www/doc/data/log/{DATE}.log</default>
+            <errors>/var/www/doc/data/log/{DATE}.errors.log</errors>
+        </paths>
+    </logging>
+    <transformations>
+        <template name="responsive" />
+    </transformations>
+    <files>
+        <directory>/var/www/mortgageware/*</directory>
+        <ignore>/var/www/mortgageware/vendor/*</ignore>
+        <ignore>/var/www/mortgageware/app/cache/*</ignore>
+        <ignore>/var/www/mortgageware/app/spool/*</ignore>
+        <ignore>/var/www/mortgageware/app/logs/*</ignore>
+    </files>
+</phpdoc>

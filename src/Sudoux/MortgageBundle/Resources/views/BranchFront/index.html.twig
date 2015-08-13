@@ -1,0 +1,147 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}
+	{% if city %}
+		{{ city|ucwords|urlDecode }},
+	{% endif %}
+	{% if activeState %}
+		{{ activeState|upper }}
+	{% endif %}
+
+
+{% endblock %}
+
+{% block body_class %}page-branch-list{% endblock %}
+
+{% block head %}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/sudouxcmstheme/lib/jquery/jqvmap/jquery-jvectormap-2.0.2.css') }}">
+	<script src="{{ asset('bundles/sudouxcmstheme/lib/jquery/jqvmap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+	<script src="{{ asset('bundles/sudouxcmstheme/lib/jquery/jqvmap/maps/jquery-jvectormap-us-aea-en.js') }}"></script>
+	<script>
+		$(document).ready(function(){
+			new jvm.MultiMap({
+				container: $('#branch-map'),
+				maxLevel: 1,
+				main: {
+					map: 'us_aea_en'
+				},
+				mapUrlByCode: function(code, multiMap){
+					return '/js/us-counties/jquery-jvectormap-data-'+
+							code.toLowerCase()+'-'+
+							multiMap.defaultProjection+'-en.js';
+				}
+			});
+		});
+	{#{#
+		$(document).ready(function() {
+			var stateColor = "#FFF";
+			var stateActiveColor = $('#branch-map-wrapper .state.branch').css('background-color');
+			var stateSelectedColor = $('#branch-map-wrapper .state.active').css('background-color');
+            var stateLicensedColor = $('#branch-map-wrapper .state.licensed').css('background-color');
+            var mapHoverColor = $('#branch-map-wrapper .state.branch').css('background-color');
+			var selectedStates = {};
+            var branchStates = [];
+            var licensedStates = [];
+
+			var selectedRegion = null;
+
+
+            {% for licensedState in licensedStates %}
+                {% if licensedState|lower != activeState|lower %}
+                    selectedStates.{{ licensedState|lower }} = stateLicensedColor;
+                    licensedStates[licensedStates.length] = '{{ licensedState|lower }}';
+                {% endif %}
+            {% endfor %}
+			
+			{% for state in states %}
+				{% if state.abbreviation|lower != activeState|lower %}
+					selectedStates.{{ state.abbreviation|lower }} = stateActiveColor;
+                    branchStates[branchStates.length] = '{{ state.abbreviation|lower }}';
+				{% endif %}
+			{% endfor %}
+
+            {% if activeState %}
+                selectedRegion = '{{ activeState|lower }}';
+                branchStates[branchStates.length] = '{{ activeState|lower }}';
+                selectedStates.{{ activeState|lower }} = stateSelectedColor;
+            {% endif %}
+
+			$('#branch-map').vectorMap({
+			    map: 'us_aea_en',
+			    enableZoom: false,
+			    showTooltip: true,
+                color: stateColor,
+			    colors: selectedStates,
+			    selectedColor: stateSelectedColor,
+			    hoverColor: mapHoverColor,
+			    selectedRegion: selectedRegion,
+                hoverOpacity:.5,
+                onLabelShow: function(event, label, code) {
+                    if (branchStates.indexOf(code) != -1) {
+                        label[0].innerHTML = "We Have A Branch in " + label[0].innerHTML;
+                    } else {
+                        if (licensedStates.indexOf(code) != -1) {
+                            label[0].innerHTML = "We Are Licensed in " + label[0].innerHTML;
+                        }else {
+                            label[0].innerHTML = "Sorry, We Do Not Operate in " + label[0].innerHTML;
+                        }
+                    }
+                },
+                onRegionOver: function(element, code, region) {
+
+
+
+			    },
+			    onRegionClick: function(element, code, region, event) {
+
+                    if(branchStates.indexOf(code)==-1){
+                        event.preventDefault();
+                        alert("There are no Branches in this state");
+                    }
+                    else{
+                        var url = Routing.generate('sudoux_mortgage_branch_state', { state: code });
+                        window.location = url;
+                    }
+
+
+			    }
+			});
+		});#}
+	</script>
+{% endblock %}
+
+{% block content %}
+	{% if search %}<div class="alert">Search for &quot;<em>{{ search|urlDecode }}</em>&quot;</div>{% endif %}
+	{% if branches|length > 0 %}
+		<div id="branch-map-wrapper">
+			<div id="branch-map"></div>	
+			<div id="branch-legend">
+				<ul>
+					<li><span class="state active"></span>Selected State</li>
+					<li><span class="state branch"></span> Branch Locations</li>
+                    <li><span class="state licensed"></span> Licensed States</li>
+					<li><span class="state "></span>No Branches</li>
+				</ul>
+			</div>
+		</div>
+		<div class="content-list branch">
+			<div class="inner">
+				{% for branch in branches %}
+					<article class="row-item {{ cycle(['odd', 'even'], loop.index0) }} clearfix">
+						{% include 'SudouxMortgageBundle:BranchFront:branchInfo.html.twig' %}
+					</article>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="pager">{{ knp_pagination_render(branches) }}</div>
+	{% else %}
+		<p>Sorry, there are no branches available.</p>
+	{% endif %}
+{% endblock %}
+
+
+{% block sidebar_second %}
+	{% render url('sudoux_mortgage_branch_search_esi') %}
+	{% render url('sudoux_cms_form_contact_esi') %}
+	{% render url('sudoux_mortgage_state_license_esi') %}
+{% endblock %}

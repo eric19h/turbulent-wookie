@@ -1,0 +1,43 @@
+{% if loanApp.borrower.creditReport %}
+	<div id="credit-scores-wrapper" class="row row-margin">
+		<div class="span12">
+			<table id="credit-scores-table" class="table">
+				<thead>
+					<tr>
+						<th><h3>Borrower</h3></th>
+						<th><img src="{{ asset('bundles/sudouxmortgage/img/logo-experian.png')  }}" alt="Experian"></th>
+						<th><img src="{{ asset('bundles/sudouxmortgage/img/logo-transunion.gif')  }}" alt="TransUnion"></th>
+						<th><img src="{{ asset('bundles/sudouxmortgage/img/logo-equifax.png')  }}" alt="Equifax"></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><h4>{{ loanApp.borrower.fullName }}</h4></td>
+						<td class="experian">{{ loanApp.borrower.creditReport.experianScore }}</td>
+						<td class="transunion">{{ loanApp.borrower.creditReport.transunionScore }}</td>
+						<td class="equifax">{{ loanApp.borrower.creditReport.equifaxScore }}</td>
+						<td class="text-center">
+							{% if loanApp.borrower.creditReport.reportFile %}
+								<a href="{{ path('sudoux_cms_admin_file_private', { id: borrower.creditReport.reportFile.id }) }}" target="_blank"><i class="icon-download"></i> Download</a>
+							{% endif %}
+						</td>
+					</tr>
+					{% for coBorrower in loanApp.coBorrower %}
+						<tr>
+							<td><h4>{{ coBorrower.fullName }}</h4></td>
+							<td class="experian">{{ coBorrower.creditReport.experianScore }}</td>
+							<td class="transunion">{{ coBorrower.creditReport.transunionScore }}</td>
+							<td class="equifax">{{ coBorrower.creditReport.equifaxScore }}</td>
+							<td class="text-center">
+								{% if coBorrower.creditReport.reportFile %}
+								<a href="{{ path('sudoux_cms_admin_file_private', { id: coBorrower.creditReport.reportFile.id }) }}" target="_blank"><i class="icon-download"></i> Download</a>
+							{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endif %}

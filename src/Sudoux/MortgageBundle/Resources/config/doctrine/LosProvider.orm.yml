@@ -1,0 +1,27 @@
+Sudoux\MortgageBundle\Entity\LosProvider:
+    type: entity
+    table: los_provider
+    indexes:
+      name_idx:
+        columns: [ name ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        className:
+            type: string
+            length: 255
+        documents:
+            type: boolean
+        messages:
+            type: boolean
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

@@ -1,0 +1,142 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}Rent vs. Buy Calculator{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_calculator') }}">Mortgage Calculators</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<iframe id="iframe_calculator" width="100%" height="1200" style="border: 0px" scrolling="yes" frameborder="0" src="{{ calculator_url }}/website/includes/plugins/calculators/buy-vs-rent-calculator.php"></iframe>
+    {#<form action="{{ path('sudoux_mortgage_calculator_rent_buy') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+        <div class="row">
+            <div class="span6">
+                <h3>Rent Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.monthly_rent, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.monthly_rent) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_rent_increase, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_rent_increase) }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <h3>Property Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.home_value, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.home_value) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_maintenance, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_maintenance) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_appreciation, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_appreciation) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.years_before_sell, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.years_before_sell) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.selling_cost, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.selling_cost) }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span6">
+                <h3>Loan Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.loan_amount, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.loan_amount) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.interest_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.interest_rate) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.mortgage_term, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.mortgage_term) }} (Yrs)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.points, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.points) }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <h3>Taxes And Insurance Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.tax_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.tax_rate) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_taxes, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_taxes) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_insurance, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_insurance) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.annual_pmi, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.annual_pmi) }} %
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span12">
+                <div class="submit-wrapper text-center">
+                    <div class="hide">{{ form_rest(form) }}</div>
+                    <input type="submit" value="Calculate" class="btn">
+                </div>
+            </div>
+        </div>
+    </form>#}
+{% endblock %}

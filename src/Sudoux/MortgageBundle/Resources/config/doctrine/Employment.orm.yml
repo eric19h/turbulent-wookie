@@ -1,0 +1,56 @@
+Sudoux\MortgageBundle\Entity\Employment:
+    type: entity
+    table: employment
+    manyToOne: 
+      location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      employer_name_idx:
+        columns: [ employer_name ]
+      start_date_idx:
+        columns: [ start_date ]
+      end_date_idx:
+        columns: [ end_date ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        employer_name:
+            type: string
+            length: 255
+            nullable: true
+        employer_phone:
+            type: string
+            length: '20'
+            nullable: true
+        employer_phone_ext:
+            type: string
+            length: '10'
+            nullable: true
+        title:
+            type: string
+            length: 255
+            nullable: true
+        start_date:
+            type: date
+            nullable: true
+        end_date:
+            type: date
+            nullable: true
+        self_employed:
+            type: boolean
+            nullable: true
+        years_employed:
+            type: smallint
+            nullable: true
+        years_on_job:
+            type: smallint
+            nullable: true
+    lifecycleCallbacks: {  }

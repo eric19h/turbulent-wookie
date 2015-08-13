@@ -1,0 +1,48 @@
+EH                                20140528   ENV1     
+TH T100099-002TRAN1    
+TPI1.00 01                              N
+0001  3.20 W
+00ANN
+01A01                                                                                                                                   100000.00  0.00036005                                                                                                                                                                
+02A28 Leeds Point Road                               Galloway                           AZ08205      1F1SEE PRELIMINARY TITLE REPORT                                                        
+02B  16                                                                                1Joint tenants                                               1        
+02CDaniel J Alvare Jr                                          
+02E         50000.00                                                                                
+03ABW125155515Daniel                             J                                  Alvare                             Jr  6099102116 3151U 2          19821119danalvare@gmail.com                                                             
+03B125155515 14
+03B125155515 16
+03C125155515ZG30 Leeds Point Road                               Absecon                            NJ08205    O 4 1                                                  
+03C125155515F4102 Carl Road                                     Corbin City                        NJ08270    R 3 6                                                  
+04A125155515sudoUX                             102 Leeds Point Road               Leeds Point                        NJ08220    Y10 110Software Developer       6099102116
+05H125155515125         500.00
+05H125155515126        1000.00
+05H125155515122          20.00
+05H125155515101         122.00
+05H125155515114         100.00
+05H125155515102         230.00
+05H125155515106         120.00
+05H125155515123         132.00
+05I12515551520       10000.00
+05I12515551509         100.00
+05I12515551508         101.00
+05I12515551510         102.00
+05I12515551517         103.00
+05I12515551533         104.00
+05I12515551545         105.00
+05I12515551545     2010170.00
+06C125155515M1 3 PNC                                                                                                                                                    50000.00                                                                                          
+07A      150000.00           0.00           0.00           0.00           0.00           0.00           0.00           0.00           0.00           0.00           0.00
+08A125155515NNNNNNNNN01YN   
+10A125155515N1                              M
+10B                                                                                                                                                                                                                                      
+10R1251555151 
+00070 3.20 
+99BN             0.00                                                                                                                            
+ADSLoanOriginatorID                                                                     
+ADSLoanOriginationCompanyID                                                             
+00011 3.20 
+LNC1 02                 N  N  0.000                      N                  0.000   0.000NN
+PID                                                  
+PCH   N01N N 
+TT TRAN1    
+ET ENV1     

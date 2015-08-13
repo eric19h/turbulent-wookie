@@ -1,0 +1,23 @@
+Sudoux\MortgageBundle\Entity\PricingProvider:
+    type: entity
+    table: pricing_provider
+    indexes:
+      name_idx:
+        columns: [ name ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '100'
+        class_name:
+            type: string
+            length: 255
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

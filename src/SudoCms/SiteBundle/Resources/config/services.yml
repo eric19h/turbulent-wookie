@@ -1,0 +1,7 @@
+parameters:
+#    sudo_cms_site.example.class: SudoCms\SiteBundle\Example
+
+services:
+#    sudo_cms_site.example:
+#        class: %sudo_cms_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

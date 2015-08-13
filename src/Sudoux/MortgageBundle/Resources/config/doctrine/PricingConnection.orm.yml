@@ -1,0 +1,37 @@
+Sudoux\MortgageBundle\Entity\PricingConnection:
+    type: entity
+    table: pricing_connection
+    repositoryClass: Sudoux\MortgageBundle\Entity\PricingConnectionRepository
+    manyToOne:
+      pricing_provider:
+        targetEntity: Sudoux\MortgageBundle\Entity\PricingProvider
+        cascade: ["persist", "remove"]
+        joinColumns:
+          pricing_provider_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      username_idx:
+        columns: [ username ]
+      company_idx:
+        columns: [ company ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        username:
+            type: string
+            length: '100'
+        password:
+            type: string
+            length: '100'
+        company:
+            type: string
+            length: 255
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

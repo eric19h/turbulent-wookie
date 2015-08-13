@@ -1,0 +1,59 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}RealtyWare Settings{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_cms_admin_configuration_integration') }}">Integrations</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+
+	<form action="{{ path('sudoux_mortgage_admin_settings_realtyware') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="row">
+			<div class="span12">
+				<div class="control-group">
+					{{ form_label(form.domain, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.domain) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.api_key, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.api_key) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.client_id, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.client_id) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.client_secret, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.client_secret) }}
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="hide">{{ form_rest(form) }}</div>
+				    	<input type="submit" value="Update" class="btn"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+	{% if site.settings.realtywareConnection %}
+		<form action="{{ path('sudoux_mortgage_admin_settings_realtyware_delete') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+	    	<div class="alert">
+		    	<input type="submit" value="Delete" class="btn btn-danger"> <b>Warning:</b> This will remove all RealtyWare integration
+	    	</div>
+		</form>
+	{% endif %}
+{% endblock %}

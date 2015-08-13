@@ -1,0 +1,13 @@
+<div class="loan-officer-search-block block">
+    <h2 class="title">Find a Loan Officer</h2>
+    <form class="loan-officer-search-form search-form" action="{{ path('sudoux_mortgage_loan_officer') }}" method="get" {{ form_enctype(form) }} novalidate="novalidate">
+        <div class="input-append">
+            {{ form_widget(form.search) }}
+            <input type="submit" value="Go" class="btn btn-default">
+
+        </div>
+        <div class="or">- or -</div>
+        {{ form_widget(form.branch) }}
+    </form>
+
+</div>

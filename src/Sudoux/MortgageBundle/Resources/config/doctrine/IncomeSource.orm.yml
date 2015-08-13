@@ -1,0 +1,18 @@
+Sudoux\MortgageBundle\Entity\IncomeSource:
+    type: entity
+    table: income_source
+    indexes:
+      name_idx:
+        columns: [ name ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        public:
+            type: boolean
+    lifecycleCallbacks: {  }

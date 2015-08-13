@@ -1,0 +1,10 @@
+{% if licenses|length > 1 %}
+    <div class="state-licenses muted">
+        <small>
+            Licensed in
+            {% for state in licenses %}
+                {{ state.name }}{% if loop.index == loop.length - 1 %} and {% elseif loop.last == false %}, {% else %}.{% endif %}
+            {% endfor %}
+        </small>
+    </div>
+{% endif %}

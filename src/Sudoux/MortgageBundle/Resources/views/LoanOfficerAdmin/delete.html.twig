@@ -1,0 +1,21 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Delete Loan Officer{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_people_home') }}">People</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_loan_officer') }}">Loan Officer</a> <span class="divider">/</span></li>		
+		<li class="active">Delete Loan Officer</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<h3>Are you sure you want to delete &quot;{{ officer.fullName }}&quot;?</h3>
+	{% if officer.hasSite %}<p class="alert alert-warning"><b>This will also remove their associated website.</b></p>{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_officer_delete', { id: officer.id}) }}" method="post">
+		<div class="submit-wrapper clearfix">
+	    	<input type="submit" value="Delete" class="btn"> <a href="{{ path('sudoux_mortgage_admin_loan_officer') }}" class="cancel">Cancel</a> 
+		</div>
+	</form>
+{% endblock %}

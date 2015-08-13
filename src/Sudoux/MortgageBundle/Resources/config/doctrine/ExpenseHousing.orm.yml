@@ -1,0 +1,34 @@
+Sudoux\MortgageBundle\Entity\ExpenseHousing:
+    type: entity
+    table: expense_housing
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        rent:
+            type: float
+            nullable: true
+        mortgage:
+            type: float
+            nullable: true
+        other_financial:
+            type: float
+            nullable: true
+        insurance_hazard:
+            type: float
+            nullable: true
+        insurance_mortgage:
+            type: float
+            nullable: true
+        tax_real_estate:
+            type: float
+            nullable: true
+        hoa_dues:
+            type: float
+            nullable: true
+        other:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

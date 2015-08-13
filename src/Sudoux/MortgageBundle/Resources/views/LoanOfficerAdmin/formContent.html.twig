@@ -1,0 +1,148 @@
+<div class="errors">{{ form_errors(form) }}</div>
+<div class="row">
+	<div class="span6">
+		<div class="control-group">
+			{{ form_label(form.first_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.first_name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.last_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.last_name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.title, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.title) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.phone_office, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone_office) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.phone_mobile, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone_mobile) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.phone_tollfree, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone_tollfree) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.officer_photo_file, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.officer_photo_file) }}
+				{% if officer.officerPhoto %}
+					<div class="img-preview">
+						<div class="inner">
+							<div id="btn-delete-officer-photo" class="btn-delete" data-id="{{ officer.id }}">
+								<span class="icon-remove"></span>
+							</div>
+							<img src="{{ asset(officer.officerPhoto.path) }}" class="img-polaroid">
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		{% if site.settings.inheritedLos %}
+			<div class="control-group">
+				{{ form_label(form.los_id, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.los_id) }}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<div class="span6">
+		<div class="control-group">
+			{{ form_label(form.fax, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.fax) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.email) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.nmls_id, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.nmls_id) }}
+			</div>
+		</div>
+        {% set showBranch = true %}
+        {% if site.siteType %}
+            {% if site.siteType.keyName == 'branch' %}
+                {% set showBranch = false %}
+            {% endif %}
+        {% endif %}
+        {% if showBranch %}
+            <div class="control-group">
+                {{ form_label(form.branch, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                <div class="controls">
+                    {{ form_widget(form.branch) }}
+                </div>
+            </div>
+        {% endif %}
+		<div class="control-group">
+			{{ form_label(form.weight, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.weight) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.active, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.active) }}
+			</div>
+		</div>
+		{% if officer.user is null and site.settings.autoCreateSites %}
+			<div class="control-group">
+				{{ form_label(form.auto_create_user, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.auto_create_user, { 'help': 'A notification email will be send with login instructions' }) }}
+				</div>
+			</div>
+		{% elseif officer.user %}
+			<div class="control-group">
+				<label class="control-label">User</label>
+				<div class="controls">
+					<a href="{{ path('sudoux_cms_admin_user_edit', { id: officer.user.id }) }}">{{ officer.user.username }}</a>
+				</div>
+			</div>
+		{% endif %}
+        {% if officer.officerSite %}
+            <div class="control-group">
+                <label class="control-label">Site URL</label>
+                <div class="controls">
+                    <a href="http://{{ officer.officerSite.primaryDomain.domain }}" target="_blank">{{ officer.officerSite.primaryDomain.domain }}</a>
+                </div>
+            </div>
+        {% endif %}
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<div class="control-group">
+			{{ form_label(form.bio, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.bio) }}
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="hidden">
+	{{ form_rest(form) }}
+</div>

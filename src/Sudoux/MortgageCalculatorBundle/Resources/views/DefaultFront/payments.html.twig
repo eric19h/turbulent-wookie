@@ -1,0 +1,150 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}How Much Will My Payments Be?{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_calculator') }}">Mortgage Calculators</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<iframe id="iframe_calculator" width="100%" height="1200" style="border: 0px" scrolling="yes" frameborder="0" src="{{ calculator_url }}/website/includes/plugins/calculators/mortgage-payment-calculator.php"></iframe>
+    {#
+	<p>Calculate your monthly payment with applicable financial charges, PMI, hazard insurance, and property taxes.</p>
+	<form action="{{ path('sudoux_mortgage_calculator_payments') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="row">
+			<div class="span6">
+				<h3>Loan Information</h3>
+				<div class="form-horizontal">
+					<div class="control-group">
+						{{ form_label(form.loan_amount, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.loan_amount) }}
+						</div>
+					</div>
+					<div class="control-group">
+						{{ form_label(form.interest_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.interest_rate) }} %
+						</div>
+					</div>
+					<div class="control-group">
+						{{ form_label(form.mortgage_term, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.mortgage_term) }}
+						</div>
+					</div>
+					<div class="control-group">
+						{{ form_label(form.home_value, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.home_value) }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<h3>Taxes and Insurance</h3>
+				<div class="form-horizontal">
+					<div class="control-group">
+						{{ form_label(form.annual_taxes, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.annual_taxes) }}
+						</div>
+					</div>
+					<div class="control-group">
+						{{ form_label(form.annual_insurance, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.annual_insurance) }}
+						</div>
+					</div>
+					<div class="control-group">
+						{{ form_label(form.annual_pmi, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+						<div class="controls">
+							{{ form_widget(form.annual_pmi) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="row">
+        <div class="span4 offset1">
+                <h3>Send to...</h3>
+                <div>
+                    {{ form_label(form.send_to_email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                    {{ form_widget(form.send_to_email) }}
+                </div>
+                <div>
+                    {{ form_label(form.send_to_name, label|default(null), { 'label_attr': { 'class': 'control-label' }}) }}
+                    {{ form_widget(form.send_to_name) }}
+                </div>
+                <div>
+                    {{ form_label(form.send_to_phone, label|default(null), { 'label_attr': { 'class': 'control-label' }}) }}
+                    {{  form_widget(form.send_to_phone) }}
+                </div>
+            </div>
+        </div>
+		<div class="row">
+			<div class="span12">
+				<div class="submit-wrapper text-center">
+					<div class="hide">{{ form_rest(form) }}</div>
+			    	<input type="submit" value="Calculate" class="btn">
+			    </div>
+			</div>
+		</div>
+	</form>
+	
+	{% if result %}
+		<div class="summary"></div>
+		<h3>Calculation Summary</h3>
+		{{ result.summary }}
+		
+		<h3>Financial Analysis</h3>
+		<ul>
+			<li>Monthly Principal &amp; Interests <span class="value">${{ result.analysis.monthlyPayment|number_format(2, '.', ',') }}</span></li>
+			<li>Monthly Real Estate Taxes <span class="value">${{ result.analysis.monthlyTaxes|number_format(2, '.', ',') }}</span></li>
+			<li>Monthly Insurance <span class="value">${{ result.analysis.monthlyInsurance|number_format(2, '.', ',') }}</span></li>
+			<li>Loan To Value Ratio <span class="value">{{ result.analysis.loanToValueRatio|number_format(2, '.', ',') }}%</span></li>
+			<li>Months With PMI <span class="value">{{ result.analysis.monthsWithPmi }}</span></li>
+			<li>Monthly PMI <span class="value">${{ result.analysis.monthlyPmi|number_format(2, '.', ',') }}</span></li>
+			<li><b>Total Monthly Payments</b>  <span class="value">${{ result.analysis.monthlyTotal|number_format(2, '.', ',') }}</span></li>
+		</ul>
+		
+		<h3>Payment Schedule</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Month/Yr</th>
+					<th>Interests</th>
+					<th>Principal</th>
+					<th>PMI</th>
+					<th>Balance</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for schedule in result.amortizationSchedule.Schedule %}
+					{% if schedule.Type == 'SubTotal' %}
+						<tr class="subtotal">
+							<td><b>{{ schedule.Period }} Yr</b></td>
+							<td><b>{{ schedule.InterestPaid|number_format(2, '.', ',') }}</b></td>
+							<td><b>{{ schedule.PrincipalApplied|number_format(2, '.', ',') }}</b></td>
+							<td colspan="2"><b>{{ schedule.PMI|number_format(2, '.', ',') }}</b></td>
+						</tr>
+					{% else %}
+						<tr>
+							<td>{{ schedule.Period }} {% if schedule.Type == 'SubTotal' %}Yr{% endif %}</td>
+							<td>{{ schedule.InterestPaid|number_format(2, '.', ',') }}</td>
+							<td>{{ schedule.PrincipalApplied|number_format(2, '.', ',') }}</td>
+							<td>{{ schedule.PMI|number_format(2, '.', ',') }}</td>
+							<td>{{ schedule.RemainingBalance|number_format(2, '.', ',') }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+	#}
+{% endblock %}

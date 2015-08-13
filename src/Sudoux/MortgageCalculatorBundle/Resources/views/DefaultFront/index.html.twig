@@ -1,0 +1,132 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Mortgage Calculators{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="span12">
+		<h3>Featured Calculators</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span6">
+
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_payments') }}">How Much Will My Payments Be?</a></h4>
+			<p>Calculate your monthly payment with applicable financial charges, PMI, hazard insurance, and property taxes.</p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_affordability') }}">Affordability Calculator</a></h4>
+			<p>How much you can borrow from a lender? Use this calculator to calculate the amount you can afford from the lender's point of view. </p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_mortgage_length') }}">Mortgage Length Calculator</a></h4>
+			<p>This calculator will help you to determine your savings if you make larger monthly payments.</p>
+		</div>
+	</div>
+	<div class="span5">
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_mortgage_principal') }}">Mortgage Principal Calculator</a></h4>
+			<p>This calculator allow you to "peek into the future", allowing you to see the remaining balance of your mortgage after several payments. </p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_income_qualify') }}">How Much Income do I Need to Qualify?</a></h4>
+			<p>Do you need to know how much money you must earn to purchase the house of your dreams? This calculator will help you figure it out. </p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_extra_payments') }}">What if I Pay More Every Month?</a></h4>
+			<p>See how your mortgage will be reduced, if you pay $$$ more every month.</p>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<h3>Comparison Calculators</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span6">
+
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_best_loan') }}">Which Loan is Better?</a></h4>
+			<p>Can't decide which loan offer is better? Input your numbers here and lock-in the best offer.</p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_loan_interval') }}">Standard vs. Bi-Weekly</a></h4>
+			<p>You heard that bi-weekly payments can significantly decrease the time of mortgage payoff? Check it out with this calculator. </p>
+		</div>
+	</div>
+	<div class="span5">
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_rent_buy') }}">Rent vs. Buy</a></h4>
+			<p>Still renting an apartment and thinking about a home purchase? This calculator can help you make the final decision.</p>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<h3>Benefits Calculators</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span6">
+
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_refinance') }}">Should I Refinance?</a></h4>
+			<p>Is your old APR (Annual Percentage Rate) too high? Estimate the benefits of refinancing using this calculator. </p>
+		</div>
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_pay_points') }}">Should I Pay Points to Lower My Interest Rate?</a></h4>
+			<p>Calculate how much points affect your monthly payments and how fast they will pay for themselves. </p>
+		</div>
+	</div>
+	<div class="span5">
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_tax_benefits') }}">Tax Benefits Calculator</a></h4>
+			<p>This calculator will calculate your tax savings after a house purchase. Financial analysis includes first year as well as total tax savings. </p>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<h3>Credit Card Payoff Calculators</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span6">
+
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_credit_card_payoff') }}">How Can I Payoff My Credit Card Debt Sooner?</a></h4>
+			<p>This credit card payoff calculator will tell you how long it will take you to pay off your credit card debt with the amount you pay now, and how much you would have to pay every month to eliminate credit card debt even sooner. </p>
+		</div>
+	</div>
+	<div class="span5">
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_credit_card_min_payments') }}">Paying off Credit Card Debt with Minimum Payments</a></h4>
+			<p>This calculator is designed to show you how long it will take to pay off your credit card and how much interest you will pay if you only make the minimum monthly payment. </p>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<h3>Other Calculators</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="span6">
+
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_payment_per_thousand') }}">Payment per Thousand Financed</a></h4>
+			<p>Have you ever wondered how much you pay for every $1,000 of your mortgage loan? Find out here!</p>
+		</div>
+	</div>
+	<div class="span5">
+		<div class="item">
+			<h4><a href="{{ path('sudoux_mortgage_calculator_real_apr') }}">What is The Real APR for That Loan?</a></h4>
+			<p>This calculator estimates your real APR (Annual Percentage Rate) with points. </p>
+		</div>
+	</div>
+</div>
+{% endblock %}

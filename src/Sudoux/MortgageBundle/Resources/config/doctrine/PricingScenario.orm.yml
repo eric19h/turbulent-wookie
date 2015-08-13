@@ -1,0 +1,27 @@
+Sudoux\MortgageBundle\Entity\PricingScenario:
+    type: entity
+    table: pricing_scenario
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: 255
+        rate:
+            type: float
+        margin:
+            type: float
+        apr:
+            type: float
+        pi:
+            type: integer
+        closing_cost:
+            type: float
+        discount:
+            type: float
+        options:
+            type: array
+    lifecycleCallbacks: {  }

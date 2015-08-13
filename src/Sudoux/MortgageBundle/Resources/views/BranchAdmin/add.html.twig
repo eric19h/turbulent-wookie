@@ -1,0 +1,27 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Add Branch{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_branch') }}">Branches</a> <span class="divider">/</span></li>		
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% if site.settings.autoCreateSites %}
+		<div class="alert alert-info">
+			Auto creation of sites is enabled. A website will be created for this branch automatically.
+		</div>
+	{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_branch_add') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{% include 'SudouxMortgageBundle:BranchAdmin:formContent.html.twig' %}
+		<div class="control-group">
+			<div class="controls">
+		    	<input type="submit" value="Add" class="btn"> <a href="{{ path('sudoux_mortgage_admin_branch') }}">Cancel</a>
+			</div>
+		</div>
+	</form>
+{% endblock %}

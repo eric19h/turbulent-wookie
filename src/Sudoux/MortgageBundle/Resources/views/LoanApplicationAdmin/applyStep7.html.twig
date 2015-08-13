@@ -1,0 +1,318 @@
+{% extends site.getAdminThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step7{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+	<link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/sudouxcmstheme/lib/jquery/signaturepad/assets/jquery.signaturepad.css') }}" />
+	<script src="{{ asset('bundles/sudouxcmstheme/lib/jquery/signaturepad/jquery.signaturepad.min.js') }}"></script>
+	<script src="{{ asset('bundles/sudouxcmstheme/lib/jquery/signaturepad/assets/json2.min.js') }}"></script>
+	<!--[if lt IE 9]><script src="{{ asset('bundles/sudouxcmstheme/lib/jquery/signaturepad/assets/flashcanvas.js') }}"></script><![endif]-->
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+
+{% block modal %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: application.borrower } %}
+		
+	{% for borrower in application.coBorrower %}
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: borrower } %}
+	{% endfor %}
+{% endblock %}
+
+{% block content %}
+	{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationNav.html.twig' with { step: 7, application: application } %}
+	<p>Please review your application</p>
+	
+	<div id="property-info-wrapper" class="well">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step2', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Property Info</h3> 
+		<div class="property-info">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:loanSummary.html.twig' %}
+		</div>
+	</div>
+	
+	<div id="borrower-wrapper">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step1', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Borrowers</h3> 
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>SSN</th>
+					<th>Birth Date</th>
+					<th>View</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ application.borrower.fullName }}</td>
+					<td>Primary Borrower</td>
+					<td>{{ application.borrower.ssn }}</td>
+					<td>{{ application.borrower.birthDate|date(date_format) }}</td>
+					<td><a href="#borrower-detail-modal-{{ application.borrower.id }}" class="btn btn-default" role="button" data-toggle="modal">View Details</a></td>
+				</tr>
+				{% for borrower in application.coBorrower %}
+					<tr>
+						<td>{{ borrower.fullName }}</td>
+						<td>Co-Borrower</td>
+						<td>{{ borrower.ssn }}</td>
+						<td>{{ borrower.birthDate|date(date_format) }}</td>
+						<td><a href="#borrower-detail-modal-{{ borrower.id }}" class="btn btn-default" role="button" data-toggle="modal">View Details</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+				
+	</div>
+
+	<div id="title-info">
+		<h3><a href="{{ path('sudoux_mortgage_admin_loan_step2', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Title Info</h3>
+		{% if application.titleCompany1 %}<b>Title Company #1:</b> {{ application.titleCompany1 }}<br>{% endif %}
+		{% if application.titleCompany2 %}<b>Title Company #2:</b> {{ application.titleCompany2 }}<br>{% endif %}
+		<b>Title Manner: </b> {{ application.titleManner }}
+	</div>
+	
+	<div id="employment-wrapper">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step3', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Employment</h3>
+		{% set showEmployment = false %}
+		{% for borrower in application.coBorrower %}
+			{% if borrower.employment|length > 0 %}
+				{% set showEmployment = true %}
+			{% endif %}
+		{% endfor %}
+		{% if application.borrower.employment|length > 0 %}
+			{% set showEmployment = true %}
+		{% endif %}
+		{% if showEmployment %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Borrower</th>
+						<th>Employer</th>
+						<th>Phone</th>
+						<th>Position/Title</th>
+						<th>Self Employed</th>
+						<th>Time of Employment</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for employment in application.borrower.employment %}
+						<tr>
+							<td>{{ application.borrower.fullName }}</td>
+							<td>
+								<b>{{ employment.employerName }}</b><br>
+								{{ employment.location.address1 }}<br>
+								{{ employment.location.city }}, {{ employment.location.state.abbreviation }} {{ employment.location.zipcode }}
+							</td>
+							<td>{{ employment.employerPhone|phoneNumber }} {% if employment.employerPhoneExt %}Ext: {{ employment.employerPhoneExt }}{% endif %}</td>
+							<td>{{ employment.title }}</td>
+							<td>{{ employment.selfEmployed|boolToYesNo }}</td>
+							<td>{{ employment.startDate|date(date_format) }} - {{ employment.endDate|date(date_format) }}</td>
+						</tr>
+					{% endfor %}
+					{% for borrower in application.coBorrower %}
+						{% for employment in borrower.employment %}
+							<tr>
+								<td>{{ borrower.fullName }}</td>
+								<td>
+									<b>{{ employment.employerName }}</b><br>
+									{{ employment.location.address1 }}<br>
+									{{ employment.location.city }}, {{ employment.location.state.abbreviation }} {{ employment.location.zipcode }}
+								</td>
+								<td>{{ employment.employerPhone|phoneNumber }} {% if employment.employerPhoneExt %}Ext: {{ employment.employerPhoneExt }}{% endif %}</td>
+								<td>{{ employment.title }}</td>
+								<td>{{ employment.selfEmployed|boolToYesNo }}</td>
+								<td>{{ employment.startDate|date(date_format) }} - {{ employment.endDate|date(date_format) }}</td>
+							</tr>
+						{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>None</p>
+		{% endif %}
+	</div>
+	
+	<div id="assets-wrapper">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step4', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Account Assets</h3> 
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Borrower</th>
+					<th>Institution Name</th>
+					<th>Type of Account</th>
+					<th>Account Number</th>
+					<th>Balance</th>
+				</tr>
+			</thead>
+			<tbody>		
+				{% for asset in application.assetAccount %}
+					<tr>
+						<td>{{ asset.borrower.fullName }}</td>
+						<td>{{ asset.institutionName }}</td>
+						<td>{{ asset.typeText }}</td>
+						<td>{{ asset.accountNumber }}</td>
+						<td>${{ asset.balance|number_format }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step4', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Real Estate Assets</h3>
+		{% if application.assetRealEstate|length > 0 %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Borrower</th>
+						<th>Location</th>
+						<th>Market Value</th>
+						<th>Amount of Mtg.</th>
+						<th>Gross Rent</th>
+						<th>Net Rent</th>
+						<th>Mtg. Payment</th>
+						<th>Ins/Tax/Exp</th>
+					</tr>
+				</thead>
+				<tbody>		
+					{% for asset in application.assetRealEstate %}
+						<tr>
+							<td>{{ asset.borrower.fullName }}</td>
+							<td>{{ asset.location.address1 }}<br>{{ asset.location.city }}, {{ asset.location.state.abbreviation }} {{ asset.location.zipcode }}</td>
+							<td>${{ asset.marketValue|number_format }}</td>
+							<td>${{ asset.mortgageAmount|number_format }}</td>
+							<td>${{ asset.mortgagePayment|number_format }}</td>
+							<td>${{ asset.rentGrossIncome|number_format }}</td>
+							<td>${{ asset.rentNetIncome|number_format }}</td>
+							<td>${{ asset.insTaxExp|number_format }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>None</p>
+		{% endif %}
+	</div>
+	
+	<div id="housing-wrapper">
+		<div id="housing-expenses">
+			<h3 class="title">Housing Expenses</h3>
+			
+			<b>Rent:</b> ${{ application.expenseHousing.rent|number_format }}<br>
+			<b>Mortgage:</b> ${{ application.expenseHousing.mortgage|number_format }}<br>
+			<b>Other Financial:</b> ${{ application.expenseHousing.otherFinancial|number_format }}<br>
+			<b>Hazard Insurance:</b> ${{ application.expenseHousing.insuranceHazard|number_format }}<br>
+			<b>Insurance Mortgage:</b> ${{ application.expenseHousing.insuranceMortgage|number_format }}<br>
+			<b>Real Estate Taxes:</b> ${{ application.expenseHousing.taxRealEstate|number_format }}<br>
+			<b>HOA Dues:</b> ${{ application.expenseHousing.hoaDues|number_format }}<br>
+			<b>Other:</b> ${{ application.expenseHousing.other|number_format }}
+		</div>
+		
+		<h3 class="title">Monthly Income</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Borrower</th>
+					<th>Base</th>
+					<th>Overtime</th>
+					<th>Bonus</th>
+					<th>Commission</th>
+					<th>Interest</th>
+					<th>Net Rent</th>
+					<th>Other</th>
+				</tr>
+			</thead>
+			<tbody>		
+				{% for asset in application.incomeMonthly %}
+					<tr>
+						<td>{{ asset.borrower.fullName }}</td>
+						<td>${{ asset.base|number_format }}</td>
+						<td>${{ asset.overtime|number_format }}</td>
+						<td>${{ asset.bonus|number_format }}</td>
+						<td>${{ asset.commission|number_format }}</td>
+						<td>${{ asset.interest|number_format }}</td>
+						<td>${{ asset.rentNet|number_format }}</td>
+						<td>${{ asset.other|number_format }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		{#}<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step5', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Other Income</h3>
+		{% if application.incomeOther|length > 0 %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Source</th>
+						<th>Description</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>		
+					{% for asset in application.incomeOther %}
+						<tr>
+							<td>{{ asset.borrower.fullName }}</td>
+							<td>{{ asset.description }}</td>
+							<td>${{ asset.income|number_format }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>None</p>
+		{% endif %}#}
+	</div>
+
+	{% import _self as helper %}
+	{% macro badgeBool(bool) %}
+		{% spaceless %}
+			{% if bool %}
+				<span class="label label-success">Y</span>
+			{% else %}
+				<span class="label label-important">N</span>
+			{% endif %}
+		{% endspaceless %}
+	{% endmacro %}
+
+	<div id="declarations-wrapper">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step6', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Declarations</h3>
+		<div >
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:declarationSummary.html.twig' with { borrower: application.borrower, form: form.borrower } %}
+		</div>
+		{% for coBorrower in application.coBorrower %}
+			<div>
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:declarationSummary.html.twig' with { borrower: coBorrower, form: form.borrower } %}
+			</div>
+		{% endfor %}
+	</div>
+
+	<div id="govt-monitoring-wrapper">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_admin_loan_step6', { id: application.id }) }}" class="edit-link"><i class="icon-pencil"></i></a> Government Monitoring</h3>
+		<div>
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoringSummary.html.twig' with { borrower: application.borrower } %}
+		</div>
+		{% for coBorrower in application.coBorrower %}
+			<div>
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoringSummary.html.twig' with { borrower: coBorrower } %}
+			</div>
+		{% endfor %}
+	</div>
+	<div id="comments-wrapper">
+		<h3 class="title">Comments</h3>
+		{{ form_widget(form.comments) }}
+	</div>
+	<form action="{{ path('sudoux_mortgage_admin_loan_step7', { id: application.id }) }}" method="post" novalidate="novalidate" class="loan-application-form">
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:acknowledgementAndAgreement.html.twig' %}
+		<div class="text-center submit-wrapper">
+			<div class="hide">{{ form_rest(form) }}</div>
+	    	<a href="{{ path('sudoux_mortgage_admin_loan_step6', { id: application.id }) }}" class="btn btn-default">Back</a> <button type="submit" class="btn btn-default">Complete Application <span class="icon-ok-sign icon-white"></span></button>
+	    </div>
+	</form>
+{% endblock %}

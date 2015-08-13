@@ -1,0 +1,50 @@
+<div class="row-margin clearfix">
+	<div id="income-monthly-wrapper" class="prototype-table-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:incomeMonthlyFormRow.html.twig' with { form: form.income_monthly.vars.prototype } %}{% endfilter %}">
+		<h3>Monthly Income</h3>
+		<p><small><span class="required-asterisk">*</span> At least one income is required.</small></p>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Borrower <span class="required-asterisk">*</span></th>
+					<th>Base</th>
+					<th>Overtime</th>
+					<th>Bonus</th>
+					<th>Commission</th>
+					<th>Interest</th>
+					<th>Net Rent</th>
+					<th>Other</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for income in form.income_monthly %}
+					{% include 'SudouxMortgageBundle:LoanApplicationShared:incomeMonthlyFormRow.html.twig' with { form: income } %}
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="text-center">
+			<a id="add-income-monthly" href="#" class="btn-row-add"><span class="icon-plus"></span> Add Income</a>
+		</div>
+	</div>
+</div>
+<div class="row-margin hide">
+	<div id="income-other-wrapper" class="prototype-table-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationFront:incomeOtherFormRow.html.twig' with { form: form.income_other.vars.prototype } %}{% endfilter %}">		
+		<h3>Other Income</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Borrower <span class="required-asterisk">*</span></th>
+					<th>Description</th>
+					<th>Income <span class="required-asterisk">*</span></th>
+				</tr>
+			</thead>
+			<tbody>		
+				{% for income in form.income_other %}
+					{% include 'SudouxMortgageBundle:LoanApplicationFront:incomeOtherFormRow.html.twig' with { form: income } %}
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="text-center">
+			<a id="add-income-other" href="#" class="btn-row-add"><span class="icon-plus"></span> Add Income</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+<div class="borrower-previous-location-form loan-form form-horizontal">
+	<h3><a href="#" class="icon-remove delete-form"></a> Previous Address</h3>
+	<p><small class="error">*A total of 2 years of residency is required.</small></p>
+	<div class="clearfix">
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.address1) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.city) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.state) }}
+				</div>
+			</div>
+		</div>
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.zipcode) }}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Time at Residence <span class="required-asterisk">*</span></label>
+				<div class="controls">
+					{{ form_widget(form.years_at_location) }}
+					{{ form_label(form.years_at_location, label|default(null), { 'label_attr': { 'class': 'inline-block' } }) }}
+					{{ form_widget(form.months_at_location) }}
+					{{ form_label(form.months_at_location, label|default(null), { 'label_attr': { 'class': 'inline-block' } }) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.own_residence, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.own_residence, { 'attr' : { 'class': 'radio-group' } }) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

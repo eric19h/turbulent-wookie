@@ -1,0 +1,145 @@
+<?php
+
+namespace Sudoux\MortgageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * BorrowerLocation
+ */
+class BorrowerLocation
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $months_at_location;
+
+    /**
+     * @var \DateTime
+     */
+    private $created;
+    
+    
+    public function __construct()
+    {
+    	$this->created = new \DateTime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set months_at_location
+     *
+     * @param integer $monthsAtLocation
+     * @return BorrowerLocation
+     */
+    public function setMonthsAtLocation($monthsAtLocation)
+    {
+        $this->months_at_location = $monthsAtLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get months_at_location
+     *
+     * @return integer 
+     */
+    public function getMonthsAtLocation()
+    {
+        return $this->months_at_location;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return BorrowerLocation
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    /**
+     * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     */
+    private $location;
+
+
+    /**
+     * Set location
+     *
+     * @param \Sudoux\Cms\LocationBundle\Entity\Location $location
+     * @return BorrowerLocation
+     */
+    public function setLocation(\Sudoux\Cms\LocationBundle\Entity\Location $location)
+    {
+        $this->location = $location;
+    
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \Sudoux\Cms\LocationBundle\Entity\Location 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set years_at_location
+     *
+     * @param integer $yearsAtLocation
+     * @return BorrowerLocation
+     */
+    public function setYearsAtLocation($yearsAtLocation)
+    {
+        $this->years_at_location = $yearsAtLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get years_at_location
+     *
+     * @return integer 
+     */
+    public function getYearsAtLocation()
+    {
+        return $this->years_at_location;
+    }
+    /**
+     * @var integer
+     */
+    private $years_at_location;
+
+
+}

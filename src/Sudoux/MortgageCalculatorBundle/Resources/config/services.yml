@@ -1,0 +1,7 @@
+parameters:
+#    sudoux_mortgage_calculator.example.class: Sudoux\MortgageCalculatorBundle\Example
+
+services:
+#    sudoux_mortgage_calculator.example:
+#        class: %sudoux_mortgage_calculator.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

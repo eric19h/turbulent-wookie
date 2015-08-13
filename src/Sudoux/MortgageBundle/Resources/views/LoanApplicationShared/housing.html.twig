@@ -1,0 +1,60 @@
+<header>
+	<h3>Housing</h3>
+	<p><small>Detail your combined monthly housing expenses below.</small></p>
+</header>
+<div id="expense-housing">
+	<div class="form-horizontal clearfix">
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.expense_housing.rent, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.rent) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.mortgage, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.mortgage) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.insurance_hazard, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.insurance_hazard) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.other_financial, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.other_financial) }}
+				</div>
+			</div>			
+		</div>
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.expense_housing.insurance_mortgage, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.insurance_mortgage) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.tax_real_estate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.tax_real_estate) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.hoa_dues, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.hoa_dues) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.expense_housing.other, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.expense_housing.other) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

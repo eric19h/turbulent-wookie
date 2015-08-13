@@ -1,0 +1,112 @@
+Sudoux\MortgageBundle\Entity\Branch:
+    type: entity
+    table: branch
+    repositoryClass: Sudoux\MortgageBundle\Entity\BranchRepository
+    manyToOne: 
+      site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: { }
+        joinColumns:
+          site_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+      branch_site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: { }
+        joinColumns:
+          branch_site_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      branch_photo:
+        targetEntity: Sudoux\Cms\FileBundle\Entity\File
+        cascade: ["persist", "remove"]
+        joinColumns:
+          branch_photo_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      branch_manager:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanOfficer
+        cascade: { }
+        joinColumns:
+          branch_manager_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    oneToMany:
+      loan_officer:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanOfficer
+        cascade: ["remove"]
+        mappedBy: branch
+        joinColumns:
+          loan_officer_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      name_idx:
+        columns: [ name ]
+      nmls_idx:
+        columns: [ nmls_id ]
+      los_idx:
+        columns: [ los_id ]
+      created_idx:
+        columns: [ created ]
+      modified_idx:
+        columns: [ modified ]
+      weight_idx:
+        columns: [ weight ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '150'
+        nmls_id:
+            type: string
+            length: '50'
+            nullable: true
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        phone:
+            type: string
+            length: '100'
+            nullable: true
+        fax:
+            type: string
+            length: '100'
+            nullable: true
+        email:
+            type: string
+            length: '100'
+            nullable: true
+        website:
+            type: text
+            nullable: true
+        directions:
+            type: text
+            nullable: true
+        description:
+            type: text
+            nullable: true
+        active:
+            type: boolean
+        deleted:
+            type: boolean
+        created:
+            type: datetime
+        modified:
+            type: datetime
+        weight:
+            type: smallint
+    lifecycleCallbacks: {  }

@@ -1,0 +1,170 @@
+{{ application.propertyLocation.address1 }}
+{{ application.propertyLocation.city }} {{ application.propertyLocation.state.abbreviation }} {{ application.propertyLocation.zipcode }}
+
+{{ application.loanTypeText }}
+{{ application.propertyTypeText }}<br>
+{{ application.residencyTypeText }}<br>
+{{ application.salePrice|number_format }}<br>
+{{ application.loanAmount|number_format }}<br>
+{{ application.loanTerm }} years<br>
+{{ application.numUnits }}<br>
+
+{# Borrower object #}
+{{ borrower.firstName }} 
+{{ borrower.middleInitial }} 
+{{ borrower.lastName }} 
+{{ borrower.suffix }}
+{{ borrower.phoneHome|phoneNumber }}<br>
+{{ borrower.phoneMobile|phoneNumber }}<br>
+{{ borrower.email }}<br>
+{{ borrower.ssn }}<br>
+{{ borrower.birthDate|date(date_format) }}<br>
+{{ borrower.location.location.address1 }}<br>
+{{ borrower.location.location.city }}
+{{ borrower.location.location.state.abbreviation }}
+{{ borrower.location.location.zipcode }}<br>
+{{ borrower.maritalStatus }}<br>
+{{ borrower.location.yearsAtLocation }}<br>
+{{ borrower.ownResidence|boolToYesNo }}
+
+{# Co-Borrower loop #}
+{% for borrower in application.coBorrower %}
+{% endfor %}
+
+{{ application.titleCompany1 }}
+{{ application.titleCompany2 }}
+{{ application.titleMannerText }}
+
+{# Borrower Employment loop #}
+{% for employment in application.borrower.employment %}
+	{{ application.borrower.fullName }}
+	{{ employment.employerName }}
+	{{ employment.location.address1 }}
+	{{ employment.location.city }}, {{ employment.location.state.abbreviation }} {{ employment.location.zipcode }}
+	{{ employment.employerPhone|phoneNumber }} {{ employment.employerPhoneExt }}
+	{{ employment.title }}
+	{{ employment.selfEmployed|boolToYesNo }}
+	{{ employment.startDate|date(date_format) }} - {{ employment.endDate|date(date_format) }}
+{% endfor %}
+
+{# Co-Borrower Employment loop #}
+{% for borrower in application.coBorrower %}
+	{% for employment in borrower.employment %}
+		{{ borrower.fullName }}
+		{{ employment.employerName }}
+		{{ employment.location.address1 }}
+		{{ employment.location.city }}, {{ employment.location.state.abbreviation }} {{ employment.location.zipcode }}
+		{{ employment.employerPhone|phoneNumber }} Ext: {{ employment.employerPhoneExt }}</td>
+		{{ employment.title }}</td>
+		{{ employment.selfEmployed|boolToYesNo }}</td>
+		{{ employment.startDate|date(date_format) }} - {{ employment.endDate|date(date_format) }}
+	{% endfor %}
+{% endfor %}
+
+{# Application account assets #}
+{% for asset in application.assetAccount %}
+	{{ asset.borrower.fullName }}</td>
+	{{ asset.institutionName }}</td>
+	{{ asset.typeText }}</td>
+	{{ asset.accountNumber }}</td>
+	{{ asset.balance|number_format }}</td>
+{% endfor %}
+
+{# Application real estate assets #}
+{% for asset in application.assetRealEstate %}
+	{{ asset.borrower.fullName }}
+	{{ asset.location.address1 }}
+	{{ asset.location.city }}, {{ asset.location.state.abbreviation }} {{ asset.location.zipcode }}
+	{{ asset.marketValue|number_format }}
+	{{ asset.mortgageAmount|number_format }}
+	{{ asset.mortgagePayment|number_format }}
+	{{ asset.rentGrossIncome|number_format }}
+	{{ asset.rentNetIncome|number_format }}
+	{{ asset.insTaxExp|number_format }}
+{% endfor %}
+
+{# housing #}
+{{ application.expenseHousing.rent|number_format }}<br>
+{{ application.expenseHousing.mortgage|number_format }}<br>
+{{ application.expenseHousing.otherFinancial|number_format }}<br>
+{{ application.expenseHousing.insuranceHazard|number_format }}<br>
+{{ application.expenseHousing.insuranceMortgage|number_format }}<br>
+{{ application.expenseHousing.taxRealEstate|number_format }}<br>
+{{ application.expenseHousing.hoaDues|number_format }}<br>
+{{ application.expenseHousing.other|number_format }}
+
+{# monthy income #}
+{% for asset in application.incomeMonthly %}
+	{{ asset.borrower.fullName }}</td>
+	{{ asset.base|number_format }}</td>
+	{{ asset.overtime|number_format }}</td>
+	{{ asset.bonus|number_format }}</td>
+	{{ asset.commission|number_format }}</td>
+	{{ asset.interest|number_format }}</td>
+	{{ asset.rentNet|number_format }}</td>
+	{{ asset.other|number_format }}</td>
+{% endfor %}
+
+{# other income #}
+{% for asset in application.incomeOther %}
+	{{ asset.borrower.fullName }}
+	{{ asset.description }}
+	{{ asset.income|number_format }}
+{% endfor %}
+
+{# declarations #}
+{{ borrower.declarationOutstandingJudgement|boolToYesNo }}
+{{ borrower.declarationOutstandingJudgementDetails }}
+
+{{ borrower.declarationBankruptcy|boolToYesNo }}
+{{ borrower.declarationBankruptcyDetails }}
+
+{{ borrower.declarationForclosure|boolToYesNo }}
+{{ borrower.declarationForclosureDetails }}
+
+{{ borrower.declarationLawsuit|boolToYesNo }}
+{{ borrower.declarationLawsuitDetails }}
+
+{{ borrower.declarationForclosureObligation|boolToYesNo }}
+{{ borrower.declarationForclosureObligationDetails }}
+
+{{ borrower.declarationInDefault|boolToYesNo }}
+{{ borrower.declarationInDefaultDetails }}
+
+{{ borrower.declarationAlimonyChildSupport|boolToYesNo }}
+{{ borrower.declarationAlimonyChildSupportDetails }}
+
+{{ borrower.declarationDownPaymentBorrowed|boolToYesNo }}
+{{ borrower.declarationDownPaymentBorrowedDetails }}
+
+{{ borrower.declarationNoteEndorser|boolToYesNo }}
+{{ borrower.declarationNoteEndorserDetails }}
+
+{{ borrower.declarationUsCitizen|boolToYesNo }}
+
+{{ borrower.declarationResidentAlien|boolToYesNo }}
+
+{{ borrower.declarationPrimaryResidence|boolToYesNo }}
+
+{{ borrower.declarationOwnershipWithinThreeYears|boolToYesNo }}
+{{ borrower.declarationOwnershipWithinThreeYearsPropertyType }}
+{{ borrower.declarationOwnershipWithinThreeYearsPropertyTitle }}
+
+{# Declarations loop for co-borrowers #}
+{% for coBorrower in application.coBorrower %}
+{% endfor %}
+
+{# Govt monitoring loop for co-borrowers #}
+{{ borrower.govtMonitoringOptOut }}
+{{ borrower.fullname }}
+{{ application.borrower.ethnicityText }}<br>
+{{ application.borrower.raceText }}<br>
+{% if application.borrower.isMale %}Male{% else %}Female{% endif %}
+
+{# Govt monitoring loop for co-borrowers #}
+{% for coBorrower in application.coBorrower %}
+{% endfor %}
+
+{{ application.agreementOne }}
+{{ application.agreementTwo }}
+{{ application.agreementThree }}

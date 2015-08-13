@@ -1,0 +1,32 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}{% if branch %}{{ branch.name }} {% endif %}Loan Officers{% endblock %}
+
+{% block body_class %}page-loan-officer-list{% endblock %}
+
+{% block content %}
+
+	{% if search %}<div class="alert">Results for &quot;<em>{{ search }}</em>&quot;</div>{% endif %}
+	{% if officers|length > 0 %}
+		<div class="content-list officer">
+			<div class="inner">
+				{% for officer in officers %}
+					<article class="row-item {{ cycle(['odd', 'even'], loop.index0) }} clearfix">
+						{% include 'SudouxMortgageBundle:LoanOfficerFront:officerInfo.html.twig' %}
+					</article>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="pager">{{ knp_pagination_render(officers) }}</div>
+	{% else %}
+		<p>Sorry, there are no officers available.</p>
+	{% endif %}
+{% endblock %}
+
+
+{% block sidebar_second %}
+	{% if site.siteType.keyName != 'loan_officer' %}
+		{% render url('sudoux_mortgage_loan_officer_search_esi') %}
+	{% endif %}
+	{% render url('sudoux_cms_form_contact_esi') %}
+{% endblock %}

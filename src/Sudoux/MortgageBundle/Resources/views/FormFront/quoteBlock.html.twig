@@ -1,0 +1,73 @@
+<div class="contact-form-block-wrapper block hidden-phone quote-form">
+	<div class="inner">
+		<h2 class="title">{% if title is defined %}{{ title }}{% else %}Get a Quote{% endif %}</h2>
+		<div class="hide alert alert-success">
+			<p>Thank you for your submission. We will get back to you as soon as possible.</p>
+		</div>
+		<form class="contact-form-block default" action="{{ path('sudoux_cms_form_contact') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+			<div class="errors">{{ form_errors(form) }}</div>
+			<div class="control-group">
+				<div class="controls">
+					{{ form_widget(form.subject) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.first_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.first_name) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.last_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.last_name) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.email) }}
+				</div>
+			</div>
+            <div class="control-group">
+                {{ form_label(form.home_phone, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                <div class="controls">
+                    {{ form_widget(form.home_phone) }}
+                </div>
+            </div>
+			{% if showReferralSources %}
+				<div class="control-group">
+					{{ form_label(form.referral_source, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.referral_source) }}
+					</div>
+				</div>
+				<div class="control-group referral-source-desc-group">
+					<div class="controls">
+						{{ form_widget(form.referral_source_desc) }}
+					</div>
+				</div>
+			{% endif %}
+			{#<div class="control-group">
+				<label class="control-label required">Property Location <span class="required-asterisk" title="This field is required">*</span></label>
+				<div class="controls">
+					{{ form_widget(form.location.state, { 'attr': { 'class': 'span3' } }) }}
+				</div>
+			</div>#}
+			<div class="control-group">
+				{{ form_label(form.message) }}
+				<div class="controls">
+					{{ form_widget(form.message) }}
+				</div>
+			</div>
+			<div class="hide">{{ form_rest(form) }}</div>
+			<div class="submit-wrapper clearfix">
+				{% if site.settings.termsConditionsDisclaimer %}<div class="disclaimer">{{ site.settings.termsConditionsDisclaimer|purify }}</div>{% endif %}
+		    	<input type="submit" value="Request Quote" class="btn btn-default pull-left">
+		    	<span class="loader-indicator-small loader pull-left"></span>
+		    </div>
+		</form>
+    </div>
+</div>
+
+

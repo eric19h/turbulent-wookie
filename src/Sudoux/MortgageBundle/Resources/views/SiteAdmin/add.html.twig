@@ -1,0 +1,38 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Add {{ type|replace({'_':' '})|ucwords }} Site{% endblock %}
+
+{% block content %}
+	<form action="{{ path('sudoux_mortgage_admin_site_add', { type: type, id: id }) }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="control-group">
+			{{ form_label(form.name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.primary_domain.domain, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.primary_domain.domain, { 'help': 'ex. mysite.com' }) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.timezone, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.timezone) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.configure, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.configure) }}
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+		    	<input type="submit" value="Create" class="btn btn-primary">
+			</div>
+		</div>
+		<div class="hide">{{ form_rest(form) }}</div>
+	</form>
+{% endblock %}

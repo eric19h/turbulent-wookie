@@ -1,0 +1,12 @@
+<div class="borrower-info">
+	<b>{{ borrower.firstName }} {{ borrower.middleInitial }} {{ borrower.lastName }} {{ borrower.suffix }}</b><br>
+	<b>Home Phone: </b> {{ borrower.phoneHome|phoneNumber }}<br>
+	<b>Mobile Phone: </b> {{ borrower.phoneMobile|phoneNumber }}<br>
+	<b>Email: </b> {{ borrower.email }}<br>
+	<b>SSN: </b> {{ borrower.ssn }}<br>
+	<b>Birth Date: </b> {{ borrower.birthDate|date(date_format) }}<br>
+	<b>Address: </b><br>{{ borrower.location.address1 }}<br>{{ borrower.location.city }}, {{ borrower.location.state.abbreviation }} {{ borrower.location.zipcode }}<br>
+	<b>Marital Status: </b> {{ borrower.maritalStatus }}<br>
+	<b>Years at Residence: </b> {{ borrower.yearsAtResidence }}<br>
+	<b>Own Residence: </b> {{ borrower.ownResidence|boolToYesNo }}
+</div>

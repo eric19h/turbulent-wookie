@@ -1,0 +1,133 @@
+Sudoux\MortgageBundle\Entity\LoanOfficer:
+    type: entity
+    table: loan_officer
+    repositoryClass: Sudoux\MortgageBundle\Entity\LoanOfficerRepository
+    manyToOne: 
+      officer_photo:
+        targetEntity: Sudoux\Cms\FileBundle\Entity\File
+        cascade: ["persist", "remove"]
+        joinColumns:
+          officer_photo_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: {}
+        joinColumns:
+          site_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+      officer_site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: { }
+        joinColumns:
+          officer_site_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      branch:
+        targetEntity: Sudoux\MortgageBundle\Entity\Branch
+        cascade: {}
+        inversedBy: loan_officer
+        joinColumns:
+          branch_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      user:
+        targetEntity: Sudoux\Cms\UserBundle\Entity\User
+        cascade: ["persist"]
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    manyToMany:
+      testimonial:
+        targetEntity: Sudoux\Cms\NodeBundle\Entity\Testimonial
+        cascade: {  }
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          testimonial_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      first_name_idx:
+        columns: [ first_name ]
+      last_name_idx:
+        columns: [ last_name ]
+      los_id_idx:
+        columns: [ los_id ]
+      nmls_id_idx:
+        columns: [ nmls_id ]
+      created_idx:
+        columns: [ created ]
+      modified_idx:
+        columns: [ modified ]
+      weight_idx:
+        columns: [ weight ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        first_name:
+            type: string
+            length: '150'
+        last_name:
+            type: string
+            length: '150'
+        email:
+            type: string
+            length: '150'
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        nmls_id:
+            type: string
+            length: '50'
+            nullable: true
+        title:
+            type: string
+            length: 255
+            nullable: true
+        phone_office:
+            type: string
+            length: '30'
+            nullable: true
+        phone_mobile:
+            type: string
+            length: '30'
+            nullable: true
+        phone_tollfree:
+            type: string
+            length: '30'
+            nullable: true
+        fax:
+            type: string
+            length: '30'
+            nullable: true
+        signature:
+            type: string
+            length: 255
+            nullable: true
+        website:
+            type: text
+            nullable: true
+        bio:
+            type: text
+            nullable: true
+        active:
+            type: boolean
+        deleted:
+            type: boolean
+        created:
+            type: datetime
+        modified:
+            type: datetime
+        weight:
+            type: smallint
+        auto_create_user:
+            type: boolean
+    lifecycleCallbacks: {  }

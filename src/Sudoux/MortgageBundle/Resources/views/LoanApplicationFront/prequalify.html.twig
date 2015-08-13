@@ -1,0 +1,58 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Pre-Qualification Application{% endblock %}
+
+{% block body_class %}page-prequalify page-loan-apply{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block content %}
+	<form id="loan-app-form-prequalify" class="loan-application-form" action="{{ path('sudoux_mortgage_loan_prequalify') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+		<div class="form-inline well well-small">
+			<div class="clearfix">
+				<div class="loan-type {% if showReferralSources %}pull-left{% else %}text-center{% endif %} ">
+					{{ form_label(form.loan_type) }} &nbsp;{{ form_widget(form.loan_type, { 'attr' : { 'class': 'radio-group' } }) }}
+				</div>
+				{% if showReferralSources %}
+					<div class="referral-sources pull-right">
+						<div>{{ form_label(form.referral_source) }}</div>
+						{{ form_widget(form.referral_source) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		
+		<div class="borrower-form">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.borrower, title: 'Borrower Information', description: "In order to get started, we need to gather some basic personal information along with choosing whether you'll have a co-borrower.", deletable: false } %}
+		</div>
+		
+		<div id="co-borrowers-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.co_borrower.vars.prototype, title: 'Co-Borrower', deletable: true } %}{% endfilter %}">
+			{% for borrower in form.co_borrower %}
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: borrower, title: 'Co-Borrower', deletable: true } %}
+			{% endfor %}
+		</div>
+		<div>
+			<button id="add-co-borrower" class="btn btn-blank" type="button"><span class="icon-plus"></span> Add Co-Borrower</button>
+		</div>
+		<div class="comments-wrapper">
+			<div class="well clearfix">
+				<div class="pull-left comments">
+					{{ form_label(form.comments) }}
+					{{ form_widget(form.comments) }}
+				</div>
+				<div class="pull-right text-center disclaimer">
+				    By submitting this loan application form, you are giving {{ site.name }} authorization to run a credit check on your financial history.
+				</div>
+			</div>
+	    </div>
+		<div class="submit-wrapper">
+			<div class="hide">{{ form_rest(form) }}</div>
+			<div class="text-center clearfix">
+		    	<button type="submit" class="btn btn-default">Submit</button>
+		    </div>
+	    </div>
+	</form>
+{% endblock %}

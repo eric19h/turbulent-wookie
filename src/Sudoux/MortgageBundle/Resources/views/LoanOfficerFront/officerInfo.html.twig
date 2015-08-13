@@ -1,0 +1,16 @@
+{% if officer.officerPhoto %}
+    <div class="media media-block">
+	    <a class="pull-left" href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id, alias: officer.alias }) }}">
+	    	<img class="media-object img-polaroid" src="{{ asset(officer.officerPhoto.path) }}">
+	    </a>
+	    <div class="media-body">
+	    	<h3 class="media-heading"><a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id, alias: officer.alias }) }}">{{ officer.fullName }}</a></h3>
+			{% include 'SudouxMortgageBundle:LoanOfficerFront:officerRowInfo.html.twig' %}
+	    </div>
+    </div>
+{% else %}
+	<div class="media-block">
+		<h3 class="title"><a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id, alias: officer.alias }) }}">{{ officer.fullName }}</a></h3>
+		{% include 'SudouxMortgageBundle:LoanOfficerFront:officerRowInfo.html.twig' %}
+	</div>
+{% endif %}

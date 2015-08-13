@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lead xmlns="http://tempuri.org/Lead.xsd">
+    <IsTestLead>True</IsTestLead>
+    <FirstName>{{application.firstName|ucfirst }}</FirstName>
+    <LastName>{{ application.lastName|ucfirst }}</LastName>
+    <Address1>{{ application.address1|ucwords }}</Address1>
+    <Address2>{{ application.address2|ucwords }}</Address2>
+    <City>{{ application.city|ucwords }}</City>
+    <State>{{ application.state|ucfirst }}</State>
+    <ZipCode>{{ application.zipcode }}</ZipCode>
+    <Email>{{ application.email }}</Email>
+    <HomePhone>{{ application.phoneHome }}</HomePhone>
+    <CellPhone>{{ application.phoneCell }}</CellPhone>
+    <SSN>{{ application.ssn|toInteger }}</SSN>
+{% if application.hasCoborrower %}
+    <CoFirstName>{{ application.coFirstName|ucfirst }}</CoFirstName>
+    <CoLastName>{{ application.coLastName|ucfirst }}</CoLastName>
+    <CoAddress1>{{ application.coAddress1|ucwords }}</CoAddress1>
+    <CoAddress2>{{ application.coAddress2|ucwords }}</CoAddress2>
+    <CoCity>{{ application.coCity|ucwords }}</CoCity>
+    <CoState>{{ application.coState }}</CoState>
+    <CoZipCode>{{ application.coZip }}</CoZipCode>
+    <CoEmail>{{ application.coEmail }}</CoEmail>
+    <CoHomePhone>{{ application.coPhoneHome }}</CoHomePhone>
+    <CoCellPhone>{{ application.coPhoneCell }}</CoCellPhone>
+    <CoSSN>{{ application.coSSN|toInteger }}</CoSSN>
+{% if application.coIsCurrentlyEmployed %}
+    <CoEmployer>{{ application.CoEmployer }}</CoEmployer>
+    <CoEmployerPhone>{{ application.CoEmployerPhone }}</CoEmployerPhone>
+    <CoEmployerAddress1>{{ application.CoEmployerAddress1 }}</CoEmployerAddress1>
+    <CoEmployerAddress2>{{ application.CoEmployerAddress2 }}</CoEmployerAddress2>
+    <CoEmploymentYearsOnJob>{{ application.CoEmploymentYearsOnJob }}</CoEmploymentYearsOnJob>
+    <CoEmploymentMonthsOnJob>{{ application.CoEmploymentMonthsOnJob}}</CoEmploymentMonthsOnJob>
+    <CoEmploymentTitle>{{ application.CoEmploymentTitle }}</CoEmploymentTitle>
+    <CoEmployerCity>{{ application.CoEmployerCity }}</CoEmployerCity>
+    <CoEmployerState>{{ application.CoEmployerState }}</CoEmployerState>
+    <CoEmploymentZipCode>{{ application.CoEmployerZipCode }}</CoEmploymentZipCode>
+{% endif %}
+{% endif %}
+{% if application.isCurrentlyEmployed %}
+    <Employer>{{ application.employer }}</Employer>
+    <EmployerPhone>{{ application.employerPhone }}</EmployerPhone>
+    <EmployerAddress1>{{ application.employerAddress1 }}</EmployerAddress1>
+    <EmployerAddress2>{{ application.employerAddress2 }}</EmployerAddress2>
+    <EmploymentYearsOnJob>{{ application.employmentYearsOnJob }}</EmploymentYearsOnJob>
+    <EmploymentMonthsOnJob>{{ application.employmentMonthsOnJob}}</EmploymentMonthsOnJob>
+    <EmploymentTitle>{{ application.employmentTitle }}</EmploymentTitle>
+    <EmployerCity>{{ application.employerCity }}</EmployerCity>
+    <EmployerState>{{ application.employerState }}</EmployerState>
+    <EmploymentZipCode>{{ application.employerZipCode }}</EmploymentZipCode>
+{% endif %}
+    <LoanAmount>{{ application.loanAmount }}</LoanAmount>
+    <PropertyUse>{{ application.propertyUse }}</PropertyUse>
+    <PropertyMarketValue>{{ application.propertyMarketValue }}</PropertyMarketValue>
+    <PropertyAddress1>{{ application.propertyAddress1 }}</PropertyAddress1>
+    <PropertyAddress2>{{ application.propertyAddress2 }}</PropertyAddress2>
+    <PropertyCity>{{ application.propertyCity }}</PropertyCity>
+    <PropertyState>{{ application.propertyState }}</PropertyState>
+    <PropertyZipCode>{{ application.propertyZipCode }}</PropertyZipCode>
+    <CustomerIp>{{ application.customerIp }}</CustomerIp>
+    <VendorLeadPrice>{{ application.vendorLeadPrice }}</VendorLeadPrice>
+    <RealEstateBrokerPhone>{{ application.realEstateBrokerPhone }}</RealEstateBrokerPhone>
+    <VendorLeadId>{{ application.vendorLeadId }}</VendorLeadId>
+    <VendorId>{{ application.vendorId }}</VendorId>
+    <Password>{{ application.vendorPassword }}</Password>
+    <OrganizationId>{{ application.orgId }}</OrganizationId>
+    <VendorWebProperty>{{ application.vendorWebProperty }}</VendorWebProperty>
+</Lead>

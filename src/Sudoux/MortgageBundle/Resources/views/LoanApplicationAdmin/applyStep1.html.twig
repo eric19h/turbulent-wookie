@@ -1,0 +1,68 @@
+{% extends site.getAdminThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}{% if application.id %}Loan Application #{{ application.id }}{% else %}Add Loan Application{% endif %}{% endblock %}
+
+{% block body_class %}page-loan-apply step1{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationNav.html.twig' with { step: 1, application: application } %}
+	
+	<form id="loan-app-form-step1" action="{{ path('sudoux_mortgage_admin_loan_step1', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+		{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationFormTop.html.twig' %}
+
+
+		<div class="form-inline well well-small">
+			<div class="clearfix">
+
+				<div class="loan-type {% if showReferralSources %}pull-left{% else %}text-center{% endif %} ">
+					{% if application.id == null %}
+						{{ form_label(form.loan_type) }} &nbsp;{{ form_widget(form.loan_type, { 'attr' : { 'class': 'radio-group' } }) }}
+					{% else %}
+						<p>Loan Type: {{ application.loanTypeText }}</p>
+					{% endif %}
+				</div>
+
+				{% if showReferralSources %}
+					<div class="referral-sources pull-right">
+						<div>{{ form_label(form.referral_source) }}</div>
+						{{ form_widget(form.referral_source) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="borrower-form">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { borrower: application.borrower, form: form.borrower, title: 'Borrower Information', description: "In order to get started, we need to gather some basic personal information along with choosing whether you'll have a co-borrower.", deletable: false } %}
+		</div>
+		
+		<div id="co-borrowers-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.co_borrower.vars.prototype, title: 'Co-Borrower', deletable: true } %}{% endfilter %}">
+			{% for borrower in form.co_borrower %}
+				<div class="borrower-form" data-borrower-id="{{ application.coBorrower[loop.index0].id }}" data-loan-id="{{ application.id }}">
+					{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { borrower: application.coBorrower[loop.index0], form: borrower, title: 'Co-Borrower', deletable: true } %}
+				</div>
+			{% endfor %}
+		</div>
+		<div class="hide">{{ form_rest(form) }}</div>
+		{% if application.coBorrower|length == 0 %}
+			<button id="add-co-borrower" class="btn btn-default" type="button">Add Co-Borrower</button>
+		{% endif %}
+		<div class="row">
+			<div class="span12">
+				<div class="text-center submit-wrapper">
+			    	<button id="btn-step1-submit" type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+			    </div>
+		    </div>
+	    </div>
+	</form>
+{% endblock %}

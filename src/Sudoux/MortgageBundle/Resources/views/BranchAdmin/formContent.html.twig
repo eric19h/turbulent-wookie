@@ -1,0 +1,156 @@
+<div class="row">
+	<div class="span6">
+		<div class="errors">{{ form_errors(form) }}</div>
+		<div class="control-group">
+			{{ form_label(form.name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.name) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.branch_photo_file, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.branch_photo_file) }}
+				{% if branch.branchPhoto %}
+					<div class="img-preview">
+						<div class="inner">
+							<div id="btn-delete-branch-photo" class="btn-delete" data-id="{{ branch.id }}">
+								<span class="icon-remove"></span>
+							</div>
+							<img src="{{ asset(branch.branchPhoto.path) }}" class="branch-photo-preview img-polaroid">
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.phone, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.phone) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.fax, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.fax) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.email) }}
+			</div>
+		</div>
+		<div class="control-group hide">
+			{{ form_label(form.website, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.website) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.nmls_id, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.nmls_id) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.branch_manager, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.branch_manager) }}
+			</div>
+		</div>
+		{% if site.settings.inheritedLos %}
+			<div class="control-group">
+				{{ form_label(form.los_id, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.los_id) }}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<div class="span6">
+		<div class="control-group">
+			{{ form_label(form.location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.address1) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.unit, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.unit) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.city) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.state) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.zipcode) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.latitude, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.latitude) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.location.longitude, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.location.longitude) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.weight, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.weight) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.active, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.active) }}
+			</div>
+		</div>
+        {% if branch.branchSite %}
+            <div class="control-group">
+                <label class="control-label">Site URL</label>
+                <div class="controls">
+                    <a href="http://{{ branch.branchSite.primaryDomain.domain }}" target="_blank">{{ branch.branchSite.primaryDomain.domain }}</a>
+                </div>
+            </div>
+        {% endif %}
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<div class="control-group">
+			{{ form_label(form.directions, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.directions) }}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="span12">
+		<div class="control-group">
+			{{ form_label(form.description, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.description) }}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="hide">{{ form_rest(form) }}</div>

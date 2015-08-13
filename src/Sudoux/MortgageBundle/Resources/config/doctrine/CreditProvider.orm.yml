@@ -1,0 +1,22 @@
+Sudoux\MortgageBundle\Entity\CreditProvider:
+    type: entity
+    table: credit_provider
+    indexes:
+      name_idx:
+        columns: [ name ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '100'
+        className:
+            type: text
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

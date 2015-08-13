@@ -1,0 +1,7 @@
+parameters:
+#    sudoux_mortgage_user.example.class: Sudoux\MortgageUserBundle\Example
+
+services:
+#    sudoux_mortgage_user.example:
+#        class: %sudoux_mortgage_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

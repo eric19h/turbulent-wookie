@@ -1,0 +1,35 @@
+<div class="borrower-signature clearfix">
+	{% set borrowerType = 'Borrower' %}
+	{% if primaryBorrower == false %}
+		{% set borrowerType = 'Co-Borrower' %}
+	{% endif %}
+	{% set initials = borrower.firstName|slice(0,1) %}
+	{% if borrower.middleInitial %}
+		{% set initials = initials ~ borrower.middleInitial|slice(0,1) %}
+	{% endif %}
+	{% set initials = initials ~ borrower.lastName|slice(0,1) %}
+	
+	<p class="borrower-initials-wrapper"><b>{{ borrower.fullName }}'s Initials</b> {{ form_widget(form.initials, { 'attr' : { 'data-initials': initials } }) }}</p>
+	{% if borrower.signature %}
+		<div class="sigPad signed" data-signature="{{ borrower.signature }}">
+		    <div class="sigWrapper">
+		      <div class="typed">{{ borrower.fullName }}</div>
+		      <canvas class="pad" width="198" height="55"></canvas>
+		    </div>
+		    <p>{{ borrower.fullName }}</p>
+	  	</div>
+	{% else %}
+		<div class="sigPad clearfix">
+	    	<ul class="sigNav">
+	      		<li class="typeIt hide"><a href="#type-it" class="current">Auto-Sign</a></li>
+	      		<li class="drawIt"><a href="#draw-it" >Sign</a></li>
+	      		<li class="clearButton"><a href="#clear">Clear</a></li>
+	    	</ul>
+	    	<div class="sig sigWrapper">
+	      		<div class="typed">{{ borrower.fullName }}</div>
+	      		<canvas class="pad" width="198" height="55"></canvas>
+	      		<b><label>{{ borrowerType }} Signature</label></b> {{ form_widget(form.signature) }}
+	    	</div>
+		</div>
+	{% endif %}
+</div>

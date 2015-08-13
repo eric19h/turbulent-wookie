@@ -1,0 +1,140 @@
+<div class="declaration-wrapper" class="form-inline">
+	<div class="declaration clearfix">
+		{{ form_widget(form.declaration_outstanding_judgement, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+			{{ form_label(form.declaration_outstanding_judgement, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationOutstandingJudgement %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_outstanding_judgement_details) }} 
+				{{ form_widget(form.declaration_outstanding_judgement_details) }} 
+        	</div>
+		</div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_bankruptcy, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_bankruptcy, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationBankruptcy %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_bankruptcy_details) }} 
+				{{ form_widget(form.declaration_bankruptcy_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_forclosure, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_forclosure, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationForclosure %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_forclosure_details) }} 
+				{{ form_widget(form.declaration_forclosure_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_lawsuit, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_lawsuit, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationLawsuit %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_lawsuit_details) }} 
+				{{ form_widget(form.declaration_lawsuit_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_forclosure_obligation, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+	        {{ form_label(form.declaration_forclosure_obligation, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+	        <span class="help-block">
+	        	This would include such loans as home mortgage loans, SBA loans, home improvement loans, educational loans, manufactured (mobile) home loans, any mortgage, financial obligation, bond, or loan guarantee.
+	        </span>
+	        <div class="additional-questions {% if borrower.declarationForclosureObligation %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_forclosure_obligation_details) }} 
+				{{ form_widget(form.declaration_forclosure_obligation_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_in_default, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_in_default, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationInDefault %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_in_default_details) }} 
+				{{ form_widget(form.declaration_in_default_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration child-support clearfix">
+        {{ form_widget(form.declaration_alimony_child_support, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_alimony_child_support, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<ul class="additional-questions form-inline {% if borrower.declarationAlimonyChildSupport %}show{% endif %}" data-show-on="true">        		
+        		<li>
+					{{ form_label(form.declaration_alimony_child_support_alimony) }} 
+					{{ form_widget(form.declaration_alimony_child_support_alimony) }} 
+        		</li>
+        		<li>
+					{{ form_label(form.declaration_alimony_child_support_child_support) }} 
+					{{ form_widget(form.declaration_alimony_child_support_child_support) }} 
+        		</li>
+        		<li>
+					{{ form_label(form.declaration_alimony_child_support_separate_maintenance) }} 
+					{{ form_widget(form.declaration_alimony_child_support_separate_maintenance) }} 
+        		</li>
+        	</ul>
+        	
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_down_payment_borrowed, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_down_payment_borrowed, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationDownPaymentBorrowed %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_down_payment_borrowed_details) }} 
+				{{ form_widget(form.declaration_down_payment_borrowed_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_note_endorser, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_note_endorser, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<div class="additional-questions {% if borrower.declarationNoteEndorser %}show{% endif %}" data-show-on="true">        		
+				{{ form_label(form.declaration_note_endorser_details) }} 
+				{{ form_widget(form.declaration_note_endorser_details) }} 
+        	</div>
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_us_citizen, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_us_citizen, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_resident_alien, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_resident_alien, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        </div>
+	</div>
+	<div class="declaration clearfix">
+        {{ form_widget(form.declaration_primary_residence, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+        	{{ form_label(form.declaration_primary_residence, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        </div>
+	</div>
+	<div class="declaration property-ownership clearfix">
+        {{ form_widget(form.declaration_ownership_within_three_years, { 'attr' : { 'class': 'radio-group pull-left' } }) }} 
+        <div class="question">
+	        {{ form_label(form.declaration_ownership_within_three_years, label|default(null), { 'label_attr': { 'class': 'radio-group-label' } }) }}
+        	<ul class="additional-questions form-inline {% if borrower.declarationOwnershipWithinThreeYears %}show{% endif %}" data-show-on="true">
+        		<li>
+        			{{ form_label(form.declaration_ownership_within_three_years_property_type) }}
+		       	 	{{ form_widget(form.declaration_ownership_within_three_years_property_type) }}
+        		</li>
+        		<li>
+			        {{ form_label(form.declaration_ownership_within_three_years_property_title) }}
+			        {{ form_widget(form.declaration_ownership_within_three_years_property_title) }}
+        		</li>
+        	</ul>
+        </div>
+	</div>
+</div>

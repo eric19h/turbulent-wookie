@@ -1,0 +1,61 @@
+Sudoux\MortgageBundle\Entity\LoanDocument:
+    type: entity
+    table: loan_document
+    repositoryClass: Sudoux\MortgageBundle\Entity\LoanDocumentRepository
+    manyToOne:
+      file:
+        targetEntity: Sudoux\Cms\FileBundle\Entity\File
+        cascade: ["persist", "remove"]
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          file_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      type:
+        targetEntity: Sudoux\Cms\TaxonomyBundle\Entity\Taxonomy
+        cascade: {  }
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          taxonomy_id:
+            onDelete: "SET NULL"
+            referencedColumnName: id
+        orphanRemoval: false
+    manyToMany:
+      loan:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanApplication
+        mappedBy: document
+    indexes:
+      losid_idx:
+        columns: [ los_id ]
+      name_idx:
+        columns: [ name ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '255'
+        extension:
+            type: string
+            length: '20'
+            nullable: true
+        status:
+            type: integer
+        required:
+            type: boolean
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        los_status:
+            type: smallint
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

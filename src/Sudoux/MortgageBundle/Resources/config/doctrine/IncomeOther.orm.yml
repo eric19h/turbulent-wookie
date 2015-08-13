@@ -1,0 +1,27 @@
+Sudoux\MortgageBundle\Entity\IncomeOther:
+    type: entity
+    table: income_other
+    manyToOne: 
+      borrower:
+        targetEntity: Sudoux\MortgageBundle\Entity\Borrower
+        inversedBy: income_other
+        cascade: ["persist"]
+        joinColumns:
+          borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      income_idx:
+        columns: [ income ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+            nullable: true
+        income:
+            type: float
+    lifecycleCallbacks: {  }

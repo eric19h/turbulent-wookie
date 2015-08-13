@@ -1,0 +1,11 @@
+<div class="branch-search-block block">
+    <h2 class="title">Find a Branch</h2>
+    <form class="branch-search-form search-form" action="{{ path('sudoux_mortgage_branch') }}" method="get" {{ form_enctype(form) }} novalidate="novalidate">
+        <div class="input-append">
+            {{ form_widget(form.search) }}
+            <input type="submit" value="Go" class="btn btn-default">
+        </div>
+        <div class="or">- or -</div>
+        {{ form_widget(form.state) }}
+    </form>
+</div>

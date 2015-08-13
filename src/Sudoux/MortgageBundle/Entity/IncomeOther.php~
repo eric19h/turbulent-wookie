@@ -1,0 +1,111 @@
+<?php
+
+namespace Sudoux\MortgageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * IncomeOther
+ */
+class IncomeOther
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var float
+     */
+    private $income;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return IncomeOther
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set income
+     *
+     * @param float $income
+     * @return IncomeOther
+     */
+    public function setIncome($income)
+    {
+        $this->income = $income;
+    
+        return $this;
+    }
+
+    /**
+     * Get income
+     *
+     * @return float 
+     */
+    public function getIncome()
+    {
+        return $this->income;
+    }
+    /**
+     * @var \Sudoux\Cms\LocationBundle\Entity\Borrower
+     */
+    private $borrower;
+
+
+    /**
+     * Set borrower
+     *
+     * @param \Sudoux\Cms\LocationBundle\Entity\Borrower $borrower
+     * @return IncomeOther
+     */
+    public function setBorrower(\Sudoux\Cms\LocationBundle\Entity\Borrower $borrower = null)
+    {
+        $this->borrower = $borrower;
+    
+        return $this;
+    }
+
+    /**
+     * Get borrower
+     *
+     * @return \Sudoux\Cms\LocationBundle\Entity\Borrower 
+     */
+    public function getBorrower()
+    {
+        return $this->borrower;
+    }
+}

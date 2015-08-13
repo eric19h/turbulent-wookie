@@ -1,0 +1,67 @@
+sudoux_mortgage_calculator:
+    pattern:  /mortgage/calculator
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:index }
+
+sudoux_mortgage_calculator_payments:
+    pattern:  /mortgage/calculator/payments
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:payments }
+
+sudoux_mortgage_calculator_affordability:
+    pattern:  /mortgage/calculator/affordability
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:affordability }
+
+sudoux_mortgage_calculator_mortgage_length:
+    pattern:  /mortgage/calculator/mortgage-length
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:mortgageLength }
+
+sudoux_mortgage_calculator_mortgage_principal:
+    pattern:  /mortgage/calculator/mortgage-principal
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:mortgagePrincipal }
+
+sudoux_mortgage_calculator_income_qualify:
+    pattern:  /mortgage/calculator/income-qualify
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:incomeQualify }
+
+sudoux_mortgage_calculator_extra_payments:
+    pattern:  /mortgage/calculator/extra-payments
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:extraPayments }
+
+sudoux_mortgage_calculator_best_loan:
+    pattern:  /mortgage/calculator/best-loan
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:bestLoan }
+
+sudoux_mortgage_calculator_loan_interval:
+    pattern:  /mortgage/calculator/loan-interval
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:loanInterval }
+
+sudoux_mortgage_calculator_rent_buy:
+    pattern:  /mortgage/calculator/rent-buy
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:rentOrBuy }
+
+sudoux_mortgage_calculator_refinance:
+    pattern:  /mortgage/calculator/refinance
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:refinance }
+
+sudoux_mortgage_calculator_tax_benefits:
+    pattern:  /mortgage/calculator/tax-benefits
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:taxBenefits }
+
+sudoux_mortgage_calculator_pay_points:
+    pattern:  /mortgage/calculator/pay-points
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:payPoints }
+
+sudoux_mortgage_calculator_credit_card_payoff:
+    pattern:  /mortgage/calculator/credit-card-payoff
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:creditCardPayoff }
+
+sudoux_mortgage_calculator_credit_card_min_payments:
+    pattern:  /mortgage/calculator/credit-card-min-payments
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:creditCardMinPayments }
+
+sudoux_mortgage_calculator_payment_per_thousand:
+    pattern:  /mortgage/calculator/payment-per-thousand
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:paymentPerThousand }
+
+sudoux_mortgage_calculator_real_apr:
+    pattern:  /mortgage/calculator/real-apr
+    defaults: { _controller: SudouxMortgageCalculatorBundle:DefaultFront:realAPR }

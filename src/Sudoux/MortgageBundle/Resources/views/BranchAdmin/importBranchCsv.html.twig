@@ -1,0 +1,35 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Import Branches{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_branch') }}">Branches</a> <span class="divider">/</span></li>		
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<h3>Data sample</h3>
+	<div class="well well-small">
+		name,nmls_id,los_id,phone,fax,email,address1,address2,unit,city,state,zipcode,latitude,longitude,directions,description<br>
+		My Company,12345,12345,(555) 555-5555,(555) 555-5555,sample@email.com,123 Front Street, Suite 1, Unit B,Philadelphia,PA,19128,39.777499,-75.053292,Off exit 48 ,Our Turnersville Office
+	</div>
+
+	{% if site.settings.autoCreateSites %}
+		<div class="alert alert-info">
+			Auto creation of sites is enabled. A website will be created for each branch automatically.
+		</div>
+	{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_branch_import_csv') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{{ form_label(form.branch_csv) }}
+		{{ form_widget(form.branch_csv) }}
+		<div class="submit-wrapper">
+			<div class="hide">{{ form_rest(form) }}</div>
+		    <input type="submit" value="Import" class="btn"> <a href="{{ path('sudoux_mortgage_admin_branch') }}">Cancel</a>
+		</div>
+	</form>
+
+
+{% endblock %}

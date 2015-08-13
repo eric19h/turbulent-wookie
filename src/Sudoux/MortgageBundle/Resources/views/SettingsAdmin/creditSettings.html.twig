@@ -1,0 +1,64 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Credit Settings{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_cms_admin_configuration_integration') }}">Integrations</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% set conn = site.settings.creditConnection %}
+	{% if site.settings.inheritedCreditConnection and conn == null %}
+		<div class="alert alert-warning">
+			Settings are inherited from a parent site. Enter credentials below to override the parent configuration.
+		</div>
+	{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_settings_credit') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="row">
+			<div class="span12">
+				<div class="control-group">
+					{{ form_label(form.credit_provider, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.credit_provider) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.username, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.username) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.password, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.password) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.company, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.company) }}
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="hide">{{ form_rest(form) }}</div>
+				    	<input type="submit" value="Update" class="btn"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+	{% if conn %}
+		<form action="{{ path('sudoux_mortgage_admin_settings_credit_delete') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+	    	<div class="alert">
+		    	<input type="submit" value="Delete" class="btn btn-danger"> <b>Warning:</b> This will remove all credit integration
+	    	</div>
+		</form>
+	{% endif %}
+{% endblock %}

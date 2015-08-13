@@ -1,0 +1,31 @@
+##
+##Loan Application Shizzle
+###############################
+sudoux_mortgage_api_loanapp_all:
+    pattern:  /api/v1/loans
+    defaults: { _controller: SudouxMortgageApiBundle:Api:getAllLoans, _format: json }
+    requirements:
+        _method: GET
+sudoux_mortgage_api_loanapp_get:
+    pattern:  /api/v1/loans/{id}
+    defaults: { _controller: SudouxMortgageApiBundle:Api:getLoans, _format: json }
+    requirements:
+        _method: GET
+        id: "\d+"
+sudoux_mortgage_api_loanapp_edit:
+    pattern:  /api/v1/loans/{id}
+    defaults: { _controller: SudouxMortgageApiBundle:Api:editLoans, _format: json }
+    requirements:
+        _method: PATCH
+        id: "\d+"
+sudoux_mortgage_api_loanapp_add:
+    pattern:  /api/v1/loans
+    defaults: { _controller: SudouxMortgageApiBundle:Api:addLoans, _format: json }
+    requirements:
+        _method: POST
+sudoux_mortgage_api_loanapp_delete:
+    pattern:  /api/v1/loans/{id}
+    defaults: { _controller: SudouxMortgageApiBundle:Api:deleteLoans, _format: json }
+    requirements:
+        _method: DELETE
+        id: "\d+"

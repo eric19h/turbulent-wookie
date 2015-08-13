@@ -1,0 +1,41 @@
+Sudoux\MortgageBundle\Entity\LoanMilestone:
+    type: entity
+    table: loan_milestone
+    repositoryClass: Sudoux\MortgageBundle\Entity\LoanMilestoneRepository
+    manyToOne:
+      milestone_group:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanMilestoneGroup
+        cascade: { }
+        inversedBy: milestone
+        joinColumns:
+          milestone_group_id:
+            referencedColumnName: id
+            nullable: false
+    indexes:
+      los_idx:
+        columns: [ los_id ]
+      weight_idx:
+        columns: [ weight ]
+      name_idx:
+        columns: [ name ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '150'
+        display_name:
+            type: string
+            length: '150'
+            nullable:  true
+        los_id:
+            type: string
+            length: '255'
+        weight:
+            type: integer
+        active:
+            type: boolean
+    lifecycleCallbacks: {  }

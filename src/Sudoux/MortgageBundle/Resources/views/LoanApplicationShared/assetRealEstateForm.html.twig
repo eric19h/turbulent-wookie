@@ -1,0 +1,98 @@
+<div class="asset-real-estate-form loan-form">
+
+	<h3><a href="#" class="icon-remove delete-form"></a> Property</h3>
+	<div class="clearfix">
+		<div class="span-half">
+			<div class="form-horizontal">
+				<div class="control-group">
+					{{ form_label(form.borrower, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.borrower) }}
+					</div>
+				</div> 
+				<div class="control-group">
+					{{ form_label(form.location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.location.address1) }}
+					</div>
+				</div> 
+				<div class="control-group">
+					{{ form_label(form.location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.location.city) }}
+					</div>
+				</div> 
+				<div class="control-group">
+					{{ form_label(form.location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.location.state) }}
+					</div>
+				</div> 
+				<div class="control-group">
+					{{ form_label(form.location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.location.zipcode) }}
+					</div>
+				</div> 
+				{#<div class="control-group">
+					{{ form_label(form.original_cost, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.original_cost, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.date_aquired, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.date_aquired) }}
+					</div>
+				</div>
+				<div class="control-group hide">
+					{{ form_label(form.status, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.status) }}
+					</div>
+				</div>#}
+			</div>
+		</div>
+		<div class="span-half">	
+			<div class="form-horizontal">
+				<div class="control-group">
+					{{ form_label(form.market_value, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.market_value, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.mortgage_amount, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.mortgage_amount, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.mortgage_payment, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.mortgage_payment, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.rent_gross_income, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.rent_gross_income, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.rent_net_income, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.rent_net_income, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.ins_tax_exp, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.ins_tax_exp, { 'attr' : { 'class': 'span100' } }) }}
+					</div>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>

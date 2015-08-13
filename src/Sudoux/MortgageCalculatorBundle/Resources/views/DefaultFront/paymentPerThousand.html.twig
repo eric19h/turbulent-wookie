@@ -1,0 +1,16 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}Payment per Thousand Financed{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_calculator') }}">Mortgage Calculators</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+    <iframe id="iframe_calculator" width="100%" height="1200" style="border: 0px" scrolling="yes" frameborder="0" src="{{ calculator_url }}/website/includes/plugins/calculators/payment-per-thousand-calculator.php"></iframe>
+{% endblock %}

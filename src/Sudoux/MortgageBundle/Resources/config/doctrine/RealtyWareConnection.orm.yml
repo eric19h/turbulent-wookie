@@ -1,0 +1,23 @@
+Sudoux\MortgageBundle\Entity\RealtyWareConnection:
+    type: entity
+    table: realtyware_connection
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        domain:
+            type: text
+        client_id:
+            type: string
+            length: '150'
+        client_secret:
+            type: string
+            length: '150'
+        api_key:
+            type: string
+            length: '150'
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

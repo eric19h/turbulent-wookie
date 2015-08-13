@@ -1,0 +1,21 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application Summary{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('_welcome') }}"><i class="icon-home"></i></a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_cms_user_account') }}">My Account</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+
+{% block content %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: loanApp.borrower } %}
+
+	{% for borrower in loanApp.coBorrower %}
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: borrower } %}
+	{% endfor %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanFullSummary.html.twig' with { application: loanApp, form: loanForm } %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% if branch.branchPhoto %}
+    <div class="media media-block">
+	    <a class="pull-left" href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id, alias: branch.alias }) }}">
+	    	<img class="media-object img-polaroid" src="{{ asset(branch.branchPhoto.path) }}">
+	    </a>
+	    <div class="media-body">
+	    	<h3 class="media-heading"><a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id, alias: branch.alias }) }}">{{ branch.name }}</a></h3>
+			{% include 'SudouxMortgageBundle:BranchFront:branchRowInfo.html.twig' %}
+	    </div>
+    </div>
+{% else %}
+    <div class="media-block">
+        <h3 class="title"><a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id, alias: branch.alias }) }}">{{ branch.name }}</a></h3>
+        {% include 'SudouxMortgageBundle:BranchFront:branchRowInfo.html.twig' %}
+    </div>
+{% endif %}

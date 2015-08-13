@@ -1,0 +1,56 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Business Development{% endblock %}
+
+{% block body_class %}page-business-development{% endblock %}
+
+{% block head %}
+	<script src="{{ asset('dev/themes/admin/reports.js') }}"></script>
+	<script src="{{ asset('bundles/sudouxcmstheme/themes/admin/reports.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}	
+	{% if sites|length > 0 %}
+		<div class="row">
+			<div class="span5">
+				<table id="lead-data" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Leads</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for site in sites %}
+							<tr>
+								<td>
+									<span class="site-name">{{ site.name }}</span><br>
+									<a href="http://{{ site.domain }}" target="_blank"><small>http://{{ site.domain }}</small></a>
+								</td>
+								<td><span class="lead-count">{{ site.leads }}</span></td>
+								<td>
+									{% if site.leads > 0 %}
+										<a href="{{ path('sudoux_mortgage_admin_site_report_business_development_lead', { siteId: site.id }) }}" class="btn btn-default">View Leads</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="span7">
+				<div id="business-development-summary-chart" style="width: 100%; height: 300px;"></div>
+			</div>
+		</div>
+	{% else %}
+		<p>No sites available.</p>
+	{% endif %}
+{% endblock %}

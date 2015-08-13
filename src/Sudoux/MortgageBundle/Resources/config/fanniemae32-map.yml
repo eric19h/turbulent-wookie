@@ -1,0 +1,301 @@
+loan_application:
+  loan_amount:
+    lineStartsWith: "01A"
+    startingPos: 131
+    length: 15
+    type: float
+  sale_price:
+    lineStartsWith: "07A"
+    startingPos: 4
+    length: 15
+    type: float
+  num_units:
+    lineStartsWith: "02A"
+    startingPos: 100
+    length: 3
+    type: integer
+  property_year_built:
+    lineStartsWith: "02A"
+    startingPos: 185
+    length: 4
+    type: integer
+  loan_term:
+    lineStartsWith: "01A"
+    startingPos: 153
+    length: 3
+    type: integer
+    lookupMethod: getLoanTermsFromMonthsToYears
+  loan_type:
+    lineStartsWith: "02B"
+    startingPos: 6
+    length: 2
+    type: integer
+    mapping:
+      fnmValues: ['16', '05']
+      entityValues: [0, 1] # 0 - purchase, 1 - refi
+  property_location:
+    type: object
+    class: 'Sudoux\Cms\LocationBundle\Entity\Location'
+    properties:
+      address1:
+        lineStartsWith: "02A"
+        startingPos: 4
+        length: 50
+        type: ~
+      city:
+        lineStartsWith: "02A"
+        startingPos: 54
+        length: 35
+        type: ~
+      state:
+        lineStartsWith: "02A"
+        startingPos: 89
+        length: 2
+        type: object
+        class: 'Sudoux\Cms\LocationBundle\Entity\State'
+        lookupMethod: findStateByAbbreviation
+      zipcode:
+        lineStartsWith: "02A"
+        startingPos: 91
+        length: 5
+        type: ~
+      unit:
+        lineStartsWith: "PAI"
+        startingPos: 55
+        length: 11
+        type: integer
+  borrower:
+    type: object
+    class: 'Sudoux\MortgageBundle\Entity\Borrower'
+    properties:
+      ssn:
+        lineStartsWith: "03ABW"
+        startingPos: 6
+        length: 9
+        type: ~
+      first_name:
+        lineStartsWith: "03ABW"
+        startingPos: 15
+        length: 35
+        type: ~
+      middle_initial:
+        lineStartsWith: "03ABW"
+        startingPos: 50
+        length: 35
+        type: ~
+      last_name:
+        lineStartsWith: "03ABW"
+        startingPos: 85
+        length: 35
+        type: ~
+      email:
+        lineStartsWith: "03ABW"
+        startingPos: 160
+        length: 80
+        type: ~
+      suffix:
+        lineStartsWith: "03ABW"
+        startingPos: 120
+        length: 4
+        type: ~
+      phone_home:
+        lineStartsWith: "03ABW"
+        startingPos: 124
+        length: 10
+        type: ~
+      marital_status:
+        lineStartsWith: "03ABW"
+        startingPos: 139
+        length: 1
+        type: integer
+        mapping:
+          fnmValues: ['M', 'U', 'S']
+          entityValues: [0, 1, 2] # 0 - married, 1 - unmarried, 2 - separated
+      years_of_school:
+        lineStartsWith: "03ABW"
+        startingPos: 137
+        length: 2
+        type: integer
+      birth_date:
+        lineStartsWith: "03ABW"
+        startingPos: 152
+        length: 8
+        type: datetime     
+      dependents_number:
+        lineStartsWith: "03ABW"
+        startingPos: 140
+        length: 2
+        type: integer
+      #dependents_ages:
+      #  lineStartsWith: "03B"
+      #  appendLineStartsWithVariable: "borrower.ssn"
+      #  startingPos: 13
+      #  length: 3
+      #  type: string
+      #  lookupMethod: 
+      location:
+        type: object
+        class: 'Sudoux\MortgageBundle\Entity\BorrowerLocation'
+        properties:
+          years_at_location:
+            lineStartsWith: "03C"
+            startingPos: 112
+            length: 2
+            type: ~
+          months_at_location:
+            lineStartsWith: "03C"
+            startingPos: 114
+            length: 2
+            type: ~
+          own_residence:
+            lineStartsWith: "03C"
+            startingPos: 111
+            length: 1
+            type: integer
+            mapping:
+              fnmValues: ['R', 'O', 'X']
+              entityValues: [0, 1, null] # 0 - rent, 1 - own, 2 - rent free
+          location:
+            type: object
+            class: 'Sudoux\Cms\LocationBundle\Entity\Location'
+            properties:
+              address1:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 15
+                length: 50
+                type: ~
+              city:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 65
+                length: 35
+                type: ~
+              state:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 100
+                length: 2
+                type: object
+                class: 'Sudoux\Cms\LocationBundle\Entity\State'
+                lookupMethod: findStateByAbbreviation
+              zipcode:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 102
+                length: 5
+                type: ~
+  co_borrower:
+    type: array
+    class: 'Sudoux\MortgageBundle\Entity\Borrower'
+    properties:
+      ssn:
+        lineStartsWith: "03AQZ"
+        startingPos: 6
+        length: 9
+        type: ~
+      first_name:
+        lineStartsWith: "03AQZ"
+        startingPos: 15
+        length: 35
+        type: ~
+      middle_initial:
+        lineStartsWith: "03AQZ"
+        startingPos: 50
+        length: 35
+        type: ~
+      last_name:
+        lineStartsWith: "03AQZ"
+        startingPos: 85
+        length: 35
+        type: ~
+      email:
+        lineStartsWith: "03AQZ"
+        startingPos: 160
+        length: 80
+        type: ~
+      suffix:
+        lineStartsWith: "03AQZ"
+        startingPos: 120
+        length: 4
+        type: ~
+      phone_home:
+        lineStartsWith: "03AQZ"
+        startingPos: 124
+        length: 10
+        type: ~
+      marital_status:
+        lineStartsWith: "03AQZ"
+        startingPos: 139
+        length: 1
+        type: integer
+        mapping:
+          fnmValues: ['M', 'U', 'S']
+          entityValues: [0, 1, 2] # 0 - married, 1 - unmarried, 2 - separated
+      years_of_school:
+        lineStartsWith: "03AQZ"
+        startingPos: 137
+        length: 2
+        type: integer
+      birth_date:
+        lineStartsWith: "03AQZ"
+        startingPos: 152
+        length: 8
+        type: datetime     
+      dependents_number:
+        lineStartsWith: "03AQZ"
+        startingPos: 140
+        length: 2
+        type: integer
+      location:
+        type: object
+        class: 'Sudoux\MortgageBundle\Entity\BorrowerLocation'
+        properties:
+          years_at_location:
+            lineStartsWith: "03C"
+            startingPos: 112
+            length: 2
+            type: ~
+          months_at_location:
+            lineStartsWith: "03C"
+            startingPos: 114
+            length: 2
+            type: ~
+          own_residence:
+            lineStartsWith: "03C"
+            startingPos: 111
+            length: 1
+            type: integer
+            mapping:
+              fnmValues: ['R', 'O', 'X']
+              entityValues: [0, 1, null] # 0 - rent, 1 - own, 2 - rent free
+          location:
+            type: object
+            class: 'Sudoux\Cms\LocationBundle\Entity\Location'
+            properties:
+              address1:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 15
+                length: 50
+                type: ~
+              city:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 65
+                length: 35
+                type: ~
+              state:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 100
+                length: 2
+                type: object
+                class: 'Sudoux\Cms\LocationBundle\Entity\State'
+                lookupMethod: findStateByAbbreviation
+              zipcode:
+                lineStartsWith: "03C"
+                appendLineStartsWithVariable: "borrower.ssn"
+                startingPos: 102
+                length: 5
+                type: ~

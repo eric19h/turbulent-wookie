@@ -1,0 +1,89 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Leads{% endblock %}
+
+{% block body_class %}page-business-development{% endblock %}
+
+{% block head %}
+	<script src="{{ asset('dev/themes/admin/reports.js') }}"></script>
+	<script src="{{ asset('bundles/sudouxcmstheme/themes/admin/reports.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_mortgage_admin_site_report_business_development') }}">Business Development</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block modal %}
+	{% if leads|length > 0 %}
+		{% for lead in leads %}
+		    <div id="lead-detail-{{ lead.id }}" class="modal hide fade">
+			    <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h3>Lead Detail</h3>
+			    </div>
+		    	<div class="modal-body">
+						{% if lead.first_name is defined %}<b>First Name:</b> {{ lead.first_name }}<br>{% endif %}
+						{% if lead.last_name is defined %}<b>Last Name:</b> {{ lead.last_name }}<br>{% endif %}
+						<b>Email:</b> {{ lead.email }}<br>
+						<b>Status:</b> {{ lead.lead_status.name }}<br>
+						{% if lead.home_phone is defined %}<b>Home Phone:</b> {{ lead.home_phone }}<br>{% endif %}
+						{% if lead.mobile_phone is defined %}<b>Mobile Phone:</b> {{ lead.mobile_phone }}<br>{% endif %}
+						{% if lead.fax is defined %}<b>Fax:</b> {{ lead.fax }}<br>{% endif %}
+						{% if lead.subject is defined %}<b>Subject:</b> {{ lead.subject }}<br>{% endif %}
+						{% if lead.message is defined %}<b>Message:</b> {{ lead.message }}<br>{% endif %}
+						{% if lead.location is defined %}
+							<b>Address:</b><br>
+							{{ lead.location.address1 }}<br>
+							{{ lead.location.city }}, {% if lead.location.state is defined %}{{ lead.location.state.abbreviation }}{% endif %} {{ lead.location.zipcode }}
+						{% endif %}
+		    	</div>
+		    </div>
+		{% endfor %}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% if leads|length > 0 %}
+		<div class="well">
+			<form method="get" action="{{ path('sudoux_mortgage_admin_site_report_business_development_lead', { siteId: leadSite.id }) }}" novalidate="novalidate">
+				<div class="form-inline">
+					<p>{{ form_widget(form.start_date) }} to {{ form_widget(form.end_date) }}</p>
+					<p>{{ form_widget(form.status) }} <input type="submit" value="Go" class="btn btn-default"></p>
+					<div class="hide">{{ form_rest(form) }}</div>
+					
+				</div>
+			</form>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Status</th>
+					<th>Created</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lead in leads %}
+					<tr>
+						<td>{% if lead.first_name is defined %}{{ lead.first_name }}{% endif %}{% if lead.last_name is defined %} {{ lead.last_name }}{% endif %}</td>
+						<td>{{ lead.email }}</td>
+						<td>{{ lead.lead_status.name }}</td>
+						<td>{{ lead.created|date(date_format) }}</td>
+						<td>
+					    	<a href="#lead-detail-{{ lead.id }}" role="button" class="btn btn-default" data-toggle="modal">View Detail</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="pager">{{ knp_pagination_render(leads) }}</div>
+	{% else %}
+		<p>No leads found for this site.</p>
+	{% endif %}
+{% endblock %}

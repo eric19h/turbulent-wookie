@@ -1,0 +1,95 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}{{ officer.fullName }}{% endblock %}
+
+{% block body_class %}page-officer-detail{% endblock %}
+
+{% block breadcrumb %}
+	<ul>
+		<li><a href="{{ path('sudoux_mortgage_loan_officer') }}">Loan Officer</a> &raquo; </li>
+		<li>{{ officer.fullName }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% set editable = false %}
+	{% if is_granted('ROLE_SITE_ADMIN') and officer.site.id == site.id %}{% set editable = true %}{% endif %}
+		<div class="officer-content clearfix {% if editable %}editable-content{% endif %}">
+		{% if editable %}
+			<div class="edit-group hidden-phone">
+				<a class="edit-menu-toggle" data-target="dropdown-menu"><span class="icon-cog"></span></a>
+				<ul class="edit-menu">
+			    	<li><a href="{{ path('sudoux_mortgage_admin_loan_officer_edit', {'id': officer.id}) }}">Edit</a></li>
+					<li><a href="{{ path('sudoux_mortgage_admin_loan_officer_delete', {'id': officer.id}) }}">Delete</a></li>
+				</ul>
+    		</div>
+		{% endif %}	
+		
+		{% if officer.officerPhoto %}
+			<div class="media media-block">
+				<span class="pull-left">
+					<img class="media-object img-polaroid" src="{{ asset(officer.officerPhoto.path) }}">
+				</span>
+				<div class="media-body">
+					{% if officer.hasSite %}
+						<div class="pull-right">
+							{% include 'SudouxCmsThemeBundle:Misc:siteSocialLinks.html.twig' with { site: officer.officerSite } %}
+						</div>
+					{% endif %}
+					<div class="contact-info">
+						{% if officer.title %}Title: {{ officer.title }}<br>{% endif %}
+						{% if officer.phoneOffice %}Office Phone: {{ officer.phoneOffice }}<br>{% endif %}
+						{% if officer.phoneMobile %}Mobile Phone: {{ officer.phoneMobile }}<br>{% endif %}
+						{% if officer.phoneTollfree %}Toll-free Phone: {{ officer.phoneTollfree }}<br>{% endif %}
+						{% if officer.fax %}Fax: {{ officer.fax }}<br>{% endif %}
+						{% if officer.email %}Email: {{ officer.email|mailTo|purify }}<br>{% endif %}
+						{% if officer.nmlsId %}NMLS #: {{ officer.nmlsId }}{% endif %}
+						{% if officer.hasSite %}
+							{% if site.id != officer.officerSite.id %}
+								<p><a href="http://{{ officer.officerSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a></p>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="media-block">
+				{% if officer.hasSite %}
+					<div class="pull-right">
+						{% include 'SudouxCmsThemeBundle:Misc:siteSocialLinks.html.twig' with { site: officer.officerSite } %}
+					</div>
+				{% endif %}
+				<div class="contact-info">
+					{% if officer.title %}Title: {{ officer.title }}<br>{% endif %}
+					{% if officer.phoneOffice %}Office Phone: {{ officer.phoneOffice }}<br>{% endif %}
+					{% if officer.phoneMobile %}Mobile Phone: {{ officer.phoneMobile }}<br>{% endif %}
+					{% if officer.phoneTollfree %}Toll-free Phone: {{ officer.phoneTollfree }}<br>{% endif %}
+					{% if officer.fax %}Fax: {{ officer.fax }}<br>{% endif %}
+					{% if officer.email %}Email: {{ officer.email|mailTo|purify }}<br>{% endif %}
+					{% if officer.nmlsId %}NMLS #: {{ officer.nmlsId }}{% endif %}
+					{% if officer.hasSite %}
+						{% if site.id != officer.officerSite.id %}
+							<p><a href="http://{{ officer.officerSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a></p>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		{% endif %}
+
+		{% if officer.bio %}
+			<div class="bio well">
+				<h3 class="title">Bio</h3>
+				{{ officer.bio|purify }}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+
+{% block sidebar_second %}
+	{% set assignedSiteId = site.id %}
+	{% if officer.officerSite %}
+		{% set assignedSiteId = officer.officerSite.id %}
+	{% endif %}
+	{% render url('sudoux_cms_form_contact_esi', { title: 'Contact Me', subject: 0, message: 0, assignedSiteId: assignedSiteId }) %}
+{% endblock %}

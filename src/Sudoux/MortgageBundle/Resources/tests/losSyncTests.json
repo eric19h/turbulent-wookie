@@ -1,0 +1,25 @@
+/* tryLogin */
+{
+	"AuthUser":
+		{
+			"uri":"https:\/\/teBE277761.ea.elliemae.net$TEBE277761",
+			"username":"dan",
+			"password":"webmaxz"
+		},
+	"lostype":0
+}
+
+/* getLoan */
+{ "user":
+	{
+	"AuthUser":
+		{
+			"uri":"https:\/\/teBE277761.ea.elliemae.net$TEBE277761",
+			"username":"dan",
+			"password":"webmax"
+		},
+	"lostype":0,
+	"apiKey": "AAKLPCALBX"
+	},
+	"loanID":"{10027336-08b6-4e65-b03a-973bbf8cf9c1}"
+}

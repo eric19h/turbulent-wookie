@@ -1,0 +1,34 @@
+{% extends site.getAdminThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step5{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationNav.html.twig' with { step: 5, application: application } %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_step5', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+		<div class="errors">{{ form_errors(form) }}</div>
+		{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationFormTop.html.twig' %}
+		
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:housing.html.twig' %}
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:income.html.twig' %}		
+		
+		<div class="hidden">
+			{{ form_rest(form) }}
+		</div>
+		<div class="text-center submit-wrapper">
+	    	<a href="{{ path('sudoux_mortgage_admin_loan_step4', { id: application.id }) }}" class="btn btn-default">Back</a> <button type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+	    </div>
+	</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}My Loans{% endblock %}
+
+{% block body_class %}page-my-loans{% endblock %}
+
+{% block content %}
+	{% if applications|length > 0 %}
+		<p>Select a loan below you would like to view.</p>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Loan #</th>
+					<th>Address</th>
+					<th class="hidden-phone">Status</th>
+					<th class="hidden-phone">{{ knp_pagination_sortable(applications, 'Created', 'q.created') }}</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for app in applications %}
+					<tr>
+						<td>
+							{% if app.losLoanNumber %}{{ app.losLoanNumber }}{% else %}0000{{ app.id }}{% endif %}
+						</td>
+						<td>{{ app.propertyLocation.toString }}</td>
+						<td class="hidden-phone">{{ app.statusName }} {% if app.isPrequal %}(Pre-qual){% endif %}</td>
+						<td class="hidden-phone">{{ app.completedDate|date(date_format) }}</td>
+						<td>
+							{% if app.completed %}
+								{% if site.settings.inheritedMemberPortalEnabled %}
+									<a href="{{ path('sudoux_mortgage_loan_member_detail', { id: app.id }) }}">View Application</a>
+								{% endif %}
+							{% else %}
+								<a href="{{ path('sudoux_mortgage_loan_apply_step' ~ (app.lastStepCompleted + 1), { id: app.id }) }}">Complete Application</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="pager">{{ knp_pagination_render(applications) }}</div>
+	{% else %}
+		<div class="alert alert-block text-center"><h4>You have no loan applications.</h4></div>
+		<div class="text-center">
+			<a href="{{ path('sudoux_mortgage_loan_prequalify') }}" class="btn btn-default">Pre-qualify</a>
+			<a href="{{ path('sudoux_mortgage_loan_apply_step1') }}" class="btn btn-default">Apply Now</a>
+		</div>
+	{% endif %}
+{% endblock %}

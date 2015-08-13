@@ -1,0 +1,17 @@
+Sudoux\MortgageBundle\Entity\AssetOther:
+    type: entity
+    table: asset_other
+    indexes:
+      amount_idx:
+        columns: [ amount ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+        amount:
+            type: float
+    lifecycleCallbacks: {  }

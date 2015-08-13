@@ -1,0 +1,135 @@
+<?xml version="1.0" ?>
+<MESSAGE MISMOReferenceModelIdentifier="3.0.0.263.12" xmlns="http://www.mismo.org/residential/2009/schemas">
+    <ABOUT_VERSIONS>
+        <ABOUT_VERSION>
+            <AboutVersionIdentifier>FNM 1.0</AboutVersionIdentifier>
+            <CreatedDatetime>{{ application.created|date('c') }}</CreatedDatetime>
+        </ABOUT_VERSION>
+    </ABOUT_VERSIONS>
+    <DEAL_SETS>
+        <DEAL_SET>
+            <DEALS>
+                <DEAL>
+                    <COLLATERALS>
+                        <COLLATERAL>
+                            <PROPERTIES>
+                                <PROPERTY>
+                                    <ADDRESS>
+                                        <AddressLineText>{{ application.propertyLocation.address1 }}</AddressLineText>
+                                        <CityName>{{ application.propertyLocation.city }}</CityName>
+                                        <PostalCode>{{ application.propertyLocation.zipcode }}</PostalCode>
+                                        <StateCode>{{ application.propertyLocation.state.abbreviation }}</StateCode>
+                                    </ADDRESS>
+                                    <PROPERTY_DETAIL>
+                                        <FinancedUnitCount>{{ application.numUnits }}</FinancedUnitCount>
+                                        <PropertyOriginalCostAmount>{{ application.salePrice }}</PropertyOriginalCostAmount>
+                                        <PropertyUsageType>{% spaceless %}
+                                        	{% if application.residencyType == 0 %}
+                                        		PrimaryResidence
+                                        	{% elseif application.residencyType == 1 %}
+                                        		SecondHome
+                                        	{% elseif application.residencyType == 2 %}
+                                        		Investment
+                                        	{% endif %}
+                                        {% endspaceless %}</PropertyUsageType>
+                                    </PROPERTY_DETAIL>
+                                </PROPERTY>
+                            </PROPERTIES>
+                        </COLLATERAL>
+                    </COLLATERALS>
+                    <LOANS>
+                    	<LOAN LoanRoleType="SubjectLoan">
+                    		{% if application.loanType == 1 %}
+	                    		<REFINANCE>
+	                    			<RefinanceCashOutAmount></RefinanceCashOutAmount>
+	                    		</REFINANCE>
+                    		{% endif %}
+                    		<LOAN_DETAIL>
+                                <ApplicationReceivedDate>{{ application.created|date('Y-m-d') }}</ApplicationReceivedDate>
+                                <BorrowerCount>{{ application.coBorrower|length + 1 }}</BorrowerCount>
+                                <TotalMortgagedPropertiesCount>1</TotalMortgagedPropertiesCount>
+                            </LOAN_DETAIL>
+                            <TERMS_OF_MORTGAGE>
+                                <LienPriorityType>FirstLien|SecondLien</LienPriorityType>
+                                <LoanPurposeType>{% if application.loanType == 1 %}Refinance{% else %}Purchase{% endif %}</LoanPurposeType>
+                                <NoteAmount>{{ application.loanAmount }}</NoteAmount>
+                                <NoteRatePercent>%</NoteRatePercent>
+                            </TERMS_OF_MORTGAGE>
+                    	</LOAN>
+                    </LOANS>
+                    <PARTIES>
+                        {% include 'SudouxMortgageBundle:LoanApplicationAdmin:fanniemaePartyNode.xml.twig' with { borrower: application.borrower, borrowerType: 'Primary' } %}
+                        {% for borrower in application.coBorrower %}
+                        	{% include 'SudouxMortgageBundle:LoanApplicationAdmin:fanniemaePartyNode.xml.twig' with { borrower: borrower, borrowerType: 'Secondary' } %}
+                        {% endfor %}
+                   	</PARTIES>
+				</DEAL>
+			</DEALS>
+		</DEAL_SET>
+    </DEAL_SETS>
+</MESSAGE>
+
+{# {{ application.propertyTypeText }}<br>
+{{ application.salePrice|number_format }}<br>
+{{ application.loanAmount|number_format }}<br>
+{{ application.loanTerm }} years<br>
+{{ application.numUnits }}<br>
+
+
+{{ application.titleCompany1 }}
+{{ application.titleCompany2 }}
+{{ application.titleMannerText }}
+
+{% for asset in application.assetAccount %}
+	{{ asset.borrower.fullName }}</td>
+	{{ asset.institutionName }}</td>
+	{{ asset.typeText }}</td>
+	{{ asset.accountNumber }}</td>
+	{{ asset.balance|number_format }}</td>
+{% endfor %}
+
+{% for asset in application.assetRealEstate %}
+	{{ asset.borrower.fullName }}
+	{{ asset.location.address1 }}
+	{{ asset.location.city }}, {{ asset.location.state.abbreviation }} {{ asset.location.zipcode }}
+	{{ asset.marketValue|number_format }}
+	{{ asset.mortgageAmount|number_format }}
+	{{ asset.mortgagePayment|number_format }}
+	{{ asset.rentGrossIncome|number_format }}
+	{{ asset.rentNetIncome|number_format }}
+	{{ asset.insTaxExp|number_format }}
+{% endfor %}
+
+
+{{ application.expenseHousing.rent|number_format }}<br>
+{{ application.expenseHousing.mortgage|number_format }}<br>
+{{ application.expenseHousing.otherFinancial|number_format }}<br>
+{{ application.expenseHousing.insuranceHazard|number_format }}<br>
+{{ application.expenseHousing.insuranceMortgage|number_format }}<br>
+{{ application.expenseHousing.taxRealEstate|number_format }}<br>
+{{ application.expenseHousing.hoaDues|number_format }}<br>
+{{ application.expenseHousing.other|number_format }}
+
+
+{% for asset in application.incomeMonthly %}
+	{{ asset.borrower.fullName }}</td>
+	{{ asset.base|number_format }}</td>
+	{{ asset.overtime|number_format }}</td>
+	{{ asset.bonus|number_format }}</td>
+	{{ asset.commission|number_format }}</td>
+	{{ asset.interest|number_format }}</td>
+	{{ asset.rentNet|number_format }}</td>
+	{{ asset.other|number_format }}</td>
+{% endfor %}
+
+
+{% for asset in application.incomeOther %}
+	{{ asset.borrower.fullName }}
+	{{ asset.description }}
+	{{ asset.income|number_format }}
+{% endfor %}
+
+{{ application.agreementOne }}
+{{ application.agreementTwo }}
+{{ application.agreementThree }}
+#}

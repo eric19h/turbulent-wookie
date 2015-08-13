@@ -1,0 +1,120 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Loan Officers{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_people_home') }}">People</a> <span class="divider">/</span></li>	
+		<li class="active">Loan Officers</li>
+	</ul>
+{% endblock %}
+
+{% block content_top %}
+	<div class="row">
+		<div class="span8">
+			<form name="loan-officer-search-form" method="post" action="{{ path('sudoux_mortgage_admin_loan_officer') }}" novalidate="novalidate" class="clearfix">
+				<div class="input-append">
+					{{ form_widget(searchForm.search) }}
+					<div class="hide">{{ form_rest(searchForm) }}</div>
+					<input type="submit" value="Go" class="btn btn-default">
+				</div>
+				<a href="{{ path('sudoux_mortgage_admin_loan_officer') }}">Clear</a>
+			</form>
+		</div>
+		<div class="span4 text-right">
+			{% set showAddBtn = true %}
+			{% if site.siteType %}
+				{% if site.siteType.keyName == 'loan_officer' %}
+					{% set showAddBtn = false %}
+				{% endif %}
+			{% endif %}
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a href="{{ path('sudoux_mortgage_admin_loan_officer_import_csv') }}" class="btn btn-inverse"><i class="icon-upload icon-white"></i> Import Loan Officers</a>
+			{% endif %}
+			{% if showAddBtn %}
+				<a href="{{ path('sudoux_mortgage_admin_loan_officer_add') }}" class="btn btn-inverse"><i class="icon-plus icon-white"></i> Add Loan Officer</a>
+			{% endif %}
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block content %}
+	<div class="text-right">
+		<p><a href="{{ path('sudoux_mortgage_admin_loan_officer_export') }}" target="_blank"><span class="icon-download"></span> Export to CSV</a></p>
+	</div>
+	{% if search %}
+		<div class="alert">
+			<p>Results for &quot;<em>{{ search }}</em>&quot</p>
+		</div>
+	{% endif %}
+	{% if officers|length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>User</th>
+					<th>Email</th>
+					<th>Branch</th>
+					<th>Site</th>
+					<th>Active</th>
+					<th>Created</th>
+				</tr>
+			</thead>
+			{% for officer in officers %}
+			 	<tr>
+			 		<td><a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id }) }}" target="_blank">{{ officer.fullName }}</a></td>
+			 		<td>
+						{% if officer.user %}
+							<a href="{{ path('sudoux_cms_admin_user_edit', { id: officer.user.id }) }}">{{ officer.user.username }}</a>
+						{% endif %}
+					</td>
+					<td>{{ officer.email }}</td>
+			 		<td>
+                        {% if officer.branch %}
+                            {{ officer.branch.name }}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </td>
+			 		<td>{{ officer.site.name }}</td>
+			 		<td>{{ officer.active|boolToYesNo }}</td>
+			 		<td>{{ officer.created|date(date_format, app.user.timezone) }}</td>
+			 		<td>
+                        {% set branchSiteId = 0 %}
+                        {% if officer.branch %}
+                            {% if officer.branch.branchSite %}
+                                {% set branchSiteId = officer.branch.branchSite.id %}
+                            {% endif %}
+                        {% endif %}
+			 			{% if officer.site.id == site.id or branchSiteId == site.id %}
+				 			<div class="action-links">
+			 				    <div class="btn-group">
+								    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+									    Action
+									    <span class="caret"></span>
+								    </a>
+								    <ul class="dropdown-menu">
+								    	<li><a href="{{ path('sudoux_mortgage_admin_loan_officer_edit', {'id': officer.id}) }}"><i class="icon-pencil"></i> Edit</a></li>
+							    		<li><a href="{{ path('sudoux_mortgage_admin_loan_officer_delete', {'id': officer.id}) }}"><i class="icon-trash"></i> Delete</a></li>
+								    	{% if officer.hasSite %}
+								    		<li><a href="http://{{ officer.officerSite.primaryDomain.domain }}" target="_blank"><i class="icon-plus"></i> View Site</a></li>
+							    		{% else %}
+								    		<li><a href="{{ path('sudoux_mortgage_admin_site_add', { 'type': 'loan_officer', 'id': officer.id}) }}"><i class="icon-plus"></i> Create Site</a></li>
+								    	{% endif %}
+								    </ul>
+							    </div>
+							</div>
+						{% else %}
+							<p class="muted"><i class="icon-lock"></i> Locked</p>
+						{% endif %}
+					</td>
+			 	</tr>
+			{% endfor %} 
+		</table>
+		<div class="pager">{{ knp_pagination_render(officers) }}</div>
+	{% else %}
+		<p>No loan officers were found. {% if search is null %}<a href="{{ path('sudoux_mortgage_admin_loan_officer_add') }}">Click here</a> to get started.{% endif %}</p>
+	{% endif %}
+{% endblock %}

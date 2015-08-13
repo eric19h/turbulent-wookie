@@ -1,0 +1,21 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Delete Branch{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_branch') }}">Branches</a> <span class="divider">/</span></li>		
+		<li class="active">Delete Branch</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<h3>Are you sure you want to delete &quot;{{ branch.name }}&quot;?</h3>
+	{% if branch.hasSite %}<p class="alert alert-warning"><b>This will also remove their associated website.</b></p>{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_branch_delete', { id: branch.id}) }}" method="post">
+		<div class="submit-wrapper clearfix">
+	    	<input type="submit" value="Delete" class="btn"> <a href="{{ path('sudoux_mortgage_admin_branch') }}" class="cancel">Cancel</a> 
+		</div>
+	</form>
+{% endblock %}

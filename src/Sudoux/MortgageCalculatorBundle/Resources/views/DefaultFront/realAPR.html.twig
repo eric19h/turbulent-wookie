@@ -1,0 +1,80 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}What is The Real APR for That Loan?{% endblock %}
+
+{% block body_class %}page-mortgage-calculator{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_calculator') }}">Mortgage Calculators</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<iframe id="iframe_calculator" width="100%" height="1200" style="border: 0px" scrolling="yes" frameborder="0" src="{{ calculator_url }}/website/includes/plugins/calculators/what-is-the-real-apr-calculator.php"></iframe>
+    {#<form action="{{ path('sudoux_mortgage_calculator_real_apr') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+        <div class="row">
+            <div class="span6">
+                <h3>Loan Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.home_value, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.home_value) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.interest_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.interest_rate) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.mortgage_term, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.mortgage_term) }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.down_payment, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.down_payment) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <h3>Additional Information</h3>
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        {{ form_label(form.points, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.points) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.origination_fees, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.origination_fees) }} %
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        {{ form_label(form.closing_costs, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                        <div class="controls">
+                            {{ form_widget(form.closing_costs) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <div class="submit-wrapper text-center">
+                    <div class="hide">{{ form_rest(form) }}</div>
+                    <input type="submit" value="Calculate" class="btn">
+                </div>
+            </div>
+        </div>
+    </form>#}
+{% endblock %}

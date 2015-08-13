@@ -1,0 +1,40 @@
+EH                                20140502   ENV1     
+TH T100099-002TRAN1    
+TPI1.00 01                              N
+0001  3.20 W
+00ANN
+01A01                                                                                                                                    85000.00  8.75036001                                                                                5/1                                                                             
+02A22 Racoon Island Road                             Lake Hopatcong                     NJ07849      1F1SEE PRELIMINARY TITLE REPORT                                                    1938
+02B  05                                                                                1Single man                                                  1        
+02CDavid Bishop                                                
+02D2003           1.00           0.00           0.00           0.0011                                                                                            0.00
+03ABW138649160David                                                                 Bishop                                 7323109950 4512U 1          19660828                                                                                
+03B138649160  6
+03C138649160ZG59 Castle Rock Acres                              East Stroudsburg                   PA18302    O 2                                                    
+05H138649160226         668.70
+05H138649160201          35.00
+05H138649160214         252.83
+06G13864916022 Racoon Island Road              Lake Hopatcong                     NJ07849    H14           0.00       30864.00           0.00         755.00           0.00        -755.00NY1                
+06G13864916059 Castle Rock Acres               East Stroudsburg                   PA18302    H        300000.00           0.00           0.00           0.00           0.00           0.00YN2                
+06L138649160I Bank of America                    400 Christiana Road                Newark                             DE19713    25                                     755.00 41       30864.00Y  NN  
+06L138649160I Key Bank NA                        P.O. Box 94825                     Cleveland                          OH44101    3211020278208                          179.00 93       13045.00N  NN  
+06L138649160I Chase                              10790 Rancho Bernardo Road         San Diego                          CA92127    414720202238                           117.00  0        5891.00N  NN  
+06L138649160I Worlds Foremost Bank North         4800 NW 1st. Street, Suite 300     Lincoln                            NE68521                                            74.00 51        3727.00N  NN  
+06L138649160I GEMB/Lowes                         P.O. Box 103065                    Roswell                            GA30076    798192431048                            41.00 35        1412.00N  NN  
+06L138649160I THD/CBSD                                                                                                                                                    15.00 43         639.00N  NN  
+07A           0.00           0.00           0.00       30864.00        1679.05        2995.00           0.00        2550.00           0.00           0.00           0.00
+08A138649160NNNNNNNNN01NY101
+10A138649160N2                              M
+10BTMike  Byrne                                                                   Absolute Home Mortgage Corp.       279 Browertown Road                                                   West Paterson                      NJ07424    
+10R1386491605 
+00070 3.20 
+99B F1           0.00                                                                        Home Appraisal                                      
+ADSLoanOriginatorID                                                                     
+ADSLoanOriginationCompanyID                                                             
+00011 3.20 
+LNC1                    N  N  0.000                      N                  0.000   0.000  
+PID30 Year Fixed                                5/1  
+PCH360N01Y   
+ARM                  6.500
+TT TRAN1    
+ET ENV1     

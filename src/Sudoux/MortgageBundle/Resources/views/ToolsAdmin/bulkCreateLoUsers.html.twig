@@ -1,0 +1,33 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Bulk Create Loan Officer Users{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_internal_tools') }}">Tools</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% if site.settings.autoCreateLoanOfficerUser %}
+		{% if loanOfficers|length > 0 %}
+			<h3>The following loan officers will have users created or assigned.</h3>
+
+			<ul id="loan-officers">
+				{% for loanOfficer in loanOfficers %}
+					<li>{{ loanOfficer.fullname }} ({{ loanOfficer.email }})</li>
+				{% endfor %}
+			</ul>
+			<form action="{{ path('sudoux_mortgage_admin_internal_tools_bulk_create_loan_officer_users') }}" method="post">
+				<div class="submit-wrapper clearfix">
+					<input type="submit" value="Add users" class="btn"> <a href="{{ path('sudoux_cms_admin_internal_tools') }}" class="cancel">Cancel</a>
+				</div>
+			</form>
+		{% else %}
+			All loan officers with sites have a user.
+		{% endif %}
+	{% else %}
+		You must enable auto creation of loan officer users for this site first. <a href="{{ path('sudoux_mortgage_admin_settings') }}">Click here to change the setting.</a>
+	{% endif %}
+{% endblock %}

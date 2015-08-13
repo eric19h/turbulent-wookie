@@ -1,0 +1,39 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step6{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="visible-desktop">
+		{% include 'SudouxMortgageBundle:LoanApplicationFront:applicationNav.html.twig' with { step: 6, application: application } %}
+		<form action="{{ path('sudoux_mortgage_loan_apply_step6', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+			<div class="errors">{{ form_errors(form) }}</div>
+			
+			<h3>Borrower Declarations</h3>
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:declarations.html.twig' with { form: form.borrower, borrower: application.borrower } %}	
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoring.html.twig' with { form: form.borrower, borrower: application.borrower } %}
+			
+			{% for borrower_form in form.co_borrower %}
+				<h3>Co-Borrower Declarations for {{ application.coBorrower[loop.index0].fullName }}</h3>
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:declarations.html.twig' with { form: borrower_form, borrower: application.coBorrower[loop.index0] } %}
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoring.html.twig' with { form: borrower_form, borrower: application.coBorrower[loop.index0] } %}
+			{% endfor %}
+		
+			<div class="hidden">
+				{{ form_rest(form) }}
+			</div>
+			<div class="text-center submit-wrapper">
+		    	<a href="{{ path('sudoux_mortgage_loan_apply_step5', { id: application.id }) }}" class="btn btn-default">Back</a> 
+		    	<button type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+		    </div>
+		</form>
+	</div>
+	<div class="hidden-desktop">
+		{{ sudoux.application.messages.loan_screen_too_small|raw }}
+	</div>
+{% endblock %}

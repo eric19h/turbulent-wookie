@@ -1,0 +1,21 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Import Fannie Mae 3.2 File{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_import_fanniemae') }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{{ form_label(form.fanniemae_file) }}
+		{{ form_widget(form.fanniemae_file) }}
+		<div class="submit-wrapper">
+			<div class="hide">{{ form_rest(form) }}</div>
+		    <input type="submit" value="Import Loan" class="btn"> <a href="{{ path('sudoux_mortgage_admin_loan') }}">Cancel</a>
+		</div>
+	</form>
+{% endblock %}

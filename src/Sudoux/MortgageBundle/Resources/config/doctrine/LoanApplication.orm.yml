@@ -1,0 +1,308 @@
+Sudoux\MortgageBundle\Entity\LoanApplication:
+    type: entity
+    table: loan_application
+    repositoryClass: Sudoux\MortgageBundle\Entity\LoanApplicationRepository
+    manyToOne: 
+      property_location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          property_location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      user:
+        targetEntity: Sudoux\Cms\UserBundle\Entity\User
+        cascade: { }
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      admin_user:
+        targetEntity: Sudoux\Cms\UserBundle\Entity\User
+        cascade: { }
+        joinColumns:
+          admin_user_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: { }
+        joinColumns:
+          site_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+      borrower:
+        targetEntity: Sudoux\MortgageBundle\Entity\Borrower
+        cascade: ["persist", "remove"]
+        inversedBy: loan
+        joinColumns:
+          borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      expense_housing:
+        targetEntity: Sudoux\MortgageBundle\Entity\ExpenseHousing
+        cascade: ["persist", "remove"]
+        joinColumns:
+          expense_housing_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      loan_officer:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanOfficer
+        cascade: { }
+        joinColumns:
+          loan_officer_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      message_thread:
+        targetEntity: Sudoux\Cms\MessageBundle\Entity\Thread
+        cascade: ["persist", "remove"]
+        joinColumns:
+          thread_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      milestone_group:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanMilestoneGroup
+        cascade: { }
+        joinColumns:
+          milestone_group_id:
+            referencedColumnName: id
+      milestone:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanMilestone
+        cascade: { }
+        joinColumns:
+          milestone_id:
+            referencedColumnName: id
+    manyToMany:
+      co_borrower:
+        targetEntity: Sudoux\MortgageBundle\Entity\Borrower
+        cascade: ["persist", "remove"]
+        inversedBy: loan_coborrower
+        joinColumns:
+          co_borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      asset_account:
+        targetEntity: Sudoux\MortgageBundle\Entity\AssetAccount
+        cascade: ["persist", "remove"]
+        joinColumns:
+          asset_account_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      asset_real_estate:
+        targetEntity: Sudoux\MortgageBundle\Entity\AssetRealEstate
+        cascade: ["persist", "remove"]
+        joinColumns:
+          asset_real_estate_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      income_other:
+        targetEntity: Sudoux\MortgageBundle\Entity\IncomeOther
+        cascade: ["persist", "remove"]
+        joinColumns:
+          income_other_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      income_monthly:
+        targetEntity: Sudoux\MortgageBundle\Entity\IncomeMonthly
+        cascade: ["persist", "remove"]
+        joinColumns:
+          income_monthly_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      additional_site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: ["persist"]
+        joinColumns:
+          site_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      document:
+        targetEntity: Sudoux\MortgageBundle\Entity\LoanDocument
+        cascade: ["remove"]
+        orderBy:
+          created: DESC
+        joinColumns:
+          document_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      email:
+        targetEntity: Sudoux\Cms\MessageBundle\Entity\Email
+        cascade: ["persist", "remove"]
+        orderBy:
+          created: DESC
+        joinColumns:
+          email_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      client_user:
+        targetEntity: Sudoux\Cms\UserBundle\Entity\User
+        cascade: { }
+        joinColumns:
+          client_user_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      pricing_scenario:
+        targetEntity: Sudoux\MortgageBundle\Entity\PricingScenario
+        cascade: ["persist", "remove"]
+        joinColumns:
+          pricing_scenario_id:
+            referencedColumnName: id
+      referral_source:
+        targetEntity: Sudoux\Cms\FormBundle\Entity\ReferralSource
+        cascade: { }
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          referral_source_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+        losid_idx:
+          columns: [ los_id ]
+        created_idx:
+          columns: [ created ]
+        modified_idx:
+          columns: [ modified ]
+        los_modified_idx:
+          columns: [ los_modified ]
+        status_date_idx:
+          columns: [ status_date ]
+        sent_to_los_idx:
+          columns: [ sent_to_los ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        guid:
+            type: guid              
+        sale_price:
+            type: bigint
+            nullable: true
+        loan_amount:
+            type: bigint
+            nullable: true
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        los_loan_number:
+            type: string
+            length: '255'
+            nullable: true
+        loan_term:
+            type: integer
+            nullable: true
+        loan_type:
+            type: smallint
+            nullable: true
+        num_units:
+            type: smallint
+            nullable: true
+        property_type:
+            type: smallint
+            nullable: true
+        property_year_built:
+            type: integer
+            nullable: true
+        residency_type:
+            type: smallint
+            nullable: true
+        title_company1:
+            type: string
+            length: 255
+            nullable: true
+        title_company2:
+            type: string
+            length: 255
+            nullable: true
+        title_manner:
+            type: string
+            length: 255
+            nullable: true
+        has_realtor:
+            type: boolean
+            nullable: true
+        realtor_name:
+            type: string
+            length: 255
+            nullable: true
+        realtor_company:
+            type: string
+            length: 255
+            nullable: true
+        realtor_phone:
+            type: string
+            length: 255
+            nullable: true
+        is_prequal:
+            type: boolean
+        refinance_year_aquired:
+            type: integer
+            nullable: true
+        refinance_original_cost:
+            type: float
+            nullable: true
+        refinance_existing_liens:
+            type: float
+            nullable: true
+        refinance_current_rate:
+            type: float
+            nullable: true
+        refinance_current_loan_type:
+            type: text
+            nullable: true
+        refinance_current_lender:
+            type: text
+            nullable: true
+        refinance_purpose:
+            type: smallint
+            nullable: true
+        agreement_one:
+            type: boolean
+            nullable: true
+        agreement_two:
+            type: boolean
+            nullable: true
+        agreement_three:
+            type: boolean
+            nullable: true
+        comments:
+            type: text
+            nullable: true
+        completed:
+            type: boolean
+            nullable: true
+        completed_date:
+            type: datetime
+            nullable: true
+        lock_status:
+            type: smallint
+        last_step_completed:
+            type: smallint
+            nullable: true
+        status:
+            type: integer
+        status_date:
+            type: datetime
+        deleted:
+            type: boolean
+        created:
+            type: datetime
+        modified:
+            type: datetime
+        los_modified:
+            type: datetime
+            nullable: true            
+        sent_to_los:
+            type: boolean
+            nullable: true
+        source:
+            type: integer
+        no_property_location:
+            type: boolean
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate: [ preUpdate ]

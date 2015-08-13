@@ -1,0 +1,194 @@
+admin_main_menu:
+  dashboard:
+    name: Dashboard
+    route: sudoux_cms_admin
+    iconClass: icon-home icon-white
+    role: ROLE_SITE_ADMIN
+  content:
+    name: Content
+    route: sudoux_cms_admin_content_home
+    iconClass: icon-file icon-white
+    role: ~
+    child_routes: 
+      - sudoux_cms_admin_node_page
+      - sudoux_cms_admin_node_page_add
+      - sudoux_cms_admin_node_page_edit
+      - sudoux_cms_admin_node_page_delete
+      - sudoux_cms_admin_node_blog
+      - sudoux_cms_admin_node_blog_add
+      - sudoux_cms_admin_node_blog_edit
+      - sudoux_cms_admin_node_blog_delete
+      - sudoux_cms_admin_node_news
+      - sudoux_cms_admin_node_news_add
+      - sudoux_cms_admin_node_news_edit
+      - sudoux_cms_admin_node_news_delete
+      - sudoux_cms_admin_file
+      - sudoux_cms_admin_file_add
+      - sudoux_cms_admin_file_edit
+      - sudoux_cms_admin_file_delete
+      - sudoux_cms_admin_advertisement
+      - sudoux_cms_admin_advertisement_add
+      - sudoux_cms_admin_advertisement_edit
+      - sudoux_cms_admin_advertisement_delete
+      - sudoux_cms_admin_job
+      - sudoux_cms_admin_job_add
+      - sudoux_cms_admin_job_edit
+      - sudoux_cms_admin_job_delete
+      - sudoux_cms_admin_testimonial
+      - sudoux_cms_admin_testimonial_add
+      - sudoux_cms_admin_testimonial_edit
+      - sudoux_cms_admin_testimonial_delete
+      - sudoux_cms_admin_kbarticle
+      - sudoux_cms_admin_dictionary
+      - sudoux_cms_admin_dictionary_letter
+      - sudoux_cms_admin_kbarticle
+      - sudoux_cms_admin_dictionary
+      - sudoux_cms_admin_dictionary_letter
+  menus:
+    name: Menus
+    route: sudoux_cms_admin_menu
+    iconClass: icon-align-justify icon-white
+    role: ~
+    child_routes: 
+      - sudoux_cms_admin_menu_add
+      - sudoux_cms_admin_menu_edit
+      - sudoux_cms_admin_menu_delete
+      - sudoux_cms_admin_menu_item
+      - sudoux_cms_admin_menu_item_add
+      - sudoux_cms_admin_menu_item_edit
+      - sudoux_cms_admin_menu_item_delete
+  people:
+    name: People
+    route: sudoux_cms_admin_people_home
+    iconClass: icon-user icon-white
+    role: ~
+    child_routes: 
+      - sudoux_cms_admin_user
+      - sudoux_cms_admin_user_add
+      - sudoux_cms_admin_user_edit
+      - sudoux_cms_admin_user_delete
+      - sudoux_cms_admin_user_account
+      - sudoux_cms_admin_people_contact
+      - sudoux_cms_admin_people_contact_add
+      - sudoux_cms_admin_people_contact_edit
+      - sudoux_cms_admin_people_contact_delete
+      - sudoux_mortgage_admin_loan_officer
+      - sudoux_mortgage_admin_loan_officer_add
+      - sudoux_mortgage_admin_loan_officer_edit
+      - sudoux_mortgage_admin_loan_officer_delete
+  website:
+    name: Sites
+    route: sudoux_cms_admin_site
+    iconClass: icon-globe icon-white
+    role: ~
+    child_routes: 
+      - sudoux_cms_admin_site
+      - sudoux_cms_admin_site_add
+      - sudoux_cms_admin_site_edit
+      - sudoux_cms_admin_site_delete
+      - sudoux_cms_admin_site_domain
+      - sudoux_cms_admin_site_domain_add
+      - sudoux_cms_admin_site_domain_edit
+      - sudoux_cms_admin_site_domain_delete  
+  loan:
+    name: Loans
+    route: sudoux_mortgage_admin_loan
+    iconClass: icon-list-alt icon-white
+    role: ~
+    child_routes:
+      - sudoux_mortgage_admin_loan
+      - sudoux_mortgage_admin_loan_add
+      - sudoux_mortgage_admin_loan_step1
+      - sudoux_mortgage_admin_loan_step2
+      - sudoux_mortgage_admin_loan_step3
+      - sudoux_mortgage_admin_loan_step4
+      - sudoux_mortgage_admin_loan_step5
+      - sudoux_mortgage_admin_loan_step6
+      - sudoux_mortgage_admin_loan_step7
+      - sudoux_mortgage_admin_loan_member
+      - sudoux_mortgage_admin_loan_edit
+      - sudoux_mortgage_admin_loan_delete
+  business:
+    name: Business
+    route: sudoux_cms_admin_business_home
+    iconClass: icon-briefcase icon-white
+    role: ~
+    child_routes:
+      - sudoux_cms_admin_business_company
+      - sudoux_cms_admin_business_company_add
+      - sudoux_cms_admin_business_company_edit
+      - sudoux_cms_admin_business_company_delete
+      - sudoux_cms_admin_business_partner
+      - sudoux_cms_admin_business_partner_add
+      - sudoux_cms_admin_business_partner_edit
+      - sudoux_cms_admin_business_partner_delete      
+      - sudoux_cms_admin_form_lead
+      - sudoux_cms_admin_form_lead_add
+      - sudoux_cms_admin_form_lead_edit
+      - sudoux_cms_admin_form_lead_delete
+      - sudoux_mortgage_admin_branch
+      - sudoux_mortgage_admin_branch_add
+      - sudoux_mortgage_admin_branch_edit
+      - sudoux_mortgage_admin_branch_delete
+      - sudoux_mortgage_admin_business_realtor_referral
+  configuration:
+    name: Configuration
+    route: sudoux_cms_admin_configuration_home
+    iconClass: icon-cog icon-white
+    role: ~
+    child_routes:
+      - sudoux_cms_admin_configuration_home
+      - sudoux_cms_admin_site_settings_edit_general
+      - sudoux_cms_admin_site_settings_edit_website
+      - sudoux_cms_admin_site_settings_edit_banner
+      - sudoux_cms_admin_site_settings_edit_theme
+      - sudoux_cms_admin_site_settings
+      - sudoux_cms_admin_theme
+      - sudoux_cms_admin_vocab
+      - sudoux_cms_admin_vocab_add
+      - sudoux_cms_admin_vocab_edit
+      - sudoux_cms_admin_vocab_delete
+      - sudoux_cms_admin_taxonomy
+      - sudoux_cms_admin_taxonomy_add
+      - sudoux_cms_admin_taxonomy_edit
+      - sudoux_cms_admin_taxonomy_delete
+      - sudoux_cms_admin_site_redirect
+      - sudoux_cms_admin_site_redirect_add
+      - sudoux_cms_admin_site_redirect_edit
+      - sudoux_cms_admin_site_redirect_delete
+      - sudoux_cms_admin_seo
+      - sudoux_cms_admin_seo_meta_data
+      - sudoux_cms_admin_seo_meta_data_add
+      - sudoux_cms_admin_seo_meta_data_edit
+      - sudoux_cms_admin_seo_meta_data_delete
+      - sudoux_cms_admin_seo_meta_data_path
+      - sudoux_cms_admin_seo_meta_data_path_add
+      - sudoux_cms_admin_seo_meta_data_path_edit
+      - sudoux_cms_admin_seo_meta_data_path_delete
+      - sudoux_mortgage_admin_settings_pricing
+      - sudoux_mortgage_admin_settings_pricing_delete
+      - sudoux_mortgage_admin_settings_credit
+      - sudoux_mortgage_admin_settings_credit_delete
+      - sudoux_mortgage_admin_settings_los
+      - sudoux_mortgage_admin_settings_los_delete
+      - sudoux_mortgage_admin_settings_los_milestones
+      - sudoux_mortgage_admin_settings_los
+      - sudoux_mortgage_admin_settings_los_delete
+      - sudoux_mortgage_admin_settings_realtyware
+      - sudoux_mortgage_admin_settings_realtyware_delete
+  tools:
+    name: Tools
+    route: sudoux_cms_admin_internal_tools
+    iconClass: icon-wrench icon-white
+    role: ROLE_SUPER_ADMIN
+#  payment:
+#    name: Payments
+#    route: sudoux_cms_admin_site_payment
+#    iconClass: icon-envelope
+#    role: ROLE_SUPER_ADMIN
+#    child_routes: [sudoux_cms_admin_site_payment, sudoux_cms_admin_site_payment_add, sudoux_cms_admin_site_payment_edit, sudoux_cms_admin_site_payment_delete ]
+#  report:
+#    name: Reports
+#    route: sudoux_cms_admin_site_report
+#    iconClass: icon-list-alt icon-white
+#    role: ROLE_SITE_ADMIN

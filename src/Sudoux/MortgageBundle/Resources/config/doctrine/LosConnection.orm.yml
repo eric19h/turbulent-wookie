@@ -1,0 +1,69 @@
+Sudoux\MortgageBundle\Entity\LosConnection:
+    type: entity
+    table: los_connection
+    manyToOne: 
+        los_provider:
+            targetEntity: Sudoux\MortgageBundle\Entity\LosProvider
+            cascade: {}
+            joinColumns:
+                los_provider_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        site:
+            targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+            cascade: {}
+            joinColumns:
+                site_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        site_settings:
+            targetEntity: Sudoux\Cms\SiteBundle\Entity\Settings
+            mappedBy: los
+            cascade: ["persist", "remove"]
+    indexes:
+      username_idx:
+        columns: [ username ]
+      company_idx:
+        columns: [ company ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        host:
+            type: text
+            nullable: true
+        service_url:
+            type: text
+            nullable: true
+        username:
+            type: string
+            length: '100'
+        password:
+            type: string
+            length: '100'
+        company:
+            type: string
+            length: '100'
+            nullable: true
+        license_key:
+            type: text
+            nullable: true
+        automatic:
+            type: boolean
+        settings:
+            type: array
+            nullable: true
+        last_updated:
+            type: datetime
+        import_los_loans:
+            type: boolean
+        auto_send_docs:
+            type: boolean
+        allow_loan_deletions:
+            type: boolean
+        active:
+            type: boolean
+    lifecycleCallbacks: {  }

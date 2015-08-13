@@ -1,0 +1,415 @@
+{% block xmlHeader %}<?xml version="1.0" encoding="UTF-8"?>{% endblock xmlHeader %}
+<!DOCTYPE LOAN_APPLICATION SYSTEM "MISMO_231.dtd">
+{%  block mismo231LoanApplication %}
+<LOAN_APPLICATION MISMOVersionID="2.3.1">
+    <!-- - - - - - - ADDITIONAL_CASE_DATA - - - - - - -->
+    <ADDITIONAL_CASE_DATA>
+        {% if application.loanType == "Purchase" %}
+            <TRANSMITTAL_DATA/>
+        {% else %}
+            <TRANSMITTAL_DATA PropertyAppraisedValueAmount="{{ application.refinanceOriginalCost|number_format(2, '.', '') }}" />
+        {% endif %}
+    </ADDITIONAL_CASE_DATA>
+    <!-- - - - - - - - - ASSETS - - - - - - - - - - - -->
+    {% for assetA in application.assetAccount %}
+        <ASSET BorrowerID="D{{ assetA.borrower.ssn|toInteger }}" _AccountIdentifier="{{ assetA.accountNumber }}"
+               _CashOrMarketValueAmount="{{ assetA.balance|number_format(2, '.', '') }}"
+               _HolderName="{{ assetA.institutionName }}" _Type="{{ assetA.type }}" />
+    {% endfor %}
+    <!-- - - - - - - - - - - INTERVIEWER_INFORMATION - - - - - - - - - - -->
+    <INTERVIEWER_INFORMATION/>
+    <!-- - - - - - - - - LIABILITIES- - - - - - - - - -->
+    {% for assetR in application.borrower.assetRealEstate %}
+        {% if assetR.mortgageAmount is not empty and assetR.mortgageAmount > 0 %}
+            <LIABILITY BorrowerID="D{{ assetR.borrower.ssn|toInteger }}" _ID="D{{ assetR.id + 10000 }}"
+                       REO_ID="D{{ assetR.id + 5000 }}"
+                       _HolderName="Mortgage Loan"
+                       _UnpaidBalanceAmount="{{ assetR.mortgageAmount|number_format(2, '.', '') }}"
+                       _Type="MortgageLoan" />
+        {% endif %}
+    {% endfor %}
+    {% if application.borrower.declarationAlimonyChildSupport %}
+        <LIABILITY BorrowerID="D{{ application.borrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 100 }}"
+                   _MonthlyPaymentAmount="{{ application.borrower.declarationAlimonyChildSupportSeparateMaintenance|number_format(2, '.', '') }}" _Type="SeparateMaintenanceExpense"/>
+        <!-- Debt: BP_1 Support_2 -->
+        <LIABILITY BorrowerID="D{{ application.borrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 110 }}"
+                   _MonthlyPaymentAmount="{{ application.borrower.declarationAlimonyChildSupportChildSupport|number_format(2, '.', '') }}" _Type="ChildSupport"/>
+        <!-- Debt: BP_1 Support_1 -->
+        <LIABILITY BorrowerID="D{{ application.borrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 120 }}"
+                   _MonthlyPaymentAmount="{{ application.borrower.declarationAlimonyChildSupportAlimony|number_format(2, '.', '') }}" _Type="Alimony"/>
+    {% endif %}
+    {% for coborrower in application.coborrower %}
+        {% if coborrower.declarationAlimonyChildSupport %}
+            <LIABILITY BorrowerID="D{{ coborrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 200 }}"
+                       _MonthlyPaymentAmount="{{ coborrower.declarationAlimonyChildSupportSeparateMaintenance }}|number_format(2, '.', '') " _Type="SeparateMaintenanceExpense"/>
+            <!-- Debt: BP_1 Support_2 -->
+            <LIABILITY BorrowerID="D{{ application.borrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 210 }}"
+                       _MonthlyPaymentAmount="{{ application.borrower.declarationAlimonyChildSupportChildSupport}}|number_format(2, '.', '') " _Type="ChildSupport"/>
+            <!-- Debt: BP_1 Support_1 -->
+            <LIABILITY BorrowerID="D{{ application.borrower.ssn|toInteger }}" _ID="D{{ application.id + loop.index + 220 }}"
+                       _MonthlyPaymentAmount="{{ application.borrower.declarationAlimonyChildSupportAlimony }}|number_format(2, '.', '') " _Type="Alimony"/>
+        {% endif %}
+    {% endfor %}
+    <!-- - - - - - - - LOAN PRODUCT DATA- - - - - - - -->
+    <LOAN_PRODUCT_DATA>
+        <LOAN_FEATURES GSEPropertyType="{{ application.propertyType }}" />
+    </LOAN_PRODUCT_DATA>
+    <!-- - - - - - - - LOAN PURPOSE - - - - - - - - - -->
+    {% if application.loanType == "Refinance" %}
+        <LOAN_PURPOSE PropertyUsageType="{{ application.residencyType }}"
+                      GSETitleMannerHeldDescription="{{ application.titleManner }}"
+                      _Type="Refinance"><CONSTRUCTION_REFINANCE_DATA RefinanceImprovementsType="Unknown" GSERefinancePurposeType="{{ application.refinancePurpose }}" PropertyAcquiredYear="{{ application.refinanceYearAquired }}" PropertyExistingLienAmount="{{ application.refinanceExistingLiens|number_format(2, '.', '') }}" PropertyOriginalCostAmount="{{ application.refinanceOriginalCost|number_format(2, '.', '') }}"/>
+        </LOAN_PURPOSE>
+    {% else %}
+        <LOAN_PURPOSE PropertyUsageType="{{ application.residencyType }}"
+                      _Type="Purchase"
+                      GSETitleMannerHeldDescription="{{ application.titleManner }}">
+        </LOAN_PURPOSE>
+    {% endif %}
+    <!-- - - - - - - - - - - LOAN_QUALIFICATION - - - - - - - - - - -->
+    <LOAN_QUALIFICATION AdditionalBorrowerAssetsConsideredIndicator="Y" />
+    <!-- - - - - - - - MORTGAGE TERMS - - - - - - - - -->
+    <MORTGAGE_TERMS BaseLoanAmount="{{ application.loanAmount|number_format(2, '.', '') }}"
+                    LoanAmortizationTermMonths="{{ (application.loanTerm)*12 }}" />
+    <!-- - - - - - - - PROPERTY - - - - - - - - - - - -->
+    {% if not application.noPropertyLocation %}
+    <PROPERTY _City="{{ application.propertyLocation.city|ucwords }}"
+              _PostalCode="{{ application.propertyLocation.zipcode }}"
+              _FinancedNumberOfUnits="{{ application.numUnits }}"
+              _State="{{ application.propertyLocation.state.abbreviation|ucfirst }}"
+            {% if application.propertyYearBuilt is not empty %}
+              _StreetAddress="{{ application.propertyLocation.address1|ucwords }}"
+              _StructureBuiltYear="{{ application.propertyYearBuilt }}">
+        {% else %}
+            _StreetAddress="{{ application.propertyLocation.address1|ucwords }}">
+        {% endif %}
+        {% endif %}
+        {% if application.propertyType is not empty %}
+            <_LEGAL_DESCRIPTION _TextDescription="{{ application.propertyType }}" />
+        {% endif %}
+    </PROPERTY>
+    <!-- - - - - - - - REO PROPERTY - - - - - - - - - -->
+    {% for assetR in application.borrower.assetRealEstate %}
+        <REO_PROPERTY BorrowerID="D{{ assetR.borrower.ssn|toInteger }}"
+                      _City="{{ assetR.location.city|ucwords }}"
+                      _PostalCode="{{ assetR.location.zipcode }}"
+                      _RentalIncomeGrossAmount="{{ assetR.rentGrossIncome|number_format(2, '.', '') }}"
+                      _RentalIncomeNetAmount="{{ assetR.rentNetIncome|number_format(2, '.', '') }}"
+                      _State="{{ assetR.location.state.abbreviation|ucfirst }}"
+                      _StreetAddress="{{ assetR.location.address1|ucwords }}"
+                      _MarketValueAmount="{{ assetR.marketValue|number_format(2, '.', '')  }}"
+                      REO_ID="D{{ assetR.id }}" />
+    {% endfor %}
+    <!-- - - - - - - - TITLE HOLDER - - - - - - - - - -->
+    {% if application.titleCompany1 %}
+        <TITLE_HOLDER _Name="{{ application.titleCompany1 }}"/>
+    {% endif %}
+    {% if application.titleCompany1 %}
+        <TITLE_HOLDER _Name="{{ application.titleCompany2 }}"/>
+    {% endif %}
+    <!-- - - - - - - - TRANSACTIONAL DETAIL - - - - - -->
+    <TRANSACTION_DETAIL
+            {% if application.salePrice is not empty %}
+                PurchasePriceAmount="{{ application.salePrice|number_format(2, '.', '') }}"
+            {% endif %}
+            {% if application.refinanceExistingLiens is not empty %}
+                SubordinateLienAmount="{{ application.refinanceExistingLiens|number_format(2, '.', '') }}"
+            {% endif %}
+            {% if application.refinanceExistingLiens is not empty %}
+                RefinanceIncludingDebtsToBePaidOffAmount="{{ application.loanAmount|number_format(2, '.', '') }}"
+            {% endif %}
+            />
+    <!-- - - - - - - - - - - BORROWER - - - - - - - - - -->
+    <BORROWER BorrowerID="D{{ application.borrower.ssn|toInteger }}" BrwrConsentDate="{{ application.completedDate|date('Y-m-d') }}"
+              _LastName="{{ application.borrower.lastName|ucfirst }}"
+              _SSN="{{ application.borrower.ssn|toInteger }}"
+              _FirstName="{{ application.borrower.firstName|ucfirst }}"
+              DependentCount="{{ application.borrower.dependentsNumber }}"
+              SchoolingYears="{{ application.borrower.yearsOfSchool}}"
+              MaritalStatusType="{{ application.borrower.maritalStatus }}"
+              _BirthDate="{{ application.borrower.birthDate|date('Y-m-d') }}"
+              _HomeTelephoneNumber="{{ application.borrower.phoneHome|toInteger }}"
+              _NameSuffix="{{ application.borrower.suffix }}"
+              _UnparsedName="{{ application.borrower.fullName }}"
+              _PrintPositionType="Borrower"
+              _MiddleName="{{ application.borrower.middleInitial }}"
+              _AgeAtApplicationYears="{{ application.borrower.birthDate|age }}"
+              _ApplicationSignedDate="{{ application.completedDate|date('Y-m-d') }}">
+        <_MAIL_TO/>
+        <_RESIDENCE _City="{{ application.borrower.location.location.city|ucwords }}"
+                    _State="{{ application.borrower.location.location.state.abbreviation|ucfirst }}"
+                    _PostalCode="{{ application.borrower.location.location.zipcode }}"
+                    _StreetAddress="{{  application.borrower.location.location.address1|ucwords  }}"
+                    BorrowerResidencyDurationYears="{{ application.borrower.location.yearsAtLocation }}"
+                    BorrowerResidencyType="Current"
+                    BorrowerResidencyDurationMonths="{{ application.borrower.location.monthsAtLocation }}">
+        </_RESIDENCE>
+        <!-- - - - - - - - CURRENT INCOME - - - - - - - - -->
+        {% for asset in application.borrower.incomeMonthly %}
+            {%if asset.base|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.base|number_format(2, '.', '') }}"
+                                IncomeType="Base"/>
+            {% endif %}
+            {%if asset.overtime|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.overtime|number_format(2, '.', '') }}"
+                                IncomeType="Overtime"/>
+            {% endif %}
+            {%if asset.bonus|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.bonus|number_format(2, '.', '') }}"
+                                IncomeType="Bonus"/>
+            {% endif %}
+            {%if asset.commission|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.commission|number_format(2, '.', '') }}"
+                                IncomeType="Commissions"/>
+            {% endif %}
+            {%if asset.interest|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.interest|number_format(2, '.', '') }}"
+                                IncomeType="DividendsInterest"/>
+            {% endif %}
+            {% if asset.other|number_format > 0 or asset.rentNet|number_format > 0 %}
+                <CURRENT_INCOME _MonthlyTotalAmount="{{ (asset.other + asset.rentNet)|number_format(2, '.', '') }}"
+                                IncomeType="OtherTypesOfIncome"/>
+            {% endif %}
+        {% endfor %}
+        <!-- - - - -DECLARATIONS & EXPLANATIONS- - - - - - -->
+        <DECLARATION PropertyForeclosedPastSevenYearsIndicator="{{ application.borrower.declarationForclosure|boolToYN }}"
+                     PresentlyDelinquentIndicator="{{ application.borrower.declarationInDefault|boolToYN }}"
+                     PartyToLawsuitIndicator="{{ application.borrower.declarationLawsuit|boolToYN }}"
+                     OutstandingJudgementsIndicator="{{ application.borrower.declarationOutstandingJudgement|boolToYN }}"
+                     LoanForeclosureOrJudgementIndicator="{{ application.borrower.declarationForclosureObligation|boolToYN }}"
+                     IntentToOccupyType="{{ application.borrower.declarationPrimaryResidence|boolToYesNo }}"
+                     CoMakerEndorserOfNoteIndicator="{{ application.borrower.declarationNoteEndorser|boolToYN }}"
+                     CitizenshipResidencyType="{{ application.borrower.declarationUsCitizen }}"
+                     BorrowedDownPaymentIndicator="{{ application.borrower.declarationDownPaymentBorrowed|boolToYN }}"
+                     BankruptcyIndicator="{{ application.borrower.declarationBankruptcy|boolToYN }}"
+                     AlimonyChildSupportObligationIndicator="{{ application.borrower.declarationAlimonyChildSupport|boolToYN }}"
+                {% if application.borrower.declarationOwnershipWithinThreeYears %}
+                     HomeownerPastThreeYearsType="Yes"
+                     PriorPropertyUsageType="{{ application.borrower.declarationOwnershipWithinThreeYearsPropertyType }}"
+                     PriorPropertyTitleType="{{ application.borrower.declarationOwnershipWithinThreeYearsPropertyTitle }}">
+            {% else %}
+                HomeownerPastThreeYearsType="No">
+            {% endif %}
+            {% if application.borrower.declarationDownPaymentBorrowed %}
+                <_EXPLANATION _Type="BorrowedDownPayment" _Description="{{ application.borrower.declarationDownPaymentBorrowedDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationNoteEndorser %}
+                <_EXPLANATION _Type="CoMakerEndorserOnNote" _Description="{{ application.borrower.declarationNoteEndorserDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationBankruptcy %}
+                <_EXPLANATION _Type="DeclaredBankruptcyPastSevenYears" _Description="{{ application.borrower.declarationBankruptcyDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationInDefault %}
+                <_EXPLANATION _Type="DelinquencyOrDefault" _Description="{{ application.borrower.declarationInDefaultDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationForclosure %}
+                <_EXPLANATION _Type="DirectIndirectForeclosedPropertyPastSevenYears" _Description="{{ application.borrower.declarationForclosureDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationForclosureObligation %}
+                <_EXPLANATION _Type="ObligatedOnLoanForeclosedOrDeedInLieuOfJudgement" _Description="{{ application.borrower.declarationForclosureObligationDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationOutstandingJudgement %}
+                <_EXPLANATION _Type="OutstandingJudgments" _Description="{{ application.borrower.declarationOutstandingJudgementDetails }}"/>
+            {% endif %}
+            {% if application.borrower.declarationLawsuit %}
+                <_EXPLANATION _Type="PartyToLawsuit" _Description="{{ application.borrower.declarationLawsuitDetails }}"/>
+            {% endif %}
+        </DECLARATION>
+        <!-- - - - - - - - DEPENDENTS - - - - - - - - - - -->
+        {% for dependent in application.borrower.dependentsAges %}
+            <DEPENDENT _AgeYears="{{ dependent }}"/>
+        {% endfor %}
+        <!-- - - - - - - - EMPLOYMENT - - - - - - - - - - -->
+        {% for employment in application.borrower.employment %}
+            <EMPLOYER _City="{{ employment.location.city|ucwords }}"
+                      _Name="{{ employment.employerName }}"
+                      _PostalCode="{{ employment.location.zipcode }}"
+                      _State="{{ employment.location.state.abbreviation|ucfirst }}"
+                      _StreetAddress="{{ employment.location.address1|ucwords }}"
+                      _TelephoneNumber="{{ employment.employerPhone }}"
+                    {%if employment.current %}
+                        CurrentEmploymentMonthsOnJob="{{ employment.timeAtJob.months  }}"
+                        CurrentEmploymentYearsOnJob="{{ employment.timeAtJob.years }}"
+                        CurrentEmploymentTimeInLineOfWorkYears="{{ employment.yearsEmployed }}"
+                        {%if loop.first %}
+                            EmploymentPrimaryIndicator="{{ employment.current }}"
+                        {% endif %}
+                    {% else %}
+                        PreviousEmploymentEndDate="{{ employment.endDate|date('Y-m-d') }}"
+                        PreviousEmploymentStartDate="{{ employment.startDate|date('Y-m-d') }}"
+                    {% endif %}
+                      EmploymentBorrowerSelfEmployedIndicator="{{ employment.selfEmployed }}"
+                      EmploymentCurrentIndicator="{{ employment.current }}"
+                      EmploymentPositionDescription="{{ employment.title }}"/>
+        {% endfor %}
+        <!-- - - - - - - - GOVERNMENT MONITORING - - - - -->
+        {% if application.borrower.govtMonitoringOptOut %}
+        <GOVERNMENT_MONITORING RaceNationalOriginRefusalIndicator="Y"
+                               GenderType="InformationNotProvidedUnknown"
+                               HMDAEthnicityType="InformationNotProvidedByApplicantInMailInternetOrTelephoneApplication">
+            {% else %}
+            <GOVERNMENT_MONITORING  RaceNationalOriginRefusalIndicator="N"
+                                    RaceNationalOriginType="{{ application.borrower.race }}"
+                                    HMDAEthnicityType="{{ application.borrower.ethnicity }}"
+                                    GenderType="{{ application.borrower.isMale }}">
+                {% endif %}
+            </GOVERNMENT_MONITORING>
+            <!-- - - - - -  PRESENT HOUSING EXPENSE - - - - - -->
+            {% if application.expenseHousing.other is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ (application.expenseHousing.other + application.expenseHousing.otherFinancial)|number_format(2, '.', '') }}" HousingExpenseType="OtherHousingExpense"/>
+            {% endif %}
+            {% if application.expenseHousing.hoaDues is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.hoaDues|number_format(2, '.', '') }}" HousingExpenseType="HomeownersAssociationDuesAndCondominiumFees"/>
+            {% endif %}
+            {% if application.expenseHousing.insuranceMortgage is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.insuranceMortgage|number_format(2, '.', '') }}" HousingExpenseType="MI"/>
+            {% endif %}
+            {% if application.expenseHousing.taxRealEstate is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.taxRealEstate|number_format(2, '.', '') }}" HousingExpenseType="RealEstateTax"/>
+            {% endif %}
+            {% if application.expenseHousing.insuranceHazard is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.insuranceHazard|number_format(2, '.', '') }}" HousingExpenseType="HazardInsurance"/>
+            {% endif %}
+            {% if application.expenseHousing.mortgage is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.mortgage|number_format(2, '.', '') }}" HousingExpenseType="FirstMortgagePrincipalAndInterest"/>
+            {% endif %}
+            {% if application.expenseHousing.rent is not empty %}
+                <PRESENT_HOUSING_EXPENSE _PaymentAmount="{{ application.expenseHousing.rent|number_format(2, '.', '') }}" HousingExpenseType="Rent"/>
+            {% endif %}
+    </BORROWER>
+    {% if application.coborrower|length > 0 %}
+        {% for coborrower in application.coborrower %}
+            <!-- - - - - - - - - - COBORROWER - - - - - - - - - -->
+            <BORROWER BorrowerID="D{{ coborrower.ssn|toInteger }}" BrwrConsentDate="{{ application.completedDate|date('Y-m-d') }}"
+                      _LastName="{{ coborrower.lastName|ucfirst }}"
+                      _SSN="{{ coborrower.ssn|toInteger }}"
+                      _FirstName="{{ coborrower.firstName|ucfirst }}"
+                      DependentCount="{{ coborrower.dependentsNumber }}"
+                      SchoolingYears="{{ coborrower.yearsOfSchool}}"
+                      MaritalStatusType="{{ coborrower.maritalStatus }}"
+                      _BirthDate="{{ coborrower.birthDate|date('Y-m-d') }}"
+                      _HomeTelephoneNumber="{{ coborrower.phoneHome|toInteger }}"
+                      _NameSuffix="{{ coborrower.suffix }}"
+                      _UnparsedName="{{ coborrower.fullName }}"
+                      _PrintPositionType="CoBorrower"
+                      _MiddleName="{{ coborrower.middleInitial }}"
+                      _AgeAtApplicationYears="{{ coborrower.birthDate|age }}"
+                      _ApplicationSignedDate="{{ application.completedDate|date('Y-m-d')}}">
+                <_MAIL_TO/>
+                <_RESIDENCE _City="{{ coborrower.location.location.city|ucwords }}"
+                            _State="{{ coborrower.location.location.state.abbreviation|ucfirst }}"
+                            _PostalCode="{{ coborrower.location.location.zipcode }}"
+                            _StreetAddress="{{  coborrower.location.location.address1|ucwords  }}"
+                            BorrowerResidencyDurationYears="{{ coborrower.location.yearsAtLocation }}"
+                            BorrowerResidencyType="Current"
+                            BorrowerResidencyDurationMonths="{{ coborrower.location.monthsAtLocation }}">
+                </_RESIDENCE>
+                <!-- - - - - - - - CURRENT INCOME - - - - - - - - -->
+                {% for asset in application.incomeMonthly%}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.base|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.base|number_format(2, '.', '') }}" IncomeType="Base"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.overtime|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.overtime|number_format(2, '.', '') }}" IncomeType="Overtime"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.bonus|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.bonus|number_format(2, '.', '') }}" IncomeType="Bonus"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.commission|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.commission|number_format(2, '.', '') }}" IncomeType="Commissions"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.interest|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.interest|number_format(2, '.', '') }}" IncomeType="DividendsInterest"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.rentNet|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.rentNet|number_format(2, '.', '') }}" IncomeType="NetRentalIncome"/>
+                    {% endif %}
+                    {%if asset.borrower.fullname == coborrower.fullname and asset.other|number_format > 0 %}
+                        <CURRENT_INCOME _MonthlyTotalAmount="{{ asset.other|number_format(2, '.', '') }}" IncomeType="OtherTypesOfIncome"/>
+                    {% endif %}
+                {% endfor %}
+                <!-- - - - -DECLARATIONS & EXPLANATIONS- - - - - - -->
+                <DECLARATION PropertyForeclosedPastSevenYearsIndicator="{{ coborrower.declarationForclosure|boolToYN }}"
+                             PresentlyDelinquentIndicator="{{ coborrower.declarationInDefault|boolToYN }}"
+                             PartyToLawsuitIndicator="{{ coborrower.declarationLawsuit|boolToYN }}"
+                             OutstandingJudgementsIndicator="{{ coborrower.declarationOutstandingJudgement|boolToYN }}"
+                             LoanForeclosureOrJudgementIndicator="{{ coborrower.declarationForclosureObligation|boolToYN }}"
+                             IntentToOccupyType="{{ coborrower.declarationPrimaryResidence|boolToYesNo }}"
+                             CoMakerEndorserOfNoteIndicator="{{ coborrower.declarationNoteEndorser|boolToYN }}"
+                             CitizenshipResidencyType="{{ coborrower.declarationUsCitizen }}"
+                             BorrowedDownPaymentIndicator="{{ coborrower.declarationDownPaymentBorrowed|boolToYN }}"
+                             BankruptcyIndicator="{{ coborrower.declarationBankruptcy|boolToYN }}"
+                             AlimonyChildSupportObligationIndicator="{{ coborrower.declarationAlimonyChildSupport|boolToYN }}"
+                        {% if coborrower.declarationOwnershipWithinThreeYears %}
+                             HomeownerPastThreeYearsType="Yes"
+                             PriorPropertyUsageType="{{ coborrower.declarationOwnershipWithinThreeYearsPropertyType }}"
+                             PriorPropertyTitleType="{{ coborrower.declarationOwnershipWithinThreeYearsPropertyTitle }}">
+                    {% else %}
+                        HomeownerPastThreeYearsType="No">
+                    {% endif %}
+                    {% if coborrower.declarationDownPaymentBorrowed %}
+                        <_EXPLANATION _Type="BorrowedDownPayment" _Description="{{ coborrower.declarationDownPaymentBorrowedDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationNoteEndorser %}
+                        <_EXPLANATION _Type="CoMakerEndorserOnNote" _Description="{{ coborrower.declarationNoteEndorserDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationBankruptcy %}
+                        <_EXPLANATION _Type="DeclaredBankruptcyPastSevenYears" _Description="{{ coborrower.declarationBankruptcyDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationInDefault %}
+                        <_EXPLANATION _Type="DelinquencyOrDefault" _Description="{{ coborrower.declarationInDefaultDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationForclosure %}
+                        <_EXPLANATION _Type="DirectIndirectForeclosedPropertyPastSevenYears" _Description="{{ coborrower.declarationForclosureDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationForclosureObligation %}
+                        <_EXPLANATION _Type="ObligatedOnLoanForeclosedOrDeedInLieuOfJudgement" _Description="{{ coborrower.declarationForclosureObligationDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationOutstandingJudgement %}
+                        <_EXPLANATION _Type="OutstandingJudgments" _Description="{{ coborrower.declarationOutstandingJudgementDetails }}"/>
+                    {% endif %}
+                    {% if coborrower.declarationLawsuit %}
+                        <_EXPLANATION _Type="PartyToLawsuit" _Description="{{ coborrower.declarationLawsuitDetails }}"/>
+                    {% endif %}
+                </DECLARATION>
+                <!-- - - - - - - - DEPENDENTS - - - - - - - - - - -->
+                {% for dependent in coborrower.dependentsAges %}
+                    <DEPENDENT _AgeYears="{{ dependent }}"/>
+                {% endfor %}
+                <!-- - - - - - - - EMPLOYMENT - - - - - - - - - - -->
+                {% for employment in coborrower.employment %}
+                    <EMPLOYER _City="{{ employment.location.city|ucwords }}"
+                              _Name="{{ employment.employerName }}"
+                              _PostalCode="{{ employment.location.zipcode }}"
+                              _State="{{ employment.location.state.abbreviation|ucfirst }}"
+                              _StreetAddress="{{ employment.location.address1|ucwords }}"
+                              _TelephoneNumber="{{ employment.employerPhone }}"
+                            {%if employment.current %}
+                                CurrentEmploymentMonthsOnJob="{{ employment.timeAtJob.months  }}"
+                                CurrentEmploymentYearsOnJob="{{ employment.timeAtJob.years }}"
+                                CurrentEmploymentTimeInLineOfWorkYears="{{ employment.yearsEmployed }}"
+                            {% else %}
+                                PreviousEmploymentEndDate="{{ employment.endDate|date('Y-m-d')}}"
+                                PreviousEmploymentStartDate="{{ employment.startDate|date('Y-m-d')}}"
+                            {% endif %}
+                              EmploymentBorrowerSelfEmployedIndicator="{{ employment.selfEmployed }}"
+                              EmploymentCurrentIndicator="{{ employment.current }}"
+                              EmploymentPositionDescription="{{ employment.title }}"/>
+                {% endfor %}
+                <!-- - - - - - - - GOVERNMENT MONITORING- -  - - -->
+                {% if coborrower.govtMonitoringOptOut %}
+                <GOVERNMENT_MONITORING RaceNationalOriginRefusalIndicator="Y"
+                                       GenderType="InformationNotProvidedUnknown"
+                                       HMDAEthnicityType="InformationNotProvidedByApplicantInMailInternetOrTelephoneApplication">
+                    {% else %}
+                    <GOVERNMENT_MONITORING RaceNationalOriginRefusalIndicator="N"
+                                           RaceNationalOriginType="{{ coborrower.race }}"
+                                           HMDAEthnicityType="{{ coborrower.ethnicity }}"
+                                           GenderType="{{ coborrower.isMale }}">
+                        {% endif %}
+                    </GOVERNMENT_MONITORING>
+            </BORROWER>
+        {% endfor %}
+    {% endif %}
+</LOAN_APPLICATION>
+{% endblock mismo231LoanApplication %}

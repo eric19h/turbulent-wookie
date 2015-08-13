@@ -1,0 +1,36 @@
+Sudoux\MortgageBundle\Entity\CreditConnection:
+    type: entity
+    table: credit_connection
+    manyToOne:
+      credit_provider:
+        targetEntity: Sudoux\MortgageBundle\Entity\CreditProvider
+        cascade: {}
+        joinColumns:
+          credit_provider_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      username_idx:
+        columns: [ username ]
+      company_idx:
+        columns: [ company ]
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        username:
+            type: string
+            length: '100'
+        password:
+            type: string
+            length: '100'
+        company:
+            type: string
+            length: '100'
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

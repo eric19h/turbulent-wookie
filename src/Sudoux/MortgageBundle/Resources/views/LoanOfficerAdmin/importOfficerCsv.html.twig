@@ -1,0 +1,34 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Import Loan Officers{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_people_home') }}">People</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_loan_officer') }}">Loan Officers</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<h3>Data sample</h3>
+	<div class="well well-small">
+		first_name,last_name,email,los_id,nmls_id,title,phone_office,phone_mobile,phone_tollfree,fax,signature,bio, branch_nmls_id<br>
+		Jane,Doe,janedoe@email.com,12345,12345,Branch Manager,(555) 555-5555,(555) 555-5555,(800) 555-5555,(555) 555-5555,-Jane Doe,My bio,12345
+	</div>
+
+	{% if site.settings.autoCreateSites %}
+		<div class="alert alert-info">
+			Auto creation of sites is enabled. A website will be created for each loan officer automatically.
+		</div>
+	{% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_officer_import_csv') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{{ form_label(form.loan_officer_csv) }}
+		{{ form_widget(form.loan_officer_csv) }}
+		<div class="submit-wrapper">
+			<div class="hide">{{ form_rest(form) }}</div>
+		    <input type="submit" value="Import" class="btn"> <a href="{{ path('sudoux_mortgage_admin_loan_officer') }}">Cancel</a>
+		</div>
+	</form>
+
+{% endblock %}

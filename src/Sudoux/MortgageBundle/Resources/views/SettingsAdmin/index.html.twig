@@ -1,0 +1,107 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Mortgage Settings{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li class="active">Mortgage Settings</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% import "SudouxCmsSiteBundle:SiteAdmin:macros.html.twig" as siteMacros %}
+
+	<form action="{{ path('sudoux_mortgage_admin_settings') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="row">
+			<div class="span9">
+				<div class="control-group">
+					{{ form_label(form.loan_document_vocab, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ siteMacros.inheritedEntityGroup(settings.loanDocumentVocab, settings.inheritedLoanDocumentVocab, form.loan_document_vocab, 'name') }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.show_los_milestones, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ siteMacros.inheritedBoolGroup(settings.showLosMilestones, settings.inheritedShowLosMilestones, form.show_los_milestones) }}
+					</div>
+				</div>
+                <div class="control-group">
+                    {{ form_label(form.send_milestones_notifications, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                    <div class="controls">
+                        {{ siteMacros.inheritedBoolGroup(settings.sendMilestonesNotifications, settings.inheritedSendMilestonesNotifications, form.send_milestones_notifications) }}
+                    </div>
+                </div>
+				{% if site.siteType %}
+					{% if site.siteType.keyName != 'loan_officer' %}
+						<div class="control-group">
+							{{ form_label(form.branch, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+							<div class="controls">
+								{{ form_widget(form.branch, {'help': 'Select the branch assigned to this site.'}) }}
+							</div>
+						</div>
+					{% endif %}
+				{% endif %}
+				<div class="control-group">
+					{{ form_label(form.loan_officer, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.loan_officer, {'help': 'Select the loan officer assigned to this site.'}) }}
+					</div>
+				</div>
+                <div class="control-group">
+                    {{ form_label(form.loan_complete_url, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                    <div class="controls">
+                        {{ siteMacros.inheritedPropertyGroup(settings.loanCompleteUrl, settings.inheritedLoanCompleteUrl, form.loan_complete_url, 'Redirect to a local page (/page/application-complete) or an external link (http://google.com).') }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(form.prequal_complete_url, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                    <div class="controls">
+                        {{ siteMacros.inheritedPropertyGroup(settings.prequalCompleteUrl, settings.inheritedPrequalCompleteUrl, form.prequal_complete_url, 'Redirect to a local page (/page/prequal-complete) or an external link (http://google.com).') }}
+                    </div>
+                </div>
+				<div class="control-group">
+					{{ form_label(form.member_portal_enabled, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ siteMacros.inheritedBoolGroup(settings.memberPortalEnabled, settings.inheritedMemberPortalEnabled, form.member_portal_enabled) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.member_portal_documents_enabled, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ siteMacros.inheritedBoolGroup(settings.memberPortalDocumentsEnabled, settings.inheritedMemberPortalDocumentsEnabled, form.member_portal_documents_enabled) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.auto_create_loan_officer_user, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ siteMacros.inheritedBoolGroup(settings.autoCreateLoanOfficerUser, settings.inheritedAutoCreateLoanOfficerUser, form.auto_create_loan_officer_user) }}
+					</div>
+				</div>
+                <div class="control-group">
+                    {{ form_label(form.state_license, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+                    <div class="controls">
+                            <div class="inherited-property-group">
+                                {% if settings.stateLicense|length > 0 or settings.inheritedStateLicense|length == 0  %}
+                                    {{ form_widget(form.state_license) }}
+                                {% else %}
+                                    <div class="hide inherited-field">
+                                        <a href="#" class="btn-show-inheritance-field"><i class="icon-remove"></i> Cancel</a>
+                                        {{ form_widget(form.state_license) }}
+                                    </div>
+                                    <span class="inherited-property-value muted">Inherited</span> <a href="#" class="pop" data-title="{{ admin.help.inherited_property.title }}" data-content='{{ admin.help.inherited_property.description }}'><i class="icon-cog"></i></a>
+                                {% endif %}
+                            </div>
+                    </div>
+                </div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="hide">{{ form_rest(form) }}</div>
+				    	<input type="submit" value="Update" class="btn btn-default"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+{% endblock %}

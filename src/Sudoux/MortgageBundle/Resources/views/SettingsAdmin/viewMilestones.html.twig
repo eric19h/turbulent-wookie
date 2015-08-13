@@ -1,0 +1,37 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}LOS Milestones{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_cms_admin_configuration_integration') }}">Integrations</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_mortgage_admin_settings_los') }}">LOS Settings</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	
+	<ul class="nav nav-tabs">
+		<li><a href="{{ path('sudoux_mortgage_admin_settings_los') }}">Settings</a></li>
+		<li class="active"><a href="{{ path('sudoux_mortgage_admin_settings_los_milestones') }}">Milestones</a></li>
+	</ul>
+	
+	{% if milestoneGroups|length > 0 %}
+		{% for milestoneGroup in milestoneGroups %}
+			<div>
+				<h3>{{ milestoneGroup.name }}</h3>
+				<ul>
+					{% for milestone in milestoneGroup.milestone %}
+						<li>{{ milestone.name }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	{#<form action="{{ path('sudoux_mortgage_admin_settings_los_milestone_import') }}" method="post"novalidate="novalidate">
+		<input type="submit" value="Import" class="btn btn-default"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+	</form>#}
+{% endblock %}

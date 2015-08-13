@@ -1,0 +1,18 @@
+<tr>
+	<td>{{ form_widget(form.borrower) }}</td>
+	<td>
+		{{ form_label(form.location.address1) }}<br>
+		{{ form_widget(form.location.address1) }}<br>
+		{{ form_label(form.location.city) }}<br>
+		{{ form_widget(form.location.city) }}<br>
+		{{ form_widget(form.location.state) }}<br>
+		{{ form_label(form.location.zipcode) }}<br>
+		{{ form_widget(form.location.zipcode) }}
+	</td>
+	<td>{{ form_widget(form.market_value, { 'attr' : { 'class': 'span100' } }) }}</td>
+	<td>{{ form_widget(form.mortgage_amount, { 'attr' : { 'class': 'span100' } }) }}</td>
+	<td>{{ form_widget(form.mortgage_payment, { 'attr' : { 'class': 'span100' } }) }}</td>
+	<td>{{ form_widget(form.rent_gross_income, { 'attr' : { 'class': 'span100' } }) }}</td>
+	<td>{{ form_widget(form.rent_net_income, { 'attr' : { 'class': 'span100' } }) }}</td>
+	<td>{{ form_widget(form.ins_tax_exp, { 'attr' : { 'class': 'span100' } }) }}</td>
+</tr>

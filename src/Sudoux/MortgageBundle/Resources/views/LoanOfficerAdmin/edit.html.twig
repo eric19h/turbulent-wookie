@@ -1,0 +1,22 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Edit Loan Officer{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_people_home') }}">People</a> <span class="divider">/</span></li>
+		<li><a href="{{ path('sudoux_mortgage_admin_loan_officer') }}">Loan Officers</a> <span class="divider">/</span></li>		
+		<li class="active">Edit Loan Officer</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_officer_edit', { id: officer.id }) }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{% include 'SudouxMortgageBundle:LoanOfficerAdmin:formContent.html.twig' %}
+		<div class="control-group">
+			<div class="controls">
+		    	<input type="submit" value="Update" class="btn"> <a href="{{ path('sudoux_cms_admin_people_home') }}">Cancel</a>
+			</div>
+		</div>
+	</form>
+{% endblock %}

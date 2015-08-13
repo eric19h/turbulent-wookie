@@ -1,0 +1,16 @@
+{% use 'SudouxMortgageBundle:LoanApplicationAdmin/formats:mismo231.xml.twig' %}
+{{ block('xmlHeader') }}
+<loan-data>
+    <mismo-loan-app>
+        {{ block('mismo231LoanApplication')|replace({'\n':'\n\t'})|raw }}
+    </mismo-loan-app>
+        <additional-loan-info ApplyNowCreditAuth="Yes"
+                          ApplyNowCreditAuthDate="{{ application.completedDate|date('Y-m-d') }}" PrequalCreditAuth="N/A"
+                          PrequalCreditAuthDate="" builder-name=""
+                          community-code="" community-name=""
+                          destiny-branch-id="{{ application.loanOfficer.branch.losId }}" destiny-loan-officer-id="{{ application.loanOfficer.losId }}"
+                          monthly-communitydev-amt="0.00" monthly-hoa-amt="0.00"
+                          monthly-insurance-amt="0.00" monthly-tax-amt="0.00"
+                          opportunity-source="Destiny" webmax-reference-id="{{ application.id }}"
+                          siebel-customer-id="" siebel-opportunity-id="" username="{{ application.loanOfficer.email }}"/>
+</loan-data>

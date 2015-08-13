@@ -1,0 +1,531 @@
+<?php
+
+namespace Sudoux\MortgageBundle\Entity;
+
+use Sudoux\Cms\SecurityBundle\DependencyInjection\EncryptionUtil;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Class LosConnection
+ * @package Sudoux\MortgageBundle\Entity
+ * @author Dan Alvare
+ */
+class LosConnection
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $provider;
+
+    /**
+     * @var string
+     */
+    private $server;
+
+    /**
+     * @var string
+     */
+    private $username;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @var string
+     */
+    private $company;
+
+
+    public function __construct()
+    {
+    	$this->automatic = true;
+    	$this->last_updated = new \DateTime();
+        $this->allow_loan_deletions = true;
+        $this->active = true;
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set provider
+     *
+     * @param string $provider
+     * @return LosConnection
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
+    
+        return $this;
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string 
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set server
+     *
+     * @param string $server
+     * @return LosConnection
+     */
+    public function setServer($server)
+    {
+        $this->server = $server;
+    
+        return $this;
+    }
+
+    /**
+     * Get server
+     *
+     * @return string 
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return LosConnection
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return LosConnection
+     */
+    public function setPassword($password)
+    {
+    	if(!empty($password)) {
+		    $encryptionUtil = new EncryptionUtil();
+		    $encryptedPassword = $encryptionUtil->encrypt($password);
+		    $this->password = $encryptedPassword;
+    	} 
+    
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+    	$encryptionUtil = new EncryptionUtil();
+    	return $encryptionUtil->decrypt($this->password);
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     * @return LosConnection
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    
+        return $this;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string 
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\LosProvider
+     */
+    private $los_provider;
+
+
+    /**
+     * Set los_provider
+     *
+     * @param \Sudoux\MortgageBundle\Entity\LosProvider $losProvider
+     * @return LosConnection
+     */
+    public function setLosProvider(\Sudoux\MortgageBundle\Entity\LosProvider $losProvider = null)
+    {
+        $this->los_provider = $losProvider;
+    
+        return $this;
+    }
+
+    /**
+     * Get los_provider
+     *
+     * @return \Sudoux\MortgageBundle\Entity\LosProvider 
+     */
+    public function getLosProvider()
+    {
+        return $this->los_provider;
+    }
+    /**
+     * @var boolean
+     */
+    private $automatic;
+
+
+    /**
+     * Set automatic
+     *
+     * @param boolean $automatic
+     * @return LosConnection
+     */
+    public function setAutomatic($automatic)
+    {
+        $this->automatic = $automatic;
+    
+        return $this;
+    }
+
+    /**
+     * Get automatic
+     *
+     * @return boolean 
+     */
+    public function getAutomatic()
+    {
+        return $this->automatic;
+    }
+    /**
+     * @var array
+     */
+    private $settings;
+
+
+    /**
+     * Set settings
+     *
+     * @param array $settings
+     * @return LosConnection
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    
+        return $this;
+    }
+
+    /**
+     * Get settings
+     *
+     * @return array 
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+    
+    /**
+     * @var string
+     */
+    private $host;
+
+
+    /**
+     * Set host
+     *
+     * @param string $host
+     * @return LosConnection
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
+    
+        return $this;
+    }
+
+    /**
+     * Get host
+     *
+     * @return string 
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+    /**
+     * @var string
+     */
+    private $license_key;
+
+
+    /**
+     * Set license_key
+     *
+     * @param string $licenseKey
+     * @return LosConnection
+     */
+    public function setLicenseKey($licenseKey)
+    {
+        $this->license_key = $licenseKey;
+    
+        return $this;
+    }
+
+    /**
+     * Get license_key
+     *
+     * @return string 
+     */
+    public function getLicenseKey()
+    {
+        return $this->license_key;
+    }
+    /**
+     * @var string
+     */
+    private $service_url;
+
+
+    /**
+     * Set service_url
+     *
+     * @param string $serviceUrl
+     * @return LosConnection
+     */
+    public function setServiceUrl($serviceUrl)
+    {
+        $this->service_url = $serviceUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get service_url
+     *
+     * @return string 
+     */
+    public function getServiceUrl()
+    {
+        return $this->service_url;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $last_updated;
+
+
+    /**
+     * Set last_updated
+     *
+     * @param \DateTime $lastUpdated
+     * @return LosConnection
+     */
+    public function setLastUpdated($lastUpdated)
+    {
+        $this->last_updated = $lastUpdated;
+    
+        return $this;
+    }
+
+    /**
+     * Get last_updated
+     *
+     * @return \DateTime 
+     */
+    public function getLastUpdated()
+    {
+        return $this->last_updated;
+    }
+    /**
+     * @var boolean
+     */
+    private $import_los_loans;
+
+
+    /**
+     * Set import_los_loans
+     *
+     * @param boolean $importLosLoans
+     * @return LosConnection
+     */
+    public function setImportLosLoans($importLosLoans)
+    {
+        $this->import_los_loans = $importLosLoans;
+    
+        return $this;
+    }
+
+    /**
+     * Get import_los_loans
+     *
+     * @return boolean 
+     */
+    public function getImportLosLoans()
+    {
+        return $this->import_los_loans;
+    }
+    /**
+     * @var boolean
+     */
+    private $allow_loan_deletions;
+
+
+    /**
+     * Set allow_loan_deletions
+     *
+     * @param boolean $allowLoanDeletions
+     * @return LosConnection
+     */
+    public function setAllowLoanDeletions($allowLoanDeletions)
+    {
+        $this->allow_loan_deletions = $allowLoanDeletions;
+    
+        return $this;
+    }
+
+    /**
+     * Get allow_loan_deletions
+     *
+     * @return boolean 
+     */
+    public function getAllowLoanDeletions()
+    {
+        return $this->allow_loan_deletions;
+    }
+    /**
+     * @var boolean
+     */
+    private $active;
+
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return LosConnection
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+    /**
+     * @var boolean
+     */
+    private $auto_send_docs;
+
+
+    /**
+     * Set auto_send_docs
+     *
+     * @param boolean $autoSendDocs
+     * @return LosConnection
+     */
+    public function setAutoSendDocs($autoSendDocs)
+    {
+        $this->auto_send_docs = $autoSendDocs;
+    
+        return $this;
+    }
+
+    /**
+     * Get auto_send_docs
+     *
+     * @return boolean 
+     */
+    public function getAutoSendDocs()
+    {
+        return $this->auto_send_docs;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $site_settings;
+
+
+    /**
+     * Add site_settings
+     *
+     * @param \Sudoux\Cms\SiteBundle\Entity\Settings $siteSettings
+     * @return LosConnection
+     */
+    public function addSiteSetting(\Sudoux\Cms\SiteBundle\Entity\Settings $siteSettings)
+    {
+        $this->site_settings[] = $siteSettings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove site_settings
+     *
+     * @param \Sudoux\Cms\SiteBundle\Entity\Settings $siteSettings
+     */
+    public function removeSiteSetting(\Sudoux\Cms\SiteBundle\Entity\Settings $siteSettings)
+    {
+        $this->site_settings->removeElement($siteSettings);
+    }
+
+    /**
+     * Get site_settings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSiteSettings()
+    {
+        return $this->site_settings;
+    }
+}

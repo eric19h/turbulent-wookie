@@ -1,0 +1,24 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Restructure Site Inheritance{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_internal_tools') }}">Tools</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<h3>Restructure sites to default inheritance.</h3>
+	<p>This action will reassign branch sites to the top level site & loan officer sites to branch sites.</p>
+	{% if site.parentSite == null %}
+		<form action="{{ path('sudoux_mortgage_admin_internal_tools_restructure_site_inheritance') }}" method="post">
+			<div class="submit-wrapper clearfix">
+				<input type="submit" value="Restructure" class="btn"> <a href="{{ path('sudoux_cms_admin_internal_tools') }}" class="cancel">Cancel</a>
+			</div>
+		</form>
+	{% else %}
+		<div class="alert alert-danger">This operation can only be performed on the top level site.</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Sync Loan Officers with LOS{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_internal_tools') }}">Tools</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="span12">
+			<div class="alert alert-warning">
+				<b>Warning: This may create websites and user accounts for loan officers depending on your site config.</b>
+			</div>
+
+			<form action="{{ path('sudoux_mortgage_admin_internal_tools_sync_loan_officer_sites_from_los') }}" method="post">
+				<div class="submit-wrapper clearfix">
+					<input type="submit" value="Sync" class="btn">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h3>Existing Los Loan Officers</h3>
+			{% if existingLoanOfficers|length > 0 %}
+				<ul>
+					{% for loanOfficer in existingLoanOfficers %}
+						<li>{{ loanOfficer.firstName }} {{ loanOfficer.lastName }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				None.
+			{% endif %}
+		</div>
+		<div class="span4">
+			<h3>New Los Loan Officers</h3>
+			{% if newLoanOfficers|length > 0 %}
+				<ul>
+					{% for loanOfficer in newLoanOfficers %}
+						<li>{{ loanOfficer.firstName }} {{ loanOfficer.lastName }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				None.
+			{% endif %}
+		</div>
+		<div class="span4 hide">
+			<h3>Non-existant Los Loan Officers</h3>
+			{% if deletedLoanOfficers|length > 0 %}
+				<ul>
+					{% for loanOfficer in deletedLoanOfficers %}
+						<li>{{ loanOfficer.firstName }} {{ loanOfficer.lastName }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				None.
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}

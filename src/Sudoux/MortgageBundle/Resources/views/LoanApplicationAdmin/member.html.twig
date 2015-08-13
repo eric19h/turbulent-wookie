@@ -1,0 +1,503 @@
+{% extends site.getAdminThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Member Portal{% endblock %}
+
+{% block body_class %}page-member-portal{% endblock %}
+
+{% block head %}
+	<script src="{{ asset('dev/themes/core/loan-app.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+    {% set notifications = '' %}
+    {% set newDocuments = loanApp.getNewBorrowerDocumentCount %}
+    {% if newDocuments > 0 %}
+        {% set notifications = newDocuments ~ ' new document(s) ' %}
+    {% endif %}
+
+    {% set newMessages = loanApp.getNewUserMessages(app.user)|length %}
+
+    {% if newMessages > 0 and newDocuments > 0 %}
+        {% set notifications = notifications ~ ' and ' %}
+    {% endif %}
+
+    {% if newMessages > 0 %}
+        {% set notifications = notifications ~ newMessages ~ ' new message(s) ' %}
+    {% endif %}
+
+    {% if notifications is not empty %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <b>You have {{ notifications }} to review</b>
+        </div>
+    {% endif %}
+	<div class="text-right">
+		<div class="btn-group">
+	    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+	    		Export <span class="caret"></span>
+	    	</a>
+	    	<ul class="dropdown-menu text-left">
+	    		<li><a href="{{ path('sudoux_mortgage_admin_loan_export_fanniemae', { id: loanApp.id }) }}" target="_blank">To Fannie Mae 3.2</a></li>
+	    		<li><a href="{{ path('sudoux_mortgage_admin_loan_export_mismo231', { id: loanApp.id }) }}" target="_blank">To MISMO 2.3.1</a></li>
+                <li><a href="{{ path('sudoux_mortgage_admin_loan_export_destiny', { id: loanApp.id }) }}" target="_blank">To Destiny</a></li>
+                <li><a href="{{ path('sudoux_mortgage_admin_loan_export_vantage', { id: loanApp.id }) }}" target="_blank">To Vantage</a></li>
+	    	</ul>
+	    </div>
+	</div>
+
+	{% set showInviteUser = false %}
+	{% if loanApp.user is null %}
+		{% set showInviteUser = true %}
+	{% else %}
+		{% if loanApp.user.hasRole('ROLE_MEMBER') == false %}
+			{% set showInviteUser = true %}
+		{% endif %}
+	{% endif %}
+
+    {% set tab = app.request.get('tab') %}
+    <ul class="nav nav-tabs">
+	    <li {% if tab == null %}class="active"{% endif %}><a href="#loan-details" data-toggle="tab">Loan</a></li>
+	    <li {% if tab == 'messages' %}class="active"{% endif %}><a href="#messages" data-toggle="tab">Messages</a></li>
+	    {% if site.settings.inheritedCreditConnection %}<li {% if tab == 'credit' %}class="active"{% endif %}><a href="#credit" data-toggle="tab">Credit</a></li>{% endif %}
+	    {% if site.settings.inheritedPricingConnection %}<li {% if tab == 'pricing' %}class="active"{% endif %}><a href="#pricing" data-toggle="tab">Pricing</a></li>{% endif %}
+	    <li {% if tab == 'users' %}class="active"{% endif %}><a href="#users" data-toggle="tab">Users</a></li>
+	    <li {% if tab == 'detail' %}class="active"{% endif %}><a href="#detail" data-toggle="tab">Details</a></li>	    
+    </ul>
+	<div class="tab-content">
+		<div class="tab-pane {% if tab == null %}active{% endif %}" id="loan-details">
+			<div class="row">
+				{% set detailSpan = '6' %}
+				{% if site.settings.inheritedShowLosMilestones and loanApp.milestoneGroup %}
+					{% set detailSpan = '4' %}
+					<div class="span{{ detailSpan }}">
+						<div id="milestones">
+						    <ul class="nav nav-list">
+							    <li class="nav-header hide">{{ loanApp.milestoneGroup.name }}</li>
+							    <li class="nav-header">Loan Milestones</li>
+							    {% for milestone in loanApp.milestoneGroup.activeMilestones %}
+							    	{% if milestone.weight < loanApp.milestone.weight %}
+								    	<li><span class="badge badge-success"><i class="icon-white icon-check"></i></span> {{ milestone.milestoneName }}</li>
+							    	{% else %}
+								    	<li><span class="badge badge-warning"><i class="icon-white icon-time"></i></span> {{ milestone.milestoneName }}</li>
+							    	{% endif %}
+							    {% endfor %}
+						    </ul>
+					    </div>
+					</div>
+				{% endif %}
+				<div class="span{{ detailSpan }}">
+					<div id="loan-officer-info">
+						<h3>Loan Officer</h3>
+						{% if loanApp.loanOfficer %}
+							<div class="media">
+								{% if loanApp.loanOfficer.officerPhoto %}
+									<a class="pull-left" href="#">
+										<img src="{{ asset(loanApp.loanOfficer.officerPhoto.path) }}" class="media-object img-polaroid" >
+									</a>
+								{% endif %}
+								<div class="media-body">
+									<h4 class="media-heading">{{ loanApp.loanOfficer.fullName }}</h4>
+									<p>
+										NMLS ID: {{ loanApp.loanOfficer.nmlsId }}<br>
+										Office Phone: {{ loanApp.loanOfficer.phoneOffice|phoneNumber }}<br>
+										Mobile Phone: {{ loanApp.loanOfficer.phoneMobile|phoneNumber }}<br>
+										Toll-free Phone: {{ loanApp.loanOfficer.phoneTollfree|phoneNumber }}<br>
+										Fax: {{ loanApp.loanOfficer.fax|phoneNumber }}<br>
+										Email: {{ loanApp.loanOfficer.email|mailTo|purify }}<br>
+									</p>
+								</div>
+							</div>
+
+						{% else %}
+							<p>No loan officer is associated with this loan.</p>
+						{% endif %}
+					</div>
+				</div>
+				<div class="span{{ detailSpan }}">
+					<h3>Loan Details</h3>
+					<p>
+						<form id="loan-form" method="post" action="{{ path('sudoux_mortgage_admin_loan_member', { id: loanApp.id, form: 'loan' }) }}" novalidate="novalidate">
+							{% set show_lo_widget = true %}
+                            {% if site.siteType %}
+                                {% if site.siteType.keyName == 'loan_officer' %}{% set show_lo_widget = false %}{% endif %}
+                            {% endif %}
+                            {% if site.settings.los %}
+                                {% set show_lo_widget = false %}
+                            {% endif %}
+                            {% if show_lo_widget %}
+								<b class="form-label">Loan Officer</b>
+								<div class="form-inline">
+									 {{ form_widget(loanForm.loan_officer) }} <input type="submit" value="Update" class="btn btn-default"><br>
+								</div>
+							{% endif %}
+							<b class="form-label">Status</b>
+							<div class="form-inline">
+								 {{ form_widget(loanForm.status) }} <input type="submit" value="Update" class="btn btn-default">
+							</div>
+							<div class="hide">{{ form_rest(loanForm) }}</div> 
+							
+						</form>
+						<b>Loan ID: </b>#{{ loanApp.id }}<br>
+						{% if loanApp.losLoanNumber %}<b>Loan Number: </b>{{ loanApp.losLoanNumber }}<br>{% endif %}
+						{% if loanApp.milestone %}
+							<b>Loan Status: </b>{{ loanApp.milestone.name }}<br>
+						{% endif %}
+						<b>Completed:</b> {{ loanApp.completedDate|date(date_format) }}<br>
+						<b>Borrower:</b> {{ loanApp.borrower.fullName }}<br>
+						{% for coborrower in loanApp.coborrower %}
+							<b>Co-Borrower:</b> {{ coborrower.fullName }}<br>
+						{% endfor %}
+						<b>Loan Amount:</b> ${{ loanApp.loanAmount|number_format }}<br>
+						{% if loanApp.propertyLocation %}
+							<b>Property:</b><br>
+							{{ loanApp.propertyLocation.address1 }}<br>
+							{{ loanApp.propertyLocation.city }}, {% if loanApp.propertyLocation.state %}{{ loanApp.propertyLocation.state.abbreviation }}{% endif %} {{ loanApp.propertyLocation.zipcode }}<br>
+						{% endif %}
+						{% if loanApp.referralSource|length > 0 %}
+							<b>Referral Sources:</b><br>
+							<ul>
+								{% for source in loanApp.referralSource %}
+									<li>{{ source.name }}</li>
+								{% endfor %}
+							</ul>
+
+						{% endif %}
+						<small class="muted">Last Modified: {{ loanApp.modified|date(date_format) }}</small><br>
+						<small class="muted">Source: {{ loanApp.sourceName }}</small>
+					</p>
+				</div>
+			</div>
+			{% if site.settings.inheritedMemberPortalDocumentsEnabled %}
+				<div class="row row-margin">
+					<div class="span12">
+						<h3>Documents</h3>
+						{% if loanApp.document|length > 0 %}
+							<table class="table table-striped">
+								<thead>
+									<th>Name</th>
+									<th>Category</th>
+									<th>User</th>
+									<th>Created</th>
+									{% if site.settings.los %}
+										<th>Processing Status</th>
+									{% endif %}
+									<th>Status</th>
+									<th>Action</th>
+									<th></th>
+								</thead>
+								<tbody>
+									{% for document in loanApp.document %}
+										<tr>
+											<td>{{ document.name }}</td>
+											<td>{% if document.type %}{{ document.type.term }}{% else %}None{% endif %}</td>
+											<td>{% if document.file %}{{ document.file.user.username }}{% else %}{{ site.settings.los.losProvider.name }}{% endif %}</td>
+											<td>{{ document.created|date(date_format) }}</td>
+											{% if site.settings.los %}
+												<td>
+													{% if document.losStatus == 2 or document.losStatus == 3 %}
+														<span class="icon-time"></span>
+													{% elseif document.losStatus == 5 %}
+														<span class="icon-exclamation-sign"></span>
+													{% else %}
+														<span class="icon-ok"></span>
+													{% endif %}
+													{{ document.losStatusValue }}
+													{% if document.losStatus == 3 and document.status == 3 %}
+														<br><span class="icon-share"></span> <a href="{{ path('sudoux_mortgage_admin_loan_document_send_los', { 'applicationId': loanApp.id, 'documentId': document.id }) }}">Send Now</a>
+													{% endif %}
+												</td>
+											{% endif %}
+											<td class="status">{{ document.statusName }}</td>
+											<td>
+												{% if document.losStatus == 0 and document.status != 3 %}
+													<div class="action-links">
+														<div class="btn-group">
+															<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+																Update Status
+																<span class="caret"></span>
+															</a>
+															<ul class="dropdown-menu">
+																{% for key,docStatus in document.statusValues %}
+																	<li><a href="#" data-loan-id="{{ loanApp.id }}" data-document-id="{{ document.id }}" data-status-id="{{ key }}" class="set-document-status">{{ docStatus }}</a></li>
+																{% endfor %}
+															</ul>
+														</div>
+													</div>
+												{% else %}
+													<p class="muted"><i class="icon-lock"></i> Locked</p>
+												{% endif %}
+											</td>
+											<td>
+												{% if document.file %}
+													<a href="{{ path('sudoux_mortgage_loan_document_view', { loanId: loanApp.id, documentId: document.id }) }}" target="_blank"><span class="icon-download"></span> Download</a>
+												{% else %}
+													<a href="#document-download-{{ document.id }}" data-loan-id="{{ loanApp.id }}" data-document-id="{{ document.id }}" class="set-los-file"><span class="icon-download"></span> Download</a>
+													<a id="document-download-{{ document.id }}" href="{{ path('sudoux_mortgage_loan_document_view', { loanId: loanApp.id, documentId: document.id }) }}" class="hide" target="_blank"><span class="icon-download"></span> Download</a>
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% else %}
+							<p>No documents have been uploaded</p>
+						{% endif %}
+					</div>
+				</div>
+				<div class="row row-margin">
+					<div class="span5">
+						<h3>Upload Document</h3>
+						<form id="upload-document-form" action="{{ path('sudoux_mortgage_admin_loan_member', { id: loanApp.id, form: 'document' }) }}" class="form-horizontal" method="post" {{ form_enctype(documentForm) }} novalidate="novalidate">
+							<div class="control-group">
+								{{ form_label(documentForm.name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+								<div class="controls">
+									{{ form_widget(documentForm.name) }}
+								</div>
+							</div>
+							{% if documentChecklist.taxonomy|length > 0 %}
+								<div class="control-group">
+									{{ form_label(documentForm.type, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+									<div class="controls">
+										{{ form_widget(documentForm.type) }}
+									</div>
+								</div>
+							{% endif %}
+							<div class="control-group">
+								{{ form_label(documentForm.file_field, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+								<div class="controls">
+									{{ form_widget(documentForm.file_field) }}
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<div class="hide">{{ form_rest(documentForm) }}</div>
+									<input name="submit" type="submit" value="Add" class="btn btn-default">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="span6 offset1">
+						{% if documentChecklist.taxonomy|length > 0 %}
+							<div id="document-checklist" class="well">
+								<h3>Document Checklist</h3>
+								<ul class="list-group">
+									{% for term in documentChecklist.taxonomy %}
+										<li>{% if loanApp.hasDocumentTaxonomy(term, 3) %}<i class="icon-ok"></i>{% else %}<i class="icon-time"></i>{% endif %} {{ term.term }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+		<div class="tab-pane {% if tab == 'messages' %}active{% endif %}" id="messages">
+			<div class="row row-margin">
+				<div class="span12">
+					<h3>Messages</h3>
+					{% if loanApp.messageThread %}
+						{% if loanApp.messageThread.message|length > 0 %}
+							{% for message in loanApp.messageThread.message %}
+							    <div id="message-modal-{{ message.id }}" data-message-id="{{ message.id }}" data-loan-id="{{ loanApp.id }}" class="modal hide fade message-modal">
+								    <div class="modal-header">
+									    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									    <h3>Message from {{ message.user.fullName }}</h3>
+							    	</div>
+							    	<div class="modal-body">
+							    		<p><time datetime="2009-11-13"><small>Sent on {{ message.created|date(date_format) }} at {{ message.created|date('g:i A') }}</small></time></p>
+							    		<div class="message">
+							    			{{ message.message }}
+						    			</div>
+						    		</div>
+							    </div>
+							{% endfor %}
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>Sender</th>
+										<th>Message</th>
+										<th>Status</th>
+										<th>Date Sent</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for message in loanApp.messageThread.message %}
+										<tr>
+											<td>{{ message.user.fullName }} ({{ message.user.username }})</td>
+											<td>{{ message.message|slice(0,25) }}...<a href="#message-modal-{{ message.id }}" role="button" data-toggle="modal" class="btn-view-message">Read More</a></td>
+											<td id="message-status-{{ message.id }}">
+												{% set statusClass = 'label-info' %}
+												{% if message.status == 0 %}
+													{% set statusClass = 'label-success' %}
+												{% endif %}
+												<span class="label {{ statusClass }}">{{ message.statusName }}</span>
+											</td>
+											<td>{{ message.created|date(date_format) }}</td>
+											<td><a href="#message-modal-{{ message.id }}" role="button" data-toggle="modal" data-message-id="{{ message.id }}" class="btn btn-default btn-view-message">View</a></td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% endif %}
+					{% else %}
+						<p>No messages available.</p>
+					{% endif %}
+				</div>
+			</div>
+			<div class="row row-margin">
+				<div class="span12">
+					<form id="send-message-form" action="{{ path('sudoux_mortgage_admin_loan_member', { id: loanApp.id, form: 'message' }) }}" method="post" {{ form_enctype(documentForm) }} novalidate="novalidate">
+						{{ form_widget(messageForm.message, { 'attr': { 'placeholder': 'Add Message', 'required': 'required' } }) }}<br>
+						<div class="hide">{{ form_rest(messageForm) }}</div>
+						<input name="submit" type="submit" value="Send" class="btn btn-default">
+					</form>
+				</div>
+			</div>
+		</div>
+		{% if site.settings.inheritedCreditConnection %}
+			<div class="tab-pane {% if tab == 'credit' %}active{% endif %}" id="credit">
+				<p><a href="{{ path('sudoux_mortgage_admin_loan_request_credit', { id: loanApp.id, tab: 'credit' }) }}" class="btn btn-default">Request Credit Scores</a></p>
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:credit.html.twig' %}
+			</div>
+		{% endif %}
+		{% if site.settings.inheritedPricingConnection %}
+			<div class="tab-pane {% if tab == 'pricing' %}active{% endif %}" id="pricing">
+				<p><a href="{{ path('sudoux_mortgage_admin_loan_request_pricing', { id: loanApp.id, tab: 'pricing' }) }}" class="btn btn-default">Request Pricing</a></p>
+				{% include 'SudouxMortgageBundle:LoanApplicationShared:pricing.html.twig' %}
+			</div>
+		{% endif %}
+		<div class="tab-pane {% if tab == 'users' %}active{% endif %}" id="users">
+			<p class="muted"><small>Add additional user accounts to view the loan details in the member portal.</small></p>
+			{% if showInviteUser %}
+				<div class="alert alert-warning">
+					There is no customer account associated with this loan. <a href="{{ path('sudoux_mortgage_admin_loan_member_invite_borrower', { id: loanApp.id }) }}">Click here</a> if you would like to invite the borrower.
+				</div>
+			{% endif %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Type</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if loanApp.user %}
+						<tr>
+							<td>{{ loanApp.user.username }}</td>
+							<td>{{ loanApp.user.firstName }}</td>
+							<td>{{ loanApp.user.lastName }}</td>
+							<td>Borrower</td>
+							<td><div class="muted"><i class="icon-lock"></i> Locked</div></td>
+						</tr>
+					{% endif %}
+					{% for user in loanApp.clientUser %}
+						<tr>
+							<td>{{ user.username }}</td>
+							<td>{{ user.firstName }}</td>
+							<td>{{ user.lastName }}</td>
+							<td>Additional User</td>
+							<td><a href="#" class="btn btn-default btn-remove-loan-user" data-loan-id="{{ loanApp.id }}" data-user-id="{{ user.id }}"><span class="icon-minus-sign icon-white"></span> Remove</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+			<form id="add-user-form" action="{{ path('sudoux_mortgage_admin_loan_member', { id: loanApp.id, form: 'user', tab: 'users' }) }}" method="post" {{ form_enctype(documentForm) }} novalidate="novalidate">
+	 			{{ form_label(userForm.additional_user_email) }}
+				<div class="form-inline">
+					{{ form_widget(userForm.additional_user_email) }}
+					<input name="submit" type="submit" value="Invite" class="btn btn-default">
+				</div>
+				<div class="hide">{{ form_rest(userForm) }}</div>
+			</form>
+
+		</div>
+		<div class="tab-pane {% if tab == 'detail' %}active{% endif %}" id="detail">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:loanFullSummary.html.twig' with { application: loanApp, form: loanForm } %}
+		</div>
+	</div>
+	{#<div class="row row-margin">
+		<div class="span12">
+			<h3 class="toggle-group" data-group-id="#email-group">Emails <span class="icon-chevron-down"></span></h3>
+			<div id="email-group" class="collapse">
+				{% if loanApp.email|length > 0 %}
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Subject</th>
+								<th>Recipient</th>
+								<th>Status</th>
+								<th>Date Sent</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for email in loanApp.email %}
+								<tr>
+									<td>{{ email.subject }}</td>
+									<td>{{ email.recipient }}</td>
+									<td>{{ email.statusName }}</td>
+									<td>{{ email.created|date(date_format) }}</td>
+									<td><a h href="#email-message-modal-{{ email.id }}" role="button" class="btn btn-default" data-toggle="modal">View</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% else %}
+					<p>No emails have been sent.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div> #}
+		
+{% endblock %}
+
+{% block modal %}
+	{# {% for email in loanApp.email %}
+	    <div id="email-message-modal-{{ email.id }}" class="modal large hide fade">
+		    <div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			    <h3>{{ email.subject }}</h3>
+		    </div>
+		    <div class="modal-body">
+		    	<iframe src="{{ path('sudoux_cms_admin_message_iframe', { id: email.id }) }}" border="0" frameborder="0" width="100%" height="400px"></iframe>
+		    </div>
+		    <div class="modal-footer">
+			    <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+		    </div>
+	    </div>
+	{% endfor %} #}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: loanApp.borrower } %}
+		
+	{% for borrower in loanApp.coBorrower %}
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerDetailModal.html.twig' with { borrower: borrower } %}
+	{% endfor %}
+	{% if loanApp.messageThread.message|length > 0 %}
+		{% for message in loanApp.messageThread.message %}
+		    <div id="message-modal-{{ message.id }}" data-message-id="{{ message.id }}" data-loan-id="{{ loanApp.id }}" class="modal hide fade message-modal">
+			    <div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				    <h3>Message from {{ message.user.fullName }}</h3>
+		    	</div>
+		    	<div class="modal-body">
+		    		<p><time datetime="2009-11-13"><small>Sent on {{ message.created|date(date_format) }} at {{ message.created|date('g:i A') }}</small></time></p>
+		    		<div class="message">
+		    			{{ message.message }}
+	    			</div>
+	    		</div>
+		    </div>
+		{% endfor %}
+	{% endif %}
+
+{% endblock %}

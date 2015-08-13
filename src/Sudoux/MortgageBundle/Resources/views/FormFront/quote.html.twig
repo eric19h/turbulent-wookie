@@ -1,0 +1,70 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}Get a Quote{% endblock %}
+
+{% block body_class %}page-quote{% endblock %}
+
+{% block content %}
+	<div class="quote-form-wrapper">
+		<form action="{{ path('sudoux_mortgage_form_quote') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+			<div class="errors">{{ form_errors(form) }}</div>
+			<div class="control-group">
+				{{ form_label(form.subject, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.subject) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.first_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.first_name) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.last_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.last_name) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.email, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.email) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.home_phone, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.home_phone) }}
+				</div>
+			</div>
+			{% if showReferralSources %}
+				<div class="control-group">
+					{{ form_label(form.referral_source, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.referral_source) }}
+					</div>
+				</div>
+				<div class="control-group referral-source-desc-group">
+					<div class="controls">
+						{{ form_widget(form.referral_source_desc) }}
+					</div>
+				</div>
+			{% endif %}
+			<div class="control-group">
+				{{ form_label(form.message, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.message) }}
+				</div>
+			</div>
+			{{ form_widget(form.spam_field) }}
+			<div class="control-group">
+				<div class="controls">
+					{% if site.settings.termsConditionsDisclaimer %}<div class="disclaimer">{{ site.settings.termsConditionsDisclaimer|purify }}</div>{% endif %}
+			    	<input type="submit" value="Submit" class="btn btn-default">
+				</div>
+			</div>
+			<div class="hidden">{{ form_rest(form) }}</div>
+		</form>
+	</div>
+{% endblock %}

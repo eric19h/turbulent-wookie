@@ -1,0 +1,107 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Branches{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>	
+		<li class="active">Branches</li>
+	</ul>
+{% endblock %}
+
+{% block content_top %}
+	<div class="row">
+		<div class="span8">
+			<form name="loan-officer-search-form" method="post" action="{{ path('sudoux_mortgage_admin_branch') }}" novalidate="novalidate" class="clearfix">
+				<div class="input-append">
+					{{ form_widget(searchForm.search) }}
+					<div class="hide">{{ form_rest(searchForm) }}</div>
+					<input type="submit" value="Go" class="btn btn-default">
+				</div>
+				<a href="{{ path('sudoux_mortgage_admin_branch') }}">Clear</a>
+			</form>
+		</div>
+		<div class="span4 text-right">
+			{% set showAddBtn = true %}
+			{% if site.siteType %}
+				{% if site.siteType.keyName == 'branch' %}
+					{% set showAddBtn = false %}
+				{% endif %}
+			{% endif %}
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a href="{{ path('sudoux_mortgage_admin_branch_import_csv') }}" class="btn btn-inverse"><i class="icon-upload icon-white"></i> Import Branches</a>
+			{% endif %}
+			{% if showAddBtn %}
+				<a href="{{ path('sudoux_mortgage_admin_branch_add') }}" class="btn btn-inverse"><i class="icon-plus icon-white"></i> Add Branch</a>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<div class="text-right">
+		<p><a href="{{ path('sudoux_mortgage_admin_branch_export') }}" target="_blank"><span class="icon-download"></span> Export to CSV</a></p>
+	</div>
+
+	{% if search %}
+		<div class="alert">
+			<p>Results for &quot;<em>{{ search }}</em>&quot</p>
+		</div>
+	{% endif %}
+	{% if branches|length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+					<th>NMLS ID</th>
+                    <th>Site</th>
+					<th>Active</th>
+					<th>Created</th>
+				</tr>
+			</thead>
+			{% for branch in branches %}
+			 	<tr>
+			 		<td><a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id }) }}" target="_blank">{{ branch.name }}</a></td>
+			 		<td>{{ branch.location.address1 }} {{ branch.location.city }}, {{ branch.location.state.abbreviation }}</td>
+			 		<td>{{ branch.nmlsid }}</td>
+                    <td>{{ branch.site.name }}</td>
+			 		<td>{{ branch.active|boolToYesNo }}</td>
+			 		<td>{{ branch.created|date(date_format, app.user.timezone) }}</td>
+			 		<td>
+                        {% set siteBranchId = 0 %}
+                        {% if site.settings.branch %}
+                            {% set siteBranchId = site.settings.branch.id %}
+                        {% endif %}
+			 			{% if branch.site.id == site.id or branch.id == siteBranchId %}
+				 			<div class="action-links">
+			 				    <div class="btn-group">
+								    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+									    Action
+									    <span class="caret"></span>
+								    </a>
+								    <ul class="dropdown-menu">
+								    	<li><a href="{{ path('sudoux_mortgage_admin_branch_edit', {'id': branch.id}) }}"><i class="icon-pencil"></i> Edit</a></li>
+							    		<li><a href="{{ path('sudoux_mortgage_admin_branch_delete', {'id': branch.id}) }}"><i class="icon-trash"></i> Delete</a></li>
+								    	{% if branch.id != siteBranchId %}
+                                            {% if branch.hasSite %}
+                                                <li><a href="http://{{ branch.branchSite.primaryDomain.domain }}" target="_blank"><i class="icon-plus"></i> View Site</a></li>
+                                            {% else %}
+                                                <li><a href="{{ path('sudoux_mortgage_admin_site_add', { 'type': 'branch', 'id': branch.id}) }}"><i class="icon-plus"></i> Create Site</a></li>
+                                            {% endif %}
+                                        {% endif %}
+								    </ul>
+							    </div>
+							</div>
+						{% else %}
+							<p class="muted"><i class="icon-lock"></i> Locked</p>
+						{% endif %}
+					</td>
+			 	</tr>
+			{% endfor %} 
+		</table>
+		<div class="pager">{{ knp_pagination_render(branches) }}</div>
+	{% else %}
+		<p>There are no branches. <a href="{{ path('sudoux_mortgage_admin_branch_add') }}">Click here</a> to get started.</p>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% if loanApp.pricingScenario|length > 0 %}
+	<table id="pricing-scenario-table" class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Rate</th>
+				<th>Margin</th>
+				<th>APR</th>
+				<th>P&amp;I</th>
+				<th>Closing Cost</th>
+				<th>Discount</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for scenario in loanApp.pricingScenario %}
+				<tr>
+					<td>{{ scenario.name }}</td>
+					<td>{{ scenario.rate }}%</td>
+					<td>{{ scenario.margin }}</td>
+					<td>{{ scenario.apr }}%</td>
+					<td>{{ scenario.pi }}</td>
+					<td>${{ scenario.closingCost|number_format }}</td>
+					<td>${{ scenario.discount|number_format }}</td>
+					<td><a href="#" class="show-detail">View Details</a></td>
+				</tr>
+				<tr class="scenario-detail-row">
+					<td colspan="8">
+						<table class="table table-striped scenario-detail-table">
+							<thead>
+								<tr>
+									{% for col in scenario.options.header %}
+										<th>{{ col }}</th>
+									{% endfor %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for data in scenario.options.data %}
+									<tr>
+										{% for col in data %}
+											<td>{{ col }}</td>
+										{% endfor %}
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+	
+{% endif %}

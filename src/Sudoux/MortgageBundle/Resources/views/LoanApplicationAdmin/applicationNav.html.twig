@@ -1,0 +1,44 @@
+{% if application.completed %}
+	<div class="los-controls text-right">
+	    <div class="btn-group">
+    		<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+    			Export <span class="caret"></span>
+    		</a>
+    		<ul class="dropdown-menu text-left">
+    			<li><a href="{{ path('sudoux_mortgage_admin_loan_export_fanniemae', { id: application.id }) }}" target="_blank">To Fannie Mae 3.2</a></li>
+    			{# <li><a href="{{ path('sudoux_mortgage_admin_loan_export_mismo', { id: application.id }) }}" target="_blank">To MISMO</a></li> #}
+    		</ul>
+    	</div>
+	</div>
+{% endif %}
+<div id="loan-application-admin-nav" class="loan-application-nav">
+
+	<ul id="loan-application-admin-nav" class="nav-steps">
+		<li class="{% if step == 1 %} active {% else %} completed clickable {% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step1', { id: application.id }) }}">Borrower Info</a>
+		</li>
+		<li class="{% if step == 2 %} active {% elseif step > 2 %} completed {% endif %} {% if application.lastStepCompleted >= 1 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step2', { id: application.id }) }}">Property Info</a>
+		</li>
+		<li class="{% if step == 3 %} active {% elseif step > 3 %} completed {% endif %} {% if application.lastStepCompleted >= 2 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step3', { id: application.id }) }}">Employment</a>
+		</li>
+		<li class="{% if step == 4 %} active {% elseif step > 4 %} completed {% endif %} {% if application.lastStepCompleted >= 3 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step4', { id: application.id }) }}">Assets</a>
+		</li>
+		<li class="{% if step == 5 %} active  {% elseif step > 5 %} completed {% endif %} {% if application.lastStepCompleted >= 4 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step5', { id: application.id }) }}">Housing &amp; Income</a>
+		</li>
+		<li class="{% if step == 6 %} active  {% elseif step > 6 %} completed {% endif %} {% if application.lastStepCompleted >= 5 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step6', { id: application.id }) }}">Declarations</a>
+		</li>
+		<li class="{% if step == 7 %} active {% elseif step > 7 %} completed {% endif %} {% if application.lastStepCompleted >= 6 %}clickable{% endif %}">
+			<a href="{{ path('sudoux_mortgage_admin_loan_step7', { id: application.id }) }}">Review</a>
+		</li>
+		{% if application.completed %}
+			<li class="{% if step == 8 %} active {% endif %} clickable">
+				<a href="{{ path('sudoux_mortgage_admin_loan_member', { id: application.id }) }}">Member Portal</a>
+			</li>
+		{% endif %}
+	</ul>
+</div>

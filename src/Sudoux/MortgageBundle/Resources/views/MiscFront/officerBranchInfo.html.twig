@@ -1,0 +1,41 @@
+{% if site.siteType %}
+	{% if site.siteType.keyName == 'branch' and site.settings.branch %}
+		<div class="site-profile">
+			{% if branch.branchPhoto %}
+			    <div class="media media-block">
+				    <a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id }) }}">
+				    	<img class="media-object img-polaroid" src="{{ asset(branch.branchPhoto.path) }}">
+				    </a>
+				    <div class="media-body">
+				    	<h3><a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id }) }}">{{ branch.name }}</a></h3>
+						{% include 'SudouxMortgageBundle:BranchFront:branchRowInfo.html.twig' %}
+					</div>
+			    </div>
+			{% else %}
+				<div class="media-block">
+					<h3><a href="{{ path('sudoux_mortgage_branch_detail', { id: branch.id }) }}">{{ branch.name }}</a></h3>
+					{% include 'SudouxMortgageBundle:BranchFront:branchRowInfo.html.twig' %}
+				</div>
+			{% endif %} 
+		</div>           	
+	{% elseif site.siteType.keyName == 'loan_officer' and site.settings.loanOfficer %}
+		<div class="site-profile">
+			{% if officer.officerPhoto %}
+			    <div class="media media-block">
+				    <a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id }) }}">
+				    	<img class="media-object img-polaroid" src="{{ asset(officer.officerPhoto.path) }}">
+				    </a>
+				    <div class="media-body">
+				    	<h3><a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id }) }}">{{ officer.fullName }}</a></h3>
+						{% include 'SudouxMortgageBundle:LoanOfficerFront:officerRowInfo.html.twig' %}
+					</div>
+			    </div>
+			{% else %}
+				<div class="media-block">
+					<h3><a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: officer.id }) }}">{{ officer.fullName }}</a></h3>
+					{% include 'SudouxMortgageBundle:LoanOfficerFront:officerRowInfo.html.twig' %}
+				</div>
+			{% endif %}
+		</div>           	
+	{% endif %}
+{% endif %}

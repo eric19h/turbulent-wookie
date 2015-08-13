@@ -1,0 +1,31 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Edit Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply edit{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">Edit Loan</li>
+	</ul>
+{% endblock %}
+
+{% block content_top %}
+	{% if site.settings.los %}
+		<div class="clearfix">
+			<div class="pull-right">
+				<a href="#" class="btn btn-inverse"><i class="icon-refresh icon-white"></i> Sync with LOS</a>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<form action="{{ path('sudoux_mortgage_admin_loan_edit', { id: loanApplication.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		{% include 'SudouxMortgageBundle:LoanApplicationAdmin:formContent.html.twig' %}
+		<div class="text-center clearfix">
+		    <input type="submit" value="Edit Loan" class="btn"> <a href="{{ path('sudoux_mortgage_admin_loan') }}">Cancel</a>
+		</div>
+	</form>
+{% endblock %}

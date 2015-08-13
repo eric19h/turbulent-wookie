@@ -1,0 +1,119 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}LOS Settings{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_cms_admin_configuration_integration') }}">Integrations</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% set conn = site.settings.los %}
+	{% if site.settings.inheritedLos and conn == null %}
+		<div class="alert alert-warning">
+			Settings are inherited from a parent site. Enter credentials below to override the parent configuration.
+		</div>
+	{% endif %}
+    {% if conn %}
+    	<ul class="nav nav-tabs">
+			<li class="active"><a href="{{ path('sudoux_mortgage_admin_settings_los') }}">Settings</a></li>
+			<li><a href="{{ path('sudoux_mortgage_admin_settings_los_milestones') }}">Milestones</a></li>
+		</ul>
+    {% endif %}
+	<form action="{{ path('sudoux_mortgage_admin_settings_los') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+		<div class="row">
+			<div class="span12">
+				<div class="control-group">
+					{{ form_label(form.los_provider, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.los_provider) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.service_url, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.service_url, { help: 'Default Production: https://lossync.wmmortgageware.com/losService.svc, Default Staging: http://lossync.sudoux.com/losService.svc' }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.host, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.host) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.username, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.username) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.password, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.password) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.license_key, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.license_key) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.import_los_loans, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.import_los_loans) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.allow_loan_deletions, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.allow_loan_deletions) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.auto_send_docs, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.auto_send_docs) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.active, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.active, { help: 'Inactive connections will still allow loan applications to be sent. CRON tasks will be disabled' }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.last_updated, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.last_updated, { help: 'UTC Time' }) }}
+					</div>
+				</div>
+				<div class="control-group">
+					{{ form_label(form.settings, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+					<div class="controls">
+						{{ form_widget(form.settings) }}
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="hide">{{ form_rest(form) }}</div>
+				    	<input type="submit" value="Update" class="btn"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</form>
+	
+	{% if conn %}
+		<form action="{{ path('sudoux_mortgage_admin_settings_los_delete') }}" class="form-horizontal" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+	    	<div class="alert">
+		    	<input type="submit" value="Delete" class="btn btn-danger"> <b>Warning:</b> This will remove all LOS integration
+	    	</div>
+		</form>
+	{% endif %}
+{% endblock %}

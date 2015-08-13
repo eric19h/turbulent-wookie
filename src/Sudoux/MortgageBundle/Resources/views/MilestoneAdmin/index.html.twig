@@ -1,0 +1,39 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Loan Milestones{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_configuration_home') }}">Configuration</a> <span class="divider">/</span></li>	
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content_top %}
+
+	<div class="text-right hide">
+		{% if site.settings.los %}
+			<a href="{{ path('sudoux_mortgage_admin_branch_add') }}" class="btn btn-inverse"><i class="icon-refresh icon-white"></i> Sync with LOS</a>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block content %}
+
+	{% if milestoneGroups|length > 0 %}
+		{% for milestoneGroup in milestoneGroups %}
+			<div>
+				<h3>{{ milestoneGroup.name }}</h3>
+				<ul>
+					{% for milestone in milestoneGroup.milestone %}
+						<li>{{ milestone.name }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	{#<form action="{{ path('sudoux_mortgage_admin_settings_los_milestone_import') }}" method="post"novalidate="novalidate">
+		<input type="submit" value="Import" class="btn btn-default"> <a href="{{ path('sudoux_cms_admin_configuration_home') }}">Cancel</a>
+	</form>#}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}LOS Integrations{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_internal_tools') }}">Tools</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+
+{% endblock %}
+
+
+{% block content %}
+	{% if integrations|length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Site</th>
+					<th>Domain</th>
+					<th>Credentials</th>
+					<th>Provider</th>
+					<th>Active</th>
+					<th>Last Updated</th>
+				</tr>
+			</thead>
+			{% for integration in integrations %}
+			 	<tr>
+					<td>{{ integration.site.name }}</td>
+					<td><a href="http://{{ integration.site.primaryDomain.domain }}" target="_blank">{{ integration.site.primaryDomain.domain }}</a></td>
+					<td>
+						Host: {{ integration.host }}<br>
+						Username: {{ integration.username }}<br>
+						Password: {{ integration.password }}<br>
+						License Key: {{ integration.licenseKey }}
+					</td>
+			 		<td>{{ integration.losProvider.name }}</td>
+					<td>{{ integration.active|boolToYesNo }}</td>
+					<td>
+						{% if date(integration.lastUpdated, app.user.timezone) > date('-2days') %}
+							<span class="label label-success"><i class="icon-ok icon-white"></i></span>
+						{% else %}
+							<span class="label label-important"><i class="icon-exclamation-sign icon-white"></i></span>
+						{% endif %}
+						{{ integration.lastUpdated|date(datetime_format, app.user.timezone) }}
+					</td>
+			 	</tr>
+			{% endfor %} 
+		</table>
+		<div class="pager">{{ knp_pagination_render(integrations) }}</div>
+	{% else %}
+		<p>There are no integrations available.</p>
+	{% endif %}
+{% endblock %}

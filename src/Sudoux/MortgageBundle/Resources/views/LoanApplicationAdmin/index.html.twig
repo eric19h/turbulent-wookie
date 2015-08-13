@@ -1,0 +1,121 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Loan Applications{% endblock %}
+
+{% block content_top %}
+	<div class="clearfix">
+		<div class="pull-right">
+			<p><a href="{{ path('sudoux_mortgage_admin_loan_step1') }}" class="btn btn-inverse"><i class="icon-plus icon-white"></i> Add Loan Application</a></p>
+		</div>
+	</div>
+	{% set showLoFilter = true %}
+	{% if site.siteType %}
+		{% if site.siteType.keyName == 'loan_officer' %}
+			{% set showLoFilter = false %}
+		{% endif %}
+	{% endif %}
+	{% if showLoFilter %}
+		<div class="well">
+			<form class="form-inline" method="post" action="{{ path('sudoux_mortgage_admin_loan') }}" novalidate="novalidate">
+				{{ form_label(form.officer) }}<br>{{ form_widget(form.officer) }} <input type="submit" value="Go" class="btn btn-success"> <a href="{{ path('sudoux_mortgage_admin_loan') }}">Clear</a>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% if applications|length > 0 %}
+		<table id="admin-loan-application-list" class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ knp_pagination_sortable(applications, 'ID', 'q.id') }}</th>
+					<th>Borrower</th>
+					<th>Property Address</th>
+					<th>Type</th>
+					<th>Loan Officer</th>
+					<th>Site</th>
+					<th>Status</th>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						{% if site.settings.los %}<th>LOS Status</th>{% endif %}
+					{% endif %}
+					<th>{{ knp_pagination_sortable(applications, 'Created', 'q.created') }}</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			{% for application in applications %}
+				{% set failedToSend = false %}
+				{% if site.settings.los and application.completed and application.sentToLos == false %} {# failed to send #}
+					{% set failedToSend = true %}
+				{% endif %}
+			 	<tr>
+			 		<td>{{ application.id }}</td>
+			 		<td>{{ application.borrower.fullName }}</td>
+			 		<td>{% if application.propertyLocation %}{{ application.propertyLocation.toString }}{% else %}N/A{% endif %}</td>
+			 		<td>
+			 			{% if application.isPrequal %}Prequalify{% else %}{{ application.loanTypeText }}{% endif %}
+			 		</td>
+			 		<td>
+			 		{% if application.loanOfficer %}
+			 			{{ application.loanOfficer.fullName }}
+		 			{% else %}
+			 			Not Assigned
+		 			{% endif %}
+			 		</td>
+			 		<td>{{ application.site.name }}</td>
+			 		<td class="text-center">
+		 				{% set statusLabelClass = 'label-info' %}
+			 			{% if application.isPrequal %}
+			 				<span class="label {{ statusLabelClass }}">Prospect</span>
+		 				{% else %}
+			 				{% if application.status == 0 %}{% set statusLabelClass = 'label-warning' %}{% endif %}
+			 				{% if application.status == 1 %}{% set statusLabelClass = 'label-success' %}{% endif %}
+			 				{% if application.status == 3 %}{% set statusLabelClass = 'label-important' %}{% endif %}
+			 				<span class="label {{ statusLabelClass }}">{{ application.statusName }}</span>
+		 				{% endif %}
+			 		</td>
+			 		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			 			{% if site.settings.los %}<td>{% if application.sentToLos %}<span class="icon-check"></span> Sent{% else %}<span class="icon-warning-sign"></span> Not Sent{% endif %}</td>{% endif %}
+		 			{% endif %}
+			 		<td>{{ application.created|date(date_format, app.user.timezone) }}</td>
+			 		<td>
+			 			<div class="action-links">
+		 				    <div class="btn-group">
+							    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+								    Action
+								    <span class="caret"></span>
+							    </a>
+							    <ul class="dropdown-menu">
+							    	{% if failedToSend %}
+							    		<li><a href="{{ path('sudoux_mortgage_admin_loan_resend', {'id': application.id}) }}"><i class="icon-refresh"></i> Resend</a></li>
+										<li><a href="{{ path('sudoux_mortgage_admin_loan_member', {'id': application.id}) }}"><i class="icon-list-alt"></i> Member Portal</a></li>
+							    	{% else %}
+								    	{% if application.completed %}
+											{% if site.settings.inheritedMemberPortalEnabled %}
+								    			<li><a href="{{ path('sudoux_mortgage_admin_loan_member', {'id': application.id}) }}"><i class="icon-list-alt"></i> Member Portal</a></li>
+											{% else %}
+												<li><a href="{{ path('sudoux_mortgage_admin_loan_summary', {'id': application.id}) }}"><i class="icon-list-alt"></i> Info</a></li>
+											{% endif %}
+							    		{% else %}
+											<li><a href="{{ path('sudoux_mortgage_admin_loan_step' ~ application.lastStepCompleted, {'id': application.id}) }}"><i class="icon-list-alt"></i> View</a></li>
+									    	<li><a href="{{ path('sudoux_mortgage_admin_loan_step' ~ (application.lastStepCompleted + 1), {'id': application.id}) }}"><i class="icon-pencil"></i> Complete</a></li>
+							    		{% endif %}
+							    	{% endif %}
+									{% set showDelete = true %}
+									{% if site.settings.inheritedLos %}
+										{% set showDelete = site.settings.inheritedLos.allowLoanDeletions %}
+									{% endif %}
+									{% if showDelete %}
+										<li><a href="{{ path('sudoux_mortgage_admin_loan_delete', {'id': application.id}) }}"><i class="icon-trash"></i> Delete</a></li>
+									{% endif %}
+								</ul>
+						    </div>
+						</div>
+					</td>
+			 	</tr>
+			{% endfor %} 
+		</table>
+		<div class="pager">{{ knp_pagination_render(applications) }}</div>
+	{% else %}
+		<p>There are no loan applications.</p>
+	{% endif %}
+{% endblock %}

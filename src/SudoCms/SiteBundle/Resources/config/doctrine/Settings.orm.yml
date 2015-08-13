@@ -1,0 +1,119 @@
+SudoCms\SiteBundle\Entity\Settings:
+  type: entity
+  table: settings
+  manyToMany:
+    state_license:
+      targetEntity: Sudoux\Cms\LocationBundle\Entity\State
+      joinColumns:
+        state_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  manyToOne:
+    loan_document_vocab:
+      targetEntity: Sudoux\Cms\TaxonomyBundle\Entity\Vocabulary
+      cascade: {  }
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        loan_document_vocab_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    los:
+      targetEntity: Sudoux\MortgageBundle\Entity\LosConnection
+      cascade: ["persist", "remove"]
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        los_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    credit_connection:
+      targetEntity: Sudoux\MortgageBundle\Entity\CreditConnection
+      cascade: ["persist", "remove"]
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        credit_connection_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    pricing_connection:
+      targetEntity: Sudoux\MortgageBundle\Entity\PricingConnection
+      cascade: ["persist", "remove"]
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        pricing_connection_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    realtyware_connection:
+      targetEntity: Sudoux\MortgageBundle\Entity\RealtyWareConnection
+      cascade: ["persist", "remove"]
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        realtyware_connection_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    loan_officer:
+      targetEntity: Sudoux\MortgageBundle\Entity\LoanOfficer
+      cascade: {}
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        loan_officer_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    branch:
+      targetEntity: Sudoux\MortgageBundle\Entity\Branch
+      cascade: {}
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        branch_id:
+          referencedColumnName: id
+      orphanRemoval: false
+    milestone_group:
+      targetEntity: Sudoux\MortgageBundle\Entity\LoanMilestoneGroup
+      cascade: {}
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        milestone_group_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  oneToOne:
+    site:
+      targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+      mappedBy: settings
+      joinColumns:
+        site_id:
+          referencedColumnName: id
+      orphanRemoval: false
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    show_los_milestones:
+      type: boolean
+      nullable: true
+    send_milestones_notifications:
+      type: boolean
+      nullable: true
+    loan_complete_url:
+      type: text
+      nullable: true
+    prequal_complete_url:
+      type: text
+      nullable: true
+    member_portal_enabled:
+      type: boolean
+      nullable: true
+    member_portal_documents_enabled:
+      type: boolean
+      nullable: true
+    auto_create_loan_officer_user:
+      type: boolean
+      nullable: true
+  lifecycleCallbacks: {  }

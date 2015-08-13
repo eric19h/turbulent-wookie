@@ -1,0 +1,33 @@
+Sudoux\MortgageBundle\Entity\BorrowerLocation:
+    type: entity
+    table: borrower_location
+    manyToOne:
+      location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+    indexes:
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        years_at_location:
+            type: integer
+            nullable: true
+        months_at_location:
+            type: integer
+            nullable: true
+        own_residence: 
+            type: boolean
+            nullable: true
+        created:
+            type: datetime
+    lifecycleCallbacks: {  }

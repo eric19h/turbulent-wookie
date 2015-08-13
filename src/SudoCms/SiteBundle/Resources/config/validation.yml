@@ -1,0 +1,6 @@
+SudoCms\SiteBundle\Entity\Settings:
+  constraints:
+    - Callback:
+        methods: [isMortgageSettingsValid]
+        groups: [mortgage]
+

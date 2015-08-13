@@ -1,0 +1,65 @@
+{% extends site.getAdminThemeTemplate %}
+
+{% block title %}Loans Report{% endblock %}
+
+{% block body_class %}page-report-loans{% endblock %}
+
+{% block head %}
+	<script src="{{ asset('dev/themes/admin/reports.js') }}"></script>
+	<script src="{{ asset('bundles/sudouxcmstheme/themes/admin/reports.js') }}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_cms_admin_business_home') }}">Business</a> <span class="divider">/</span></li>	
+		<li><a href="{{ path('sudoux_cms_admin_site_report') }}">Reports</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="span5">
+			<div class="well">
+				<form method="post" action="{{ path('sudoux_mortgage_admin_site_report_loans') }}" novalidate="novalidate">
+					<div class="form-inline">
+						<label>Date Range</label>
+						{{ form_widget(form.start_date) }} to {{ form_widget(form.end_date) }}
+					</div>
+					<div class="form-inline submit-wrapper">
+						{{ form_label(form.loan_officer) }} {{ form_widget(form.loan_officer) }}
+						<div class="hide">{{ form_rest(form) }}</div>
+						<input type="submit" value="Go" class="btn btn-default">
+					</div>
+					<div class="submit-wrapper">						
+					</div>
+				</form>
+			</div>
+			{% if siteLoans|length > 0 %}
+				<table id="loan-data" class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Loans</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for siteLoan in siteLoans %}
+							<tr>
+								<td>{{ loop.index }}</td>
+								<td class="site-name">{{ siteLoan.name }}</td>
+								<td class="loan-count">{{ siteLoan.total }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>No loan applications found</p>
+			{% endif %}
+		</div>
+		<div class="span7">
+			<div id="loan-chart" style="width: 100%; height: 400px;"></div>
+		</div>
+	</div>
+{% endblock %}

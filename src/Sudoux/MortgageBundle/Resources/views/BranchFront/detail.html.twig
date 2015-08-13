@@ -1,0 +1,117 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}{{ branch.name }}{% endblock %}
+
+{% block body_class %}page-branch-detail{% endblock %}
+
+{% block breadcrumb %}
+	<ul>
+		<li><a href="{{ path('sudoux_mortgage_branch') }}">Branches</a> &raquo; </li>
+		<li>{{ branch.name }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% set editable = false %}
+	{% if is_granted('ROLE_SITE_ADMIN') and branch.site.id == site.id %}{% set editable = true %}{% endif %}
+	<div class="branch-content clearfix {% if editable %}editable-content{% endif %}">
+		{% if editable %}
+			<div class="edit-group hidden-phone">
+				<a class="edit-menu-toggle" data-target="dropdown-menu"><span class="icon-cog"></span></a>
+				<ul class="edit-menu">
+			    	<li><a href="{{ path('sudoux_mortgage_admin_branch_edit', {'id': branch.id}) }}">Edit</a></li>
+					<li><a href="{{ path('sudoux_mortgage_admin_branch_delete', {'id': branch.id}) }}">Delete</a></li>
+				</ul>
+    		</div>
+		{% endif %}
+
+		{% if branch.branchPhoto %}
+			<div class="media media-block">
+				<span class="pull-left">
+					<img class="media-object img-polaroid" src="{{ asset(branch.branchPhoto.path) }}">
+				</span>
+				<div class="media-body">
+					{% if branch.hasSite %}
+						<div class="pull-right">
+							{% include 'SudouxCmsThemeBundle:Misc:siteSocialLinks.html.twig' with { site: branch.branchSite } %}
+						</div>
+					{% endif %}
+					{% if branch.location %}
+						<address class="location">
+							{{ branch.location.address1 }}<br>
+							<a href="{{ path('sudoux_mortgage_branch_city', { state: branch.location.state.abbreviation|lower, city: branch.location.city|lower }) }}">{{ branch.location.city }}</a>, <a href="{{ path('sudoux_mortgage_branch_state', { state: branch.location.state.abbreviation|lower }) }}">{{ branch.location.state.abbreviation }}</a> {{ branch.location.zipcode }}
+						</address>
+					{% endif %}
+					<div class="contact-info">
+						{% if branch.phone %}Phone: {{ branch.phone }}<br>{% endif %}
+						{% if branch.fax %}Fax: {{ branch.fax }}<br>{% endif %}
+						{% if branch.email %}Email: {{ branch.email|mailTo|purify }}<br>{% endif %}
+						{% if branch.branchManager %}Manager: <a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: branch.branchManager.id }) }}">{{ branch.branchManager.fullname }}</a>{% endif %}
+					</div>
+					<div class="view-detail">
+						{% if branch.hasSite %}
+							{% if site.id != branch.branchSite.id %}
+								<a href="http://{{ branch.branchSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a>
+							{% endif %}
+						{% endif %}
+						<p><a href="{{ path('sudoux_mortgage_loan_officer', { branch: branch.id }) }}" class="btn btn-default">View Loan Officers</a></p>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="media-block">
+				{% if branch.hasSite %}
+					<div class="pull-right">
+						{% include 'SudouxCmsThemeBundle:Misc:siteSocialLinks.html.twig' with { site: branch.branchSite } %}
+					</div>
+				{% endif %}
+				{% if branch.location %}
+					<address class="location">
+						{{ branch.location.address1 }}<br>
+						<a href="{{ path('sudoux_mortgage_branch_city', { state: branch.location.state.abbreviation|lower, city: branch.location.city|lower }) }}">{{ branch.location.city }}</a>, <a href="{{ path('sudoux_mortgage_branch_state', { state: branch.location.state.abbreviation|lower }) }}">{{ branch.location.state.abbreviation }}</a> {{ branch.location.zipcode }}
+					</address>
+				{% endif %}
+				<div class="contact-info">
+					{% if branch.phone %}Phone: {{ branch.phone }}<br>{% endif %}
+					{% if branch.fax %}Fax: {{ branch.fax }}<br>{% endif %}
+					{% if branch.email %}Email: {{ branch.email|mailTo|purify }}<br>{% endif %}
+					{% if branch.branchManager %}Manager: <a href="{{ path('sudoux_mortgage_loan_officer_detail', { id: branch.branchManager.id }) }}">{{ branch.branchManager.fullname }}</a>{% endif %}
+				</div>
+				<div class="view-detail">
+					{% if branch.hasSite %}
+						{% if site.id != branch.branchSite.id %}
+							<a href="http://{{ branch.branchSite.primaryDomain.domain }}" class="btn btn-default" target="_blank">View Website</a>
+						{% endif %}
+					{% endif %}
+					<p><a href="{{ path('sudoux_mortgage_loan_officer', { branch: branch.id }) }}" class="btn btn-default">View Loan Officers</a></p>
+				</div>
+			</div>
+		{% endif %}
+		
+		{% if branch.description or branch.directions %}
+			<div class="well branch-description-directions">
+				{% if branch.description %}
+					<div class="description">
+						<h3 class="title">Info</h3>
+						{{ branch.description|purify }}
+					</div>
+				{% endif %}
+				{% if branch.directions %}
+					<div class="directions">
+						<h3 class="title">Directions</h3>
+						{{ branch.directions|purify }}
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+
+{% block sidebar_second %}
+	{% set assignedSiteId = site.id %}
+	{% if branch.branchSite %}
+		{% set assignedSiteId = branch.branchSite.id %}
+	{% endif %}
+	{% render url('sudoux_cms_form_contact_esi', { title: 'Contact Us', subject: 0, message: 0, assignedSiteId: assignedSiteId }) %}
+{% endblock %}

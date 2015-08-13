@@ -1,0 +1,127 @@
+<h3>Property Information</h3>
+
+<div class="no-property-location-wrapper clearfix form-inline">
+	{{ form_widget(form.no_property_location) }} {{ form_label(form.no_property_location) }}
+</div>
+
+<div id="property-location-form" class="form-horizontal clearfix" {% if application.noPropertyLocation %}style="display: none;"{% endif %}>
+	<div class="span-half">
+		<div class="control-group">
+			{{ form_label(form.property_location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_location.address1) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.property_location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_location.city) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.property_location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_location.state) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.property_location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_location.zipcode) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.property_type, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_type) }}
+			</div>
+		</div>
+		{% if application.loanType == 1 %} {# refinance #}
+			<div class="control-group">
+				{{ form_label(form.refinance_year_aquired, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_year_aquired) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.refinance_original_cost, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_original_cost) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.refinance_existing_liens, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_existing_liens) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.refinance_purpose, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_purpose) }}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	<div class="span-half">
+		<div class="control-group">
+			{{ form_label(form.residency_type, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.residency_type) }}
+			</div>
+		</div>
+		{% if application.loanType != 1 %}
+			<div class="control-group">
+				{{ form_label(form.sale_price, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.sale_price) }}
+				</div>
+			</div>
+		{% endif %}
+		<div class="control-group">
+			{{ form_label(form.loan_amount, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.loan_amount) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.loan_term, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.loan_term) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.num_units, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.num_units) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.property_year_built, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.property_year_built) }}
+			</div>
+		</div>
+		{% if application.loanType == 1 %} {# refinance #}
+			<div class="control-group">
+				{{ form_label(form.refinance_current_rate, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_current_rate) }}%
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.refinance_current_loan_type, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_current_loan_type, { help: '(ex. 30 Year FHA)' }) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.refinance_current_lender, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.refinance_current_lender) }}
+				</div>
+			</div>
+			
+		{% endif %}
+	</div>
+</div>
