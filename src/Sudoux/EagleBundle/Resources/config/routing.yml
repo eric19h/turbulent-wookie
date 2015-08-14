@@ -1,3 +1,470 @@
+########################################################
+##This first set of routes are overrides of the MortgageBundle
+##routes
+######################################################3
+# loan apps
+sudoux_mortgage_loan_prequalify:
+    pattern:  /loan/prequalify
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:prequalify }
+
+sudoux_mortgage_loan_prequalify_complete:
+    pattern:  /loan/prequalify/complete
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:prequalifyComplete }
+
+sudoux_mortgage_loan_apply:
+    pattern:  /loan/apply
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep1, id: null }
+
+sudoux_mortgage_loan_apply_step1:
+    pattern:  /loan/apply/1/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep1, id: null }
+
+sudoux_mortgage_loan_apply_step2:
+    pattern:  /loan/apply/2/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep2 }
+
+sudoux_mortgage_loan_apply_step3:
+    pattern:  /loan/apply/3/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep3 }
+
+sudoux_mortgage_loan_apply_step4:
+    pattern:  /loan/apply/4/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep4 }
+
+sudoux_mortgage_loan_apply_step5:
+    pattern:  /loan/apply/5/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep5 }
+
+sudoux_mortgage_loan_apply_step6:
+    pattern:  /loan/apply/6/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep6 }
+
+sudoux_mortgage_loan_apply_step7:
+    pattern:  /loan/apply/7/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyStep7 }
+
+sudoux_mortgage_apply_complete:
+    pattern:  /loan/apply/complete
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:applyComplete }
+
+sudoux_mortgage_loan_member:
+    pattern:  /user/account/loan
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:member }
+
+sudoux_mortgage_loan_summary:
+    pattern:  /user/account/loan/summary/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:loanSummary }
+
+sudoux_mortgage_loan_member_detail:
+    pattern:  /user/account/loan/detail/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:loanDetail }
+
+sudoux_mortgage_loan_account_registration:
+    pattern:  /user/register/loan/{guid}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:loanAccountRegistration }
+
+sudoux_mortgage_admin_loan:
+    pattern:  /admin/loan
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:index }
+
+sudoux_mortgage_admin_loan_delete:
+    pattern:  /admin/loan/delete/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:delete }
+
+sudoux_mortgage_admin_loan_step1:
+    pattern:  /admin/loan/1/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep1, id: null }
+
+sudoux_mortgage_admin_loan_step2:
+    pattern:  /admin/loan/2/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep2 }
+
+sudoux_mortgage_admin_loan_step3:
+    pattern:  /admin/loan/3/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep3 }
+
+sudoux_mortgage_admin_loan_step4:
+    pattern:  /admin/loan/4/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep4 }
+
+sudoux_mortgage_admin_loan_step5:
+    pattern:  /admin/loan/5/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep5 }
+
+sudoux_mortgage_admin_loan_step6:
+    pattern:  /admin/loan/6/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep6 }
+
+sudoux_mortgage_admin_loan_step7:
+    pattern:  /admin/loan/7/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:applyStep7 }
+
+sudoux_mortgage_admin_loan_member:
+    pattern:  /admin/loan/member/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:member }
+
+sudoux_mortgage_admin_loan_summary:
+    pattern:  /admin/loan/summary/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:loanSummary }
+
+sudoux_mortgage_admin_loan_resend:
+    pattern:  /admin/loan/resend/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:resendLoan }
+
+sudoux_mortgage_admin_loan_request_credit:
+    pattern:  /admin/loan/request-credit/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:requestCredit }
+
+sudoux_mortgage_admin_loan_request_pricing:
+    pattern:  /admin/loan/request-pricing/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:requestPricing }
+
+sudoux_mortgage_admin_loan_document_send_los:
+    pattern:  /admin/loan/document/send-to-los/{applicationId}/{documentId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:sendDocumentToLos }
+
+sudoux_mortgage_loan_document_view:
+    pattern:  /user/loan/document/{documentId}/{loanId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationShared:viewLoanDocument }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_loan_document_set_status:
+    pattern:  /admin/loan/document/set-status/{documentId}/{statusId}/{loanId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:setDocumentStatus }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_loan_member_user_add:
+    pattern:  /admin/loan/member/add/{loanId}/{userId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:addLoanUser }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_loan_member_user_remove:
+    pattern:  /admin/loan/member/remove/{loanId}/{userId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:removeLoanUser }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_loan_member_invite_borrower:
+    pattern:  /admin/loan/member/invite-borrower/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:inviteBorrower }
+
+sudoux_mortgage_admin_loan_member_invite_user:
+    pattern:  /admin/loan/member/invite-user/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:inviteUser }
+
+sudoux_mortgage_admin_loan_export_fanniemae:
+    pattern:  /admin/loan/export/fanniemae/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:exportFanniemae }
+
+sudoux_mortgage_admin_loan_import_fanniemae:
+    pattern:  /admin/loan/import/fanniemae
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:importFanniemae }
+
+sudoux_mortgage_admin_loan_import_destiny_post:
+    pattern:  /loan/import/destiny
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:importDestiny }
+    requirements:
+        _method: POST
+
+sudoux_mortgage_admin_loan_export_mismo231:
+    pattern:  /admin/loan/export/mismo231/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:exportMismo231 }
+
+sudoux_mortgage_admin_loan_export_destiny:
+    pattern:  /admin/loan/export/destiny/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:exportDestiny }
+
+sudoux_mortgage_admin_loan_export_vantage:
+    pattern:  /admin/loan/export/vantage/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:exportVantage }
+
+sudoux_mortgage_borrower_form_add:
+    pattern:  /borrower/form/add/{title}
+    defaults: { _controller: SudouxEagleBundle:BorrowerFront:addForm }
+    options:
+      expose: true
+
+sudoux_mortgage_borrower_add:
+    pattern:  /borrower/add
+    defaults: { _controller: SudouxEagleBundle:BorrowerFront:add }
+
+sudoux_mortgage_borrower_add_ajax:
+    pattern:  /borrower/add/ajax
+    defaults: { _controller: SudouxEagleBundle:BorrowerFront:ajaxAdd }
+    options:
+      expose: true
+
+sudoux_mortgage_loan_coborrower_delete_ajax:
+    pattern:  /loan/coborrower/delete/{loanId}/{coBorrowerId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationShared:deleteCoborrower }
+    options:
+      expose: true
+
+sudoux_mortgage_loan_message_status_update_ajax:
+    pattern:  /user/loan/message/update-status/{id}/{statusId}/{loanId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationShared:updateMessageStatus }
+    options:
+      expose: true
+
+sudoux_mortgage_loan_get_los_document_ajax:
+    pattern:  /user/loan/add-los-document-file/{loanId}/{documentId}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationShared:addLosDocumentFile }
+    options:
+      expose: true
+
+
+# branches
+sudoux_mortgage_admin_branch:
+    pattern:  /admin/branch
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:index }
+
+sudoux_mortgage_admin_branch_export:
+    pattern:  /admin/branch/export
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:export }
+
+sudoux_mortgage_admin_branch_add:
+    pattern:  /admin/branch/add
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:add }
+
+sudoux_mortgage_admin_branch_edit:
+    pattern:  /admin/branch/edit/{id}
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:edit }
+
+sudoux_mortgage_admin_branch_delete:
+    pattern:  /admin/branch/delete/{id}
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:delete }
+
+sudoux_mortgage_admin_branch_import_csv:
+    pattern:  /admin/branch/import-csv
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:importBranchCsv }
+
+sudoux_mortgage_admin_branch_photo_delete_ajax:
+    pattern:  /admin/branch/photo/delete/{id}
+    defaults: { _controller: SudouxEagleBundle:BranchAdmin:ajaxPhotoDelete }
+    options:
+      expose: true
+
+sudoux_mortgage_branch_detail:
+    pattern:  /branch/detail/{id}/{alias}
+    defaults: { _controller: SudouxEagleBundle:BranchFront:detail, alias: null }
+
+sudoux_mortgage_branch:
+    pattern:  /branch
+    defaults: { _controller: SudouxEagleBundle:BranchFront:index, state: null }
+    options:
+      expose: true
+
+sudoux_mortgage_branch_state:
+    pattern:  /branch/{state}
+    defaults: { _controller: SudouxEagleBundle:BranchFront:index }
+    options:
+      expose: true
+
+sudoux_mortgage_branch_city:
+    pattern:  /branch/{state}/{city}
+    defaults: { _controller: SudouxEagleBundle:BranchFront:index }
+
+sudoux_mortgage_branch_search_esi:
+    pattern:  /esi/branch/search
+    defaults: { _controller: SudouxEagleBundle:BranchFront:searchBlock }
+
+sudoux_mortgage_branch_like_ajax:
+    pattern:  /branch/name/like/json
+    defaults: { _controller: SudouxEagleBundle:BranchFront:branchLikeAjax }
+    options:
+      expose: true
+
+sudoux_mortgage_branch_by_state:
+    pattern:  /branch-by-state
+    defaults: { _controller: SudouxEagleBundle:BranchFront:state }
+
+# loan officers
+sudoux_mortgage_admin_loan_officer:
+    pattern:  /admin/loan-officer
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:index }
+
+sudoux_mortgage_admin_loan_officer_export:
+    pattern:  /admin/loan-officer/export
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:export }
+
+sudoux_mortgage_admin_loan_officer_add:
+    pattern:  /admin/loan-officer/add
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:add }
+
+sudoux_mortgage_admin_loan_officer_edit:
+    pattern:  /admin/loan-officer/edit/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:edit }
+
+sudoux_mortgage_admin_loan_officer_delete:
+    pattern:  /admin/loan-officer/delete/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:delete }
+
+sudoux_mortgage_admin_loan_officer_photo_delete_ajax:
+    pattern:  /admin/loan-officer/photo/delete/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:ajaxPhotoDelete }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_loan_officer_import_csv:
+    pattern:  /admin/loan-officer/import-csv
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerAdmin:importOfficerCsv }
+
+sudoux_mortgage_loan_officer:
+    pattern:  /loan-officer
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerFront:index }
+
+sudoux_mortgage_loan_officer_detail:
+    pattern:  /loan-officer/detail/{id}/{alias}
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerFront:detail, alias: null }
+
+sudoux_mortgage_loan_officer_search_esi:
+    pattern:  /esi/loan-officer/search
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerFront:searchBlock }
+
+sudoux_mortgage_loan_officer_like_ajax:
+    pattern:  /loan-officer/like
+    defaults: { _controller: SudouxEagleBundle:LoanOfficerFront:loanOfficerLikeAjax }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_settings:
+    pattern:  /admin/site/settings/mortgage
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:index }
+
+sudoux_mortgage_admin_site_report_summary:
+    pattern:  /ajax/admin/site/report/summary
+    defaults: { _controller: SudouxEagleBundle:ReportAdmin:getDataSummary }
+    options:
+      expose: true
+
+sudoux_mortgage_admin_integration_los_status:
+    pattern:  /admin/integration/los/status
+    defaults: { _controller: SudouxEagleBundle:IntegrationAdmin:losStatus }
+
+sudoux_mortgage_admin_site_report_loans:
+    pattern:  /admin/site/report/loan
+    defaults: { _controller: SudouxEagleBundle:ReportAdmin:loans }
+
+sudoux_mortgage_admin_site_report_business_development:
+    pattern:  /admin/site/report/business-development
+    defaults: { _controller: SudouxEagleBundle:ReportAdmin:businessDevelopment }
+
+sudoux_mortgage_admin_site_report_business_development_lead:
+    pattern:  /admin/site/report/business-development/lead/{siteId}
+    defaults: { _controller: SudouxEagleBundle:ReportAdmin:businessDevelopmentLead }
+
+sudoux_mortgage_admin_site_add:
+    pattern:  /admin/site/mortgage/add/{type}/{id}
+    defaults: { _controller: SudouxEagleBundle:SiteAdmin:add }
+
+sudoux_mortgage_admin_settings_los:
+    pattern:  /admin/mortgage/settings/los
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:losSettings }
+
+sudoux_mortgage_admin_settings_los_delete:
+    pattern:  /admin/mortgage/settings/los/delete
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:deleteLosSettings }
+
+sudoux_mortgage_admin_settings_los_milestones:
+    pattern:  /admin/mortgage/settings/los/milestones
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:viewMilestones }
+
+sudoux_mortgage_admin_settings_credit:
+    pattern:  /admin/mortgage/settings/credit
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:creditSettings }
+
+sudoux_mortgage_admin_settings_credit_delete:
+    pattern:  /admin/mortgage/settings/credit/delete
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:deleteCreditSettings }
+
+sudoux_mortgage_admin_settings_pricing:
+    pattern:  /admin/mortgage/settings/pricing
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:pricingSettings }
+
+sudoux_mortgage_admin_settings_pricing_delete:
+    pattern:  /admin/mortgage/settings/pricing/delete
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:deletePricingSettings }
+
+sudoux_mortgage_admin_settings_realtyware:
+    pattern:  /admin/mortgage/settings/realtyware
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:realtywareSettings }
+
+sudoux_mortgage_admin_settings_realtyware_delete:
+    pattern:  /admin/mortgage/settings/realtyware/delete
+    defaults: { _controller: SudouxEagleBundle:SettingsAdmin:deleteRealtywareSettings }
+
+sudoux_mortgage_state_license_esi:
+    pattern:  /esi/state-license
+    defaults: { _controller: SudouxEagleBundle:StateLicenseFront:stateLicenseBlock }
+
+# forms
+sudoux_mortgage_form_quote:
+    pattern:  /quote
+    defaults: { _controller: SudouxEagleBundle:FormFront:quote }
+
+sudoux_mortgage_form_quote_esi:
+    pattern:  /esi/quote
+    defaults: { _controller: SudouxEagleBundle:FormFront:quoteBlock }
+
+#milestones
+sudoux_mortgage_admin_milestone:
+    pattern:  /admin/mortgage/settings/milestone
+    defaults: { _controller: SudouxEagleBundle:MilestoneAdmin:index }
+
+sudoux_mortgage_admin_milestone_los_sync:
+    pattern:  /admin/mortgage/settings/milestone/los-sync
+    defaults: { _controller: SudouxEagleBundle:MilestoneAdmin:sync }
+
+#internal tools
+sudoux_mortgage_admin_internal_tools_add_loan_officer_sites:
+    pattern:  /admin/internal/tools/mortgage/add-loan-officer-sites
+    defaults: { _controller: SudouxEagleBundle:ToolsAdmin:addLoanOfficerSites }
+
+sudoux_mortgage_admin_internal_tools_add_branch_sites:
+    pattern:  /admin/internal/tools/mortgage/add-branch-sites
+    defaults: { _controller: SudouxEagleBundle:ToolsAdmin:addBranchSites }
+
+sudoux_mortgage_admin_internal_tools_bulk_create_loan_officer_users:
+    pattern:  /admin/internal/tools/mortgage/bulk-create-loan-officer-users
+    defaults: { _controller: SudouxEagleBundle:ToolsAdmin:bulkCreateLoUsers }
+
+sudoux_mortgage_admin_internal_tools_restructure_site_inheritance:
+    pattern:  /admin/internal/tools/mortgage/restructure-site-inheritance
+    defaults: { _controller: SudouxEagleBundle:ToolsAdmin:restructureSiteInheritance }
+
+sudoux_mortgage_admin_internal_tools_sync_loan_officer_sites_from_los:
+    pattern:  /admin/internal/tools/mortgage/sync-loan-officer-sites-from-los
+    defaults: { _controller: SudouxEagleBundle:ToolsAdmin:syncLoanOfficersFromLos }
+
+# tests
+sudoux_mortgage_test_loan_upsert:
+    pattern:  /test/loan/upsert/{id}
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationFront:upsertLoanTest }
+
+sudoux_mortgage_admin_test_loan_upsert:
+    pattern:  /test/admin/loan/test
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:test }
+
+sudoux_mortgage_test_loan:
+    pattern:  /test/loan
+    defaults: { _controller: SudouxEagleBundle:LoanTest:index }
+
+sudoux_mortgage_test_loan_doc:
+    pattern:  /test/loan/los/doc
+    defaults: { _controller: SudouxEagleBundle:LoanTest:docUploadTest }
+
+sudoux_mortgage_test_post:
+    pattern:  /test/loan/los/post
+    defaults: { _controller: SudouxEagleBundle:LoanTest:testPost }
+
+
+####################################################
 sudoux_eagle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: SudouxEagleBundle:Default:index }
+sudoux_eagle_admin_loan:
+    pattern:  /admin/loan
+    defaults: { _controller: SudouxEagleBundle:LoanApplicationAdmin:index }
