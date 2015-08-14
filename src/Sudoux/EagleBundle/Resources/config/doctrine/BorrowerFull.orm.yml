@@ -1,0 +1,181 @@
+Sudoux\EagleBundle\Entity\BorrowerFull:
+    type: entity
+    table: borrower_full
+    repositoryClass: Sudoux\EagleBundle\Entity\BorrowerFullRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        first_name:
+            type: string
+            length: '255'
+            nullable: true
+        last_name:
+            type: string
+            length: '255'
+            nullable: true
+        email:
+            type: string
+            length: '255'
+            nullable: true
+        middle_name:
+            type: string
+            length: '255'
+            nullable: true
+        suffix:
+            type: string
+            length: '255'
+            nullable: true
+        phone_home:
+            type: string
+            length: '255'
+            nullable: true
+        phone_mobile:
+            type: string
+            length: '255'
+            nullable: true
+        ssn:
+            type: text
+        birth_date:
+            type: datetime
+            nullable: true
+        years_of_school:
+            type: smallint
+            nullable: true
+        marital_status:
+            type: smallint
+            nullable: true
+        ethnicity:
+            type: smallint
+            nullable: true
+        race:
+            type: smallint
+            nullable: true
+        is_male:
+            type: boolean
+            nullable: true
+        employed:
+            type: boolean
+            nullable: true
+        dependents:
+            type: boolean
+            nullable: true
+        dependents_number:
+            type: smallint
+            nullable: true
+        dependents_ages:
+            type: string
+            length: '255'
+            nullable: true
+        govt_monitoring_opt_out:
+            type: boolean
+            nullable: true
+        declaration_outstanding_judgement:
+            type: boolean
+            nullable: true
+        declaration_outstanding_judgement_details:
+            type: text
+            nullable: true
+        declaration_bankruptcy:
+            type: boolean
+            nullable: true
+        declaration_bankruptcy_details:
+            type: text
+            nullable: true
+        declaration_forclosure:
+            type: boolean
+            nullable: true
+        declaration_forclosure_details:
+            type: text
+            nullable: true
+        declaration_lawsuit:
+            type: boolean
+            nullable: true
+        declaration_lawsuit_details:
+            type: text
+            nullable: true
+        declaration_forclosure_obligation:
+            type: boolean
+            nullable: true
+        declaration_forclosure_obligation_details:
+            type: text
+            nullable: true
+        declaration_in_default:
+            type: boolean
+            nullable: true
+        declaration_in_default_details:
+            type: text
+            nullable: true
+        declaration_alimony_child_support:
+            type: boolean
+            nullable: true
+        declaration_alimony_child_support_details:
+            type: text
+            nullable: true
+        declaration_alimony_child_support_alimony:
+            type: integer
+            nullable: true
+        declaration_alimony_child_support_child_support:
+            type: integer
+            nullable: true
+        declaration_alimony_child_support_separate_maintenance:
+            type: integer
+            nullable: true
+        declaration_down_payment_borrowed:
+            type: boolean
+            nullable: true
+        declaration_down_payment_borrowed_details:
+            type: text
+            nullable: true
+        declaration_note_endorser:
+            type: boolean
+            nullable: true
+        declaration_note_endorser_details:
+            type: text
+            nullable: true
+        declaration_us_citizen:
+            type: boolean
+            nullable: true
+        declaration_resident_alien:
+            type: boolean
+            nullable: true
+        declaration_primary_residence:
+            type: boolean
+            nullable: true
+        declaration_ownership_within_three_years:
+            type: boolean
+            nullable: true
+        declaration_ownership_within_three_years_property_type:
+            type: smallint
+            nullable: true
+        declaration_ownership_within_three_years_property_title:
+            type: smallint
+            nullable: true
+        initials:
+            type: string
+            length: '255'
+            nullable: true
+        signature:
+            type: text
+            nullable: true
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        citizen_status:
+            type: smallint
+        preferred_contact_time:
+            type: smallint
+        preferred_contact_method:
+            type: smallint
+        credit_report_authorized:
+            type: boolean
+        consent_to_contact:
+            type: boolean
+        electronic_delivery_consent:
+            type: boolean
+        consent_to_share_info:
+            type: boolean
+    lifecycleCallbacks: {  }

@@ -5,9 +5,9 @@ namespace Sudoux\EagleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LoanApplication
+ * LoanApplicationFull
  */
-class LoanApplication
+class LoanApplicationFull
 {
     /**
      * @var integer
@@ -1619,5 +1619,89 @@ class LoanApplication
     public function getConsentToShareInfo()
     {
         return $this->consent_to_share_info;
+    }
+    /**
+     * @var integer
+     */
+    private $preferred_contact_time;
+
+    /**
+     * @var integer
+     */
+    private $preferred_contact_method;
+
+
+    /**
+     * Set preferred_contact_time
+     *
+     * @param integer $preferredContactTime
+     * @return LoanApplication
+     */
+    public function setPreferredContactTime($preferredContactTime)
+    {
+        $this->preferred_contact_time = $preferredContactTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get preferred_contact_time
+     *
+     * @return integer 
+     */
+    public function getPreferredContactTime()
+    {
+        return $this->preferred_contact_time;
+    }
+
+    /**
+     * Set preferred_contact_method
+     *
+     * @param integer $preferredContactMethod
+     * @return LoanApplication
+     */
+    public function setPreferredContactMethod($preferredContactMethod)
+    {
+        $this->preferred_contact_method = $preferredContactMethod;
+    
+        return $this;
+    }
+
+    /**
+     * Get preferred_contact_method
+     *
+     * @return integer 
+     */
+    public function getPreferredContactMethod()
+    {
+        return $this->preferred_contact_method;
+    }
+    /**
+     * @var boolean
+     */
+    private $has_communities;
+
+
+    /**
+     * Set has_communities
+     *
+     * @param boolean $hasCommunities
+     * @return LoanApplication
+     */
+    public function setHasCommunities($hasCommunities)
+    {
+        $this->has_communities = $hasCommunities;
+    
+        return $this;
+    }
+
+    /**
+     * Get has_communities
+     *
+     * @return boolean 
+     */
+    public function getHasCommunities()
+    {
+        return $this->has_communities;
     }
 }

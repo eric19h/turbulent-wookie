@@ -19,6 +19,7 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "sudoux/cms": "dev-master"
+
     },
     "scripts": {
         "post-install-cmd": [

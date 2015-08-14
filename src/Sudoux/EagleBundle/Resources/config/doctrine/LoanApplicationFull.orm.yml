@@ -1,7 +1,7 @@
-Sudoux\EagleBundle\Entity\LoanApplication:
+Sudoux\EagleBundle\Entity\LoanApplicationFull:
     type: entity
-    table: null
-    repositoryClass: Sudoux\EagleBundle\Entity\LoanApplicationRepository
+    table: loan_application_full
+    repositoryClass: Sudoux\EagleBundle\Entity\LoanApplicationFullRepository
     fields:
         id:
             type: integer
@@ -125,12 +125,6 @@ Sudoux\EagleBundle\Entity\LoanApplication:
         lennar_builder_name:
             type: string
             length: 255
-        credit_report_authorized:
-            type: boolean
-        consent_to_contact:
-            type: boolean
-        electronic_delivery_consent:
-            type: boolean
-        consent_to_share_info:
+        has_communities:
             type: boolean
     lifecycleCallbacks: {  }
