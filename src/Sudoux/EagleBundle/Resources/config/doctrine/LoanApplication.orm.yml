@@ -1,0 +1,136 @@
+Sudoux\EagleBundle\Entity\LoanApplication:
+    type: entity
+    table: null
+    repositoryClass: Sudoux\EagleBundle\Entity\LoanApplicationRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        guid:
+            type: guid
+        sale_price:
+            type: bigint
+        loan_amount:
+            type: bigint
+        los_id:
+            type: string
+            length: 255
+        los_loan_number:
+            type: string
+            length: 255
+        loan_term:
+            type: integer
+        loan_type:
+            type: smallint
+        num_units:
+            type: smallint
+        property_type:
+            type: smallint
+        property_year_built:
+            type: integer
+        residency_type:
+            type: smallint
+        title_company1:
+            type: string
+            length: 255
+        title_company2:
+            type: string
+            length: 255
+        title_company3:
+            type: string
+            length: 255
+        title_manner:
+            type: string
+            length: 255
+        has_realtor:
+            type: boolean
+        realtor_name:
+            type: string
+            length: 255
+        realtor_company:
+            type: string
+            length: 255
+        realtor_phone:
+            type: string
+            length: 255
+        is_prequal:
+            type: boolean
+        refinance_year_acquired:
+            type: integer
+        refinance_original_cost:
+            type: float
+        refinance_existing_liens:
+            type: float
+        refinance_current_rate:
+            type: float
+        refinance_current_loan_type:
+            type: text
+        refinance_current_lender:
+            type: text
+        refinance_purpose:
+            type: smallint
+        agreement_one:
+            type: boolean
+        agreement_two:
+            type: boolean
+        agreement_three:
+            type: boolean
+        comments:
+            type: text
+        completed:
+            type: boolean
+        completed_date:
+            type: datetime
+        lock_status:
+            type: smallint
+        last_step_completed:
+            type: smallint
+        status:
+            type: integer
+        status_date:
+            type: datetime
+        deleted:
+            type: boolean
+        created:
+            type: datetime
+        modified:
+            type: datetime
+        los_modified:
+            type: datetime
+        sent_to_los:
+            type: boolean
+        source:
+            type: smallint
+        no_property_location:
+            type: boolean
+        is_lennar_home:
+            type: boolean
+        loan_purpose:
+            type: smallint
+        need_to_sell:
+            type: boolean
+        rent_own_status:
+            type: smallint
+        joint_borrowers:
+            type: boolean
+        down_payment_amount:
+            type: float
+        down_payment_source:
+            type: smallint
+        lennar_community_name:
+            type: string
+            length: 255
+        lennar_builder_name:
+            type: string
+            length: 255
+        credit_report_authorized:
+            type: boolean
+        consent_to_contact:
+            type: boolean
+        electronic_delivery_consent:
+            type: boolean
+        consent_to_share_info:
+            type: boolean
+    lifecycleCallbacks: {  }
