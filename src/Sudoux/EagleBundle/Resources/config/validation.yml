@@ -1,0 +1,178 @@
+Sudoux\EagleBundle\Entity\LoanApplicationFull:
+  properties:
+    loan_type:
+      - NotBlank:  { groups: [step1] }
+    loan_type:
+      - NotBlank:  { groups: [step1] }
+    property_type:
+      - NotBlank: { groups: [step2] }
+    residency_type:
+      - NotBlank: { groups: [step2] }
+    loan_amount:
+      - NotBlank: { groups: [step2] }
+    loan_term:
+      - NotBlank: { groups: [step2] }
+      - Regex: { pattern: "/\d/",  groups: [step2] }
+    num_units:
+      - NotBlank: { groups: [step2] }
+      - Regex: { pattern: "/\d/",  groups: [step2] }
+    has_realtor:
+      - NotBlank: { groups: [step2] }
+    status:
+      - NotBlank: { groups: [status] }
+Sudoux\EagleBundle\Entity\BorrowerFull:
+  properties:
+    first_name:
+      - NotBlank: ~
+    last_name:
+      - NotBlank: ~
+    email:
+      - NotBlank: ~
+      - Email:
+          message: The email "{{ value }}" is not a valid email.
+          checkMX: true
+    phone_home:
+      - NotBlank: ~
+    birth_date:
+      - NotBlank: ~
+    years_of_school:
+      - NotBlank: ~
+      - Regex:
+          pattern: "/\d/"
+    marital_status:
+      - NotBlank: ~
+    location:
+      - Valid: ~
+    ssn: 
+      - NotBlank: ~     
+      #- Regex:
+      #    pattern: "/^[0-9]{3}[- ]?[0-9]{2}[- ]?[0-9]{4}$/"
+      #    message: Invalid SSN format ex. 111-11-1111 
+      #    match: true
+Sudoux\EagleBundle\Entity\BorrowerLocationFull:
+  properties:
+    years_at_location:
+      - NotBlank: ~
+Sudoux\MortgageBundle\Entity\Employment:
+  properties:
+    employer_name:
+      - NotBlank: ~
+    employer_phone:
+      - NotBlank: ~
+    title:
+      - NotBlank: ~
+    years_employed:
+      - NotBlank: ~
+    start_date:
+      - NotBlank: ~
+      - DateTime: ~
+    end_date:
+      - NotBlank: ~
+      - DateTime: ~
+    location:
+      - Valid: ~
+Sudoux\EagleBundle\Entity\AssetAccountFull:
+  properties:
+    institution_name:
+      - NotBlank: ~
+    type:
+      - NotBlank: ~
+    balance:
+      - NotBlank: ~
+Sudoux\EagleBundle\Entity\AssetRealEstateFull:
+  properties:
+      location:
+        - Valid: ~
+      market_value:
+        - NotBlank: ~
+      mortgage_amount:
+        - NotBlank: ~
+      mortgage_payment:
+        - NotBlank: ~
+      ins_tax_exp:
+        - NotBlank: ~
+Sudoux\EagleBundle\Entity\IncomeMonthlyFull:
+  properties:
+Sudoux\EagleBundle\Entity\IncomeOtherFull:
+  properties:
+    borrower: 
+      - NotNull: ~
+    income: 
+      - NotBlank: ~
+Sudoux\EagleBundle\Entity\LoanDocumentFull:
+  properties:
+    name: 
+      - NotNull: ~
+    file_field: 
+      - NotBlank: ~
+      - File:
+          mimeTypes: 
+            - application/pdf
+            - application/x-pdf
+            - application/msword
+            - image/jpeg
+            - text/plain
+            #- image/gif
+            #- image/png
+          mimeTypesMessage: '{{ type }} is not a valid file format. Please upload .txt .pdf .doc .tif .jpg .jpeg or .jpe'
+Sudoux\MortgageBundle\Entity\LosConnection:
+  constraints:
+    - Sudoux\Cms\SiteBundle\Validator\Constraints\Password: 
+        field: password
+  properties:
+    los_provider: 
+      - NotNull: ~
+    username: 
+      - NotNull: ~
+Sudoux\MortgageBundle\Entity\PricingConnection:
+  constraints:
+    - Sudoux\Cms\SiteBundle\Validator\Constraints\Password: 
+        field: password
+  properties:
+    pricing_provider: 
+      - NotNull: ~
+    username: 
+      - NotNull: ~
+Sudoux\MortgageBundle\Entity\CreditConnection:
+  constraints:
+    - Sudoux\Cms\SiteBundle\Validator\Constraints\Password: 
+        field: password
+  properties:
+    credit_provider: 
+      - NotNull: ~
+    username: 
+      - NotNull: ~
+Sudoux\MortgageBundle\Entity\Branch:
+  properties:
+    name: 
+      - NotBlank: ~
+    location: 
+      - Valid: ~
+    branch_photo:
+      - Valid: ~
+Sudoux\MortgageBundle\Entity\LoanOfficer:
+  constraints:
+    - Sudoux\Cms\SiteBundle\Validator\Constraints\UniqueSiteEntity:
+        fields: los_id
+        message: The LOS ID is already in use. Please change it to be unique.
+    - Callback:
+        methods:   [isLoanOfficerValid]
+  properties:
+    first_name: 
+      - NotBlank: ~
+    last_name: 
+      - NotBlank: ~
+    email: 
+      - NotBlank: ~
+    officer_photo:
+      - Valid: ~
+Sudoux\MortgageBundle\Entity\RealtyWareConnection:
+  properties:
+    domain: 
+      - NotBlank: ~
+    client_id: 
+      - NotBlank: ~
+    client_secret: 
+      - NotBlank: ~
+    api_key: 
+      - NotBlank: ~

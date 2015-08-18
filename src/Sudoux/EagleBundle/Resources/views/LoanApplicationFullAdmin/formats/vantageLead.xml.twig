@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Lead xmlns="http://tempuri.org/Lead.xsd">
+    <IsTestLead>True</IsTestLead>
+    <FirstName>{{application.firstName|ucfirst }}</FirstName>
+    <LastName>{{ application.lastName|ucfirst }}</LastName>
+    <Address1>{{ application.address1|ucwords }}</Address1>
+    <Address2>{{ application.address2|ucwords }}</Address2>
+    <City>{{ application.city|ucwords }}</City>
+    <State>{{ application.state|ucfirst }}</State>
+    <ZipCode>{{ application.zipcode }}</ZipCode>
+    <Email>{{ application.email }}</Email>
+    <HomePhone>{{ application.phoneHome }}</HomePhone>
+    <CellPhone>{{ application.phoneCell }}</CellPhone>
+    <WorkPhone>{{ application.phoneWork }}</WorkPhone>
+    <CustomerIp>{{ application.customerIp }}</CustomerIp>
+    <VendorLeadPrice>{{ application.vendorLeadPrice }}</VendorLeadPrice>
+    <VendorLeadId>{{ application.vendorLeadId }}</VendorLeadId>
+    <VendorId>{{ application.vendorId }}</VendorId>
+    <Password>{{ application.vendorPassword }}</Password>
+    <OrganizationId>{{ application.orgId }}</OrganizationId>
+    <VendorWebProperty>{{ application.vendorWebProperty }}</VendorWebProperty>
+    <VendorCreative>{{ application.vendorCreative }}</VendorCreative>
+</Lead>

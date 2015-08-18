@@ -1,0 +1,55 @@
+{% extends site.getAdminThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step2{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block breadcrumb %}
+	<ul class="breadcrumb">
+		<li><a href="{{ path('sudoux_mortgage_admin_loan') }}">Loan Applications</a> <span class="divider">/</span></li>
+		<li class="active">{{ block('title') }}</li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationNav.html.twig' with { step: 2, application: application } %}
+	<p>In this section of the application, you'll provide information about the property you are financing. </p>
+	<form action="{{ path('sudoux_mortgage_admin_loan_step2', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+		<div class="errors">{{ form_errors(form) }}</div>
+		{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationFormTop.html.twig' %}
+		
+		<div id="realtor-info-wrapper">
+			<div class="well well-small">
+				<div id="has-realtor" class="text-center form-inline">
+					{{ form_label(form.has_realtor) }} {{ form_widget(form.has_realtor, { 'attr' : { 'class': 'radio-group' } }) }}
+				</div>
+				<div id="realtor-form" class="clearfix hide">
+					<div class="pull-left form-group">
+						{{ form_label(form.realtor_name) }}
+						{{ form_widget(form.realtor_name) }}
+					</div>
+					<div class="pull-left form-group">
+						{{ form_label(form.realtor_company) }}
+						{{ form_widget(form.realtor_company) }}
+					</div>
+					<div class="pull-left form-group">
+						{{ form_label(form.realtor_phone) }}
+						{{ form_widget(form.realtor_phone) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:propertyInfo.html.twig' %}
+		{% include 'SudouxMortgageBundle:LoanApplicationShared:titleInfo.html.twig' %}		
+
+		<div class="text-center submit-wrapper">
+			<div class="hidden">{{ form_rest(form) }}</div>
+	    	<a href="{{ path('sudoux_mortgage_admin_loan_step1', { id: application.id }) }}" class="btn btn-default">Back</a> <button type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+	    </div>
+	</form>
+{% endblock %}

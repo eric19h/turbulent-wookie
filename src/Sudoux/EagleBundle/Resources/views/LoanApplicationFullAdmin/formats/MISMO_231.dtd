@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ========================================================================== -->
+<!--  Title                         : MISMO Mortgage Application DTD  -->
+<!--  File Name                : MORTGAGE_APPLICATION_v2_3_1.dtd   -->
+<!--  Version                   : Version 2.3.1  -->
+<!--  ELE Version            :                         -->
+<!--  Creation Date          : February 1, 2002          -->
+<!--  Modification Date    : September 2, 2003               -->
+<!--  Modification Date    : January 9, 2004              -->
+<!--  Modification Date    : August 5, 2004     (Replaced End User License and Copyright statements as adopted by MISMO, Inc.)    -->
+<!--  Comments               : Copyright 2004 Mortgage Industry Standards Maintenance Organization (MISMO)      -->
+<!--  All rights reserved.  -->
+<!-- THIS MISMO STANDARD INCLUDES THE END USER LICENSE AGREEMENT ATTACHED HERETO AT http://www.mismo.org/mismo/pdf/ipr_policy.pdf AND IS GOVERNED BY AND SUBJECT TO THE END USER LICENSE AGREEMENT. NO USER OF THIS STANDARD MAY REMOVE THIS REFERENCE TO AND STATEMENT REGARDING THE END USER LICENSE. ANY HARD COPY PUBLICATION OF THIS STANDARD MUST INCLUDE AND ATTACH A HARD COPY PRINT OUT OFTHE END USER LICENSE.  ANY FURTHER ELECTRONIC DISTRIBUTION OF THIS STANDARD MUST INCLUDE A SPECIFIC REFERENCED LINK TO THE END USER LICENSE AGREEMENT OR OTHER MEANS OF ATTACHMENT OF THE END USER LICENSE AGREEMENT.
+
+DISCLAIMER: THIS MISMO STANDARD IS PROVIDED "AS IS." MISMO, THE MORTGAGE BANKERS ASSOCIATION OF AMERICA ("MBA"), THE COPYRIGHT HOLDER, THE AUTHORS OF THIS MISMO STANDARD AND ANY STANDARD-SETTING BODY PARTICIPANTS TO THIS MISMO STANDARD MAKE NO REPRESENTATIONS OR WARRANTIES (i) EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE OR NON-INFRINGEMENT; (ii) THAT THE CONTENTS OF SUCH MISMO STANDARD ARE FREE FROM ERROR OR SUITABLE FOR ANY PURPOSE; NOR THAT IMPLEMENTATION OF SUCH CONTENTS WILL NOT INFRINGE ANY THIRD-PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS. IN NO EVENT WILL MISMO, MBA, THE COPYRIGHT HOLDER OR THE STANDARD-SETTING BODY PARTICIPANTS TO THIS MISMO STANDARD BE LIABLE TO ANY PARTY FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES FOR ANY USE OF THIS MISMO STANDARD, INCLUDING, WITHOUT LIMITATION, ANY LOST PROFITS, BUSINESS INTERRUPTION, LOSS OF PROGRAMS OR OTHER DATA ON YOUR INFORMATION HANDLING SYSTEM OR OTHERWISE, EVEN IF MISMO, MBA, THE COPYRIGHT HOLDER AND/OR ANY AUTHORS AND/OR ANY STANDARD-SETTING BODY PARTICIPANTS TO THIS MISMO STANDARD ARE EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. -->
+<!-- =============================================================== -->
+<!ELEMENT LOAN_APPLICATION (_DATA_INFORMATION?, ADDITIONAL_CASE_DATA?, AFFORDABLE_LENDING?, ASSET*, DOWN_PAYMENT*, GOVERNMENT_LOAN?, GOVERNMENT_REPORTING?, INTERVIEWER_INFORMATION?, LIABILITY*, LOAN_PRODUCT_DATA?, LOAN_PURPOSE?, LOAN_QUALIFICATION?, MORTGAGE_TERMS?, PROPERTY?, PROPOSED_HOUSING_EXPENSE*, REO_PROPERTY*, TITLE_HOLDER*, TRANSACTION_DETAIL?, BORROWER+, ESCROW*, RESPA_FEE*, MI_DATA?, DISCLOSURE_DATA?)>
+<!ELEMENT DISCLOSURE_DATA (PAYMENT_DETAILS?, RESPA_SERVICING_DATA?, RESPA_SUMMARY?)>
+<!--Added attribute to AUS 2.2 -->
+<!ATTLIST LOAN_APPLICATION
+	MISMOVersionID CDATA #FIXED "2.3.1"
+>
+<!ELEMENT _DATA_INFORMATION (DATA_VERSION+)>
+<!ELEMENT DATA_VERSION EMPTY>
+<!ATTLIST DATA_VERSION
+	_Name CDATA #REQUIRED
+	_Number CDATA #REQUIRED
+>
+<!--added to MA 2.3 -->
+<!ELEMENT GOVERNMENT_REPORTING EMPTY>
+<!ATTLIST GOVERNMENT_REPORTING
+	HMDAPurposeOfLoanType (HomePurchase | HomeImprovement | Refinancing) #IMPLIED
+	HMDAPreapprovalType (PreapprovalWasRequested | PreapprovalWasNotRequested | NotApplicable) #IMPLIED
+	HMDA_HOEPALoanStatusIndicator (Y | N) #IMPLIED
+	HMDARateSpreadPercent CDATA #IMPLIED
+>
+<!--added to AUS 2.2 _TypeOtherDescription String-->
+<!ELEMENT ADDITIONAL_CASE_DATA (MORTGAGE_SCORE*, TRANSMITTAL_DATA?)>
+<!ELEMENT MORTGAGE_SCORE EMPTY>
+<!ATTLIST MORTGAGE_SCORE
+	_Date CDATA #IMPLIED
+	_Type (FraudFilterScore | GE_IQScore | Other | PMIAuraAQIScore | UGIAccuscore) #IMPLIED
+	_Value CDATA #IMPLIED
+	_TypeOtherDescription CDATA #IMPLIED
+>
+<!--added to AUS 2.2 ArmsLengthIndicator Boolean-->
+<!--added to AUS 2.2 CreditReportAuthorizationIndicator Boolean-->
+<!ELEMENT TRANSMITTAL_DATA EMPTY>
+<!ATTLIST TRANSMITTAL_DATA
+	ArmsLengthIndicator (Y | N) #IMPLIED
+	BelowMarketSubordinateFinancingIndicator (Y | N) #IMPLIED
+	BuydownRatePercent CDATA #IMPLIED
+	CaseStateType (Application | FinalDisposition | PostClosingQualityControl | Prequalification | Underwriting) #IMPLIED
+	CreditReportAuthorizationIndicator (Y | N) #IMPLIED
+	CurrentFirstMortgageHolderType (FNM | FRE | Other | Unknown) #IMPLIED
+	LenderBranchIdentifier CDATA #IMPLIED
+	LenderRegistrationIdentifier CDATA #IMPLIED
+	PropertyAppraisedValueAmount CDATA #IMPLIED
+	PropertyEstimatedValueAmount CDATA #IMPLIED
+	InvestorLoanIdentifier CDATA #IMPLIED
+	InvestorInstitutionIdentifier CDATA #IMPLIED
+	CommitmentReferenceIdentifier CDATA #IMPLIED
+	ConcurrentOriginationIndicator (Y | N) #IMPLIED
+	ConcurrentOriginationLenderIndicator (Y | N) #IMPLIED
+	RateLockPeriodDays CDATA #IMPLIED
+	RateLockType (BestEfforts | Mandatory) #IMPLIED
+	RateLockRequestedExtensionDays CDATA #IMPLIED
+	LoanOriginationSystemLoanIdentifier CDATA #IMPLIED
+>
+<!--Added to AUS 2.3.1 FNMCommunityLendingProductType-->
+<!--Added to AUS 2.3.1  FNMCommunityLendingProductTypeOtherDescription-->
+<!ELEMENT AFFORDABLE_LENDING EMPTY>
+<!ATTLIST AFFORDABLE_LENDING
+	FNMCommunityLendingProductName CDATA #IMPLIED
+	FNMCommunityLendingProductType (CommunityHomeBuyerProgram | Fannie97 | Fannie32 | MyCommunityMortgage | Other) #IMPLIED
+	FNMCommunityLendingProductTypeOtherDescription CDATA #IMPLIED
+	FNMCommunitySecondsIndicator (Y | N) #IMPLIED
+	FNMNeighborsMortgageEligibilityIndicator (Y | N) #IMPLIED
+	FREAffordableProgramIdentifier CDATA #IMPLIED
+	HUDIncomeLimitAdjustmentFactor CDATA #IMPLIED
+	HUDLendingIncomeLimitAmount CDATA #IMPLIED
+	HUDMedianIncomeAmount CDATA #IMPLIED
+	MSAIdentifier CDATA #IMPLIED
+>
+<!--Added to AUS 2.2 SaleOtherAssets Enumeration-->
+<!--Added to AUS 2.3 _VerifiedIndicator Boolean-->
+<!ELEMENT ASSET EMPTY>
+<!ATTLIST ASSET
+	BorrowerID IDREFS #IMPLIED
+	_AccountIdentifier CDATA #IMPLIED
+	_CashOrMarketValueAmount CDATA #IMPLIED
+	_Type (Automobile | Bond | BridgeLoanNotDeposited | CashOnHand | CertificateOfDepositTimeDeposit | CheckingAccount | EarnestMoneyCashDepositTowardPurchase | GiftsTotal | GiftsNotDeposited | LifeInsurance | MoneyMarketFund | MutualFund | NetWorthOfBusinessOwned | OtherLiquidAssets | OtherNonLiquidAssets | PendingNetSaleProceedsFromRealEstateAssets | RelocationMoney | RetirementFund | SaleOtherAssets | SavingsAccount | SecuredBorrowedFundsNotDeposited | Stock | TrustAccount) #IMPLIED
+	_VerifiedIndicator (Y | N) #IMPLIED
+	_HolderName CDATA #IMPLIED
+	_HolderStreetAddress CDATA #IMPLIED
+	_HolderCity CDATA #IMPLIED
+	_HolderState CDATA #IMPLIED
+	_HolderPostalCode CDATA #IMPLIED
+	AutomobileMakeDescription CDATA #IMPLIED
+	AutomobileModelYear CDATA #IMPLIED
+	LifeInsuranceFaceValueAmount CDATA #IMPLIED
+	OtherAssetTypeDescription CDATA #IMPLIED
+	StockBondMutualFundShareCount CDATA #IMPLIED
+>
+<!ELEMENT DOWN_PAYMENT EMPTY>
+<!ATTLIST DOWN_PAYMENT
+	_Amount CDATA #IMPLIED
+	_SourceDescription CDATA #IMPLIED
+	_Type (BridgeLoan | CashOnHand | CheckingSavings | DepositOnSalesContract | EquityOnPendingSale | EquityOnSoldProperty | EquityOnSubjectProperty | GiftFunds | LifeInsuranceCashValue | LotEquity | OtherTypeOfDownPayment | RentWithOptionToPurchase | RetirementFunds | SaleOfChattel | SecuredBorrowedFunds | StocksAndBonds | SweatEquity | TradeEquity | TrustFunds | UnsecuredBorrowedFunds) #IMPLIED
+>
+<!ELEMENT GOVERNMENT_LOAN (FHA_LOAN?, FHA_VA_LOAN?, VA_LOAN?)>
+<!--added to AUS 2.2 _LenderIdentifier String-->
+<!--added to AUS 2.2 _SponsorIdentifier String-->
+<!ELEMENT FHA_LOAN EMPTY>
+<!ATTLIST FHA_LOAN
+	BorrowerFinancedFHADiscountPointsAmount CDATA #IMPLIED
+	FHAAlimonyLiabilityTreatmentType (AdditionToDebt | ReductionToIncome) #IMPLIED
+	FHACoverageRenewalRatePercent CDATA #IMPLIED
+	FHA_MIPremiumRefundAmount CDATA #IMPLIED
+	FHAUpfrontMIPremiumPercent CDATA #IMPLIED
+	_LenderIdentifier CDATA #IMPLIED
+	_SponsorIdentifier CDATA #IMPLIED
+	SectionOfActType (203B | 203B251 | 203B2 | 203K | 203K251 | 221D2 | 221D2251 | 234C | 234C251) #IMPLIED
+	FHAEnergyRelatedRepairsOrImprovementsAmount CDATA #IMPLIED
+	FHAGeneralServicesAdminstrationCodeIdentifier CDATA #IMPLIED
+	FHALimitedDenialParticipationIdentifier CDATA #IMPLIED
+	FHARefinanceInterestOnExistingLienAmount CDATA #IMPLIED
+	FHARefinanceOriginalExistingFHACaseIdentifier CDATA #IMPLIED
+	FHARefinanceOriginalExistingUpFrontMIPAmount CDATA #IMPLIED
+	FHAUnderwriterComputerizedHomesUnderwritingSystemIdentifier CDATA #IMPLIED
+	HUDAdequateAvailableAssetsIndicator (Y | N) #IMPLIED
+	HUDAdequateEffectiveIncomeIndicator (Y | N) #IMPLIED
+	HUDCreditCharacteristicsIndicator (Y | N) #IMPLIED
+	HUDStableEffectiveIncomeIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT FHA_VA_LOAN EMPTY>
+<!ATTLIST FHA_VA_LOAN
+	BorrowerPaidFHA_VAClosingCostsAmount CDATA #IMPLIED
+	BorrowerPaidFHA_VAClosingCostsPercent CDATA #IMPLIED
+	GovernmentMortgageCreditCertificateAmount CDATA #IMPLIED
+	GovernmentRefinanceType (FullDocumentation | InterestRateReductionRefinanceLoan | StreamlineWithAppraisal | StreamlineWithoutAppraisal) #IMPLIED
+	OtherPartyPaidFHA_VAClosingCostsAmount CDATA #IMPLIED
+	OtherPartyPaidFHA_VAClosingCostsPercent CDATA #IMPLIED
+	PropertyEnergyEfficientHomeIndicator (Y | N) #IMPLIED
+	SellerPaidFHA_VAClosingCostsPercent CDATA #IMPLIED
+	_OriginatorIdentifier CDATA #IMPLIED
+>
+<!--added to AUS 2.2 VAResidualIncomeAmount Money-->
+<!ELEMENT VA_LOAN EMPTY>
+<!ATTLIST VA_LOAN
+	VABorrowerCoBorrowerMarriedIndicator (Y | N) #IMPLIED
+	BorrowerFundingFeePercent CDATA #IMPLIED
+	VAEntitlementAmount CDATA #IMPLIED
+	VAMaintenanceExpenseMonthlyAmount CDATA #IMPLIED
+	VAUtilityExpenseMonthlyAmount CDATA #IMPLIED
+	VAEntitlementCodeIdentifier CDATA #IMPLIED
+	VAHouseholdSizeCount CDATA #IMPLIED
+	VAResidualIncomeAmount CDATA #IMPLIED
+>
+<!ELEMENT _NEAREST_LIVING_RELATIVE EMPTY>
+<!ATTLIST _NEAREST_LIVING_RELATIVE
+	_City CDATA #IMPLIED
+	_Name CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_RelationshipDescription CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_TelephoneNumber CDATA #IMPLIED
+>
+<!--added to AUS 2.3 Internet enumeration to ApplicationTakenMethodType-->
+<!ELEMENT INTERVIEWER_INFORMATION EMPTY>
+<!ATTLIST INTERVIEWER_INFORMATION
+	InterviewersEmployerStreetAddress CDATA #IMPLIED
+	InterviewersEmployerCity CDATA #IMPLIED
+	InterviewersEmployerState CDATA #IMPLIED
+	InterviewersEmployerPostalCode CDATA #IMPLIED
+	InterviewersTelephoneNumber CDATA #IMPLIED
+	ApplicationTakenMethodType (FaceToFace | Mail | Telephone | Internet) #IMPLIED
+	InterviewerApplicationSignedDate CDATA #IMPLIED
+	InterviewersEmployerName CDATA #IMPLIED
+	InterviewersName CDATA #IMPLIED
+>
+<!--added to AUS 2.2 _PayoffWithCurrentAssetsIndicator Boolean-->
+<!ELEMENT LIABILITY EMPTY>
+<!ATTLIST LIABILITY
+	_ID ID #IMPLIED
+	BorrowerID IDREFS #IMPLIED
+	REO_ID IDREF #IMPLIED
+	_HolderStreetAddress CDATA #IMPLIED
+	_HolderCity CDATA #IMPLIED
+	_HolderState CDATA #IMPLIED
+	_HolderPostalCode CDATA #IMPLIED
+	AlimonyOwedToName CDATA #IMPLIED
+	_AccountIdentifier CDATA #IMPLIED
+	_ExclusionIndicator (Y | N) #IMPLIED
+	_HolderName CDATA #IMPLIED
+	_MonthlyPaymentAmount CDATA #IMPLIED
+	_PayoffStatusIndicator (Y | N) #IMPLIED
+	_PayoffWithCurrentAssetsIndicator (Y | N) #IMPLIED
+	_RemainingTermMonths CDATA #IMPLIED
+	_Type (Alimony | ChildCare | ChildSupport | CollectionsJudgementsAndLiens | HELOC | Installment | JobRelatedExpenses | LeasePayments | MortgageLoan | Open30DayChargeAccount | OtherLiability | Revolving | SeparateMaintenanceExpense | OtherExpense | Taxes) #IMPLIED
+	_UnpaidBalanceAmount CDATA #IMPLIED
+	SubjectLoanResubordinationIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT LOAN_PRODUCT_DATA (ARM?, BUYDOWN*, LOAN_FEATURES?, PAYMENT_ADJUSTMENT*, RATE_ADJUSTMENT*)>
+<!--added to AUS 2.2 _ConversionOptionIndicator Boolean-->
+<!ELEMENT ARM EMPTY>
+<!ATTLIST ARM
+	_IndexCurrentValuePercent CDATA #IMPLIED
+	_IndexMarginPercent CDATA #IMPLIED
+	_IndexType (EleventhDistrictCostOfFunds | OneYearTreasury | ThreeYearTreasury | SixMonthTreasury | DailyCertificateOfDepositRate | FNM60DayRequiredNetYield | FNM_LIBOR | FederalCostOfFunds | FRE60DayRequiredNetYield | FRE_LIBOR | LIBOR | MonthlyAverageConstantMaturingTreasury | NationalAverageContractRateFHLBB | NationalMonthlyMedianCostOfFunds | Other | TreasuryBillDailyValue | WallStreetJournalLIBOR | WeeklyAverageCertificateOfDepositRate | WeeklyAverageConstantMaturingTreasury | WeeklyAveragePrimeRate | WeeklyAverageSecondaryMarketTreasuryBillInvestmentYield | WeeklyAverageTreasuryAuctionAverageBondDiscountYield | WeeklyAverageTreasuryAuctionAverageInvestmentYield) #IMPLIED
+	_QualifyingRatePercent CDATA #IMPLIED
+	PaymentAdjustmentLifetimeCapAmount CDATA #IMPLIED
+	PaymentAdjustmentLifetimeCapPercent CDATA #IMPLIED
+	RateAdjustmentLifetimeCapPercent CDATA #IMPLIED
+	_ConversionOptionIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT BUYDOWN (_SUBSIDY_SCHEDULE*)>
+<!ATTLIST BUYDOWN
+	_BaseDateType (NoteDate | FirstPaymentDate | LastPaymentDate) #IMPLIED
+	_ChangeFrequencyMonths CDATA #IMPLIED
+	_ContributorType (Borrower | Other | LenderPremiumFinanced | Seller | Builder) #IMPLIED
+	_ContributorTypeOtherDescription CDATA #IMPLIED
+	_DurationMonths CDATA #IMPLIED
+	_IncreaseRatePercent CDATA #IMPLIED
+	_LenderFundingIndicator (Y | N) #IMPLIED
+	_OriginalBalanceAmount CDATA #IMPLIED
+	_SubsidyCalculationType (DecliningLoanBalance | OriginalLoanAmount) #IMPLIED
+	_PermanentIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT _SUBSIDY_SCHEDULE EMPTY>
+<!ATTLIST _SUBSIDY_SCHEDULE
+	_PeriodIdentifier CDATA #IMPLIED
+	_PeriodicPaymentEffectiveDate CDATA #IMPLIED
+	_PeriodicPaymentSubsidyAmount CDATA #IMPLIED
+	_PeriodicTerm CDATA #IMPLIED
+>
+<!--added to AUS 2.2 NameDocumentsDrawnInType Enumerated-->
+<!--added to AUS 2.2 Modular enumeration to GSEPropertyType-->
+<!--added to AUS 2.2 HELOCInitialAdvanceAmount Money-->
+<!--added to AUS 2.2 InterestOnlyTerm Numeric-->
+<!--added to AUS 2.2 LenderSelfInsuredIndicator Boolean-->
+<!--added to AUS 2.2 FullPrepaymentPenaltyOptionType Enumerated-->
+<!--added to AUS 2.2 PrepaymentPenaltyTermMonths Date/Time-->
+<!--added to AUS 2.2 LoanClosingStatusType Enumerated-->
+<!--added to AUS 2.2 ServicingTransferStatusType Enumerated-->
+<!--added to AUS 2.3 FNMProductPlanIdentifier correct spelling-->
+<!--added to AUS 2.3 ManufacturedHousingSingleWide enumeration to GSEPropertyType-->
+<!--added to AUS 2.3 ManufacturedHousingDoubleWide enumeration to GSEPropertyType-->
+<!--added to AUS 2.3 DetachedCondominium enumeration to GSEPropertyType-->
+<!--added to AUS 2.3 ManufacturedHomeCondominium to GSEPropertyType-->
+<!--added to AUS 2.3.1 BuydownTemporarySubsidyIndicator-->
+<!-- added ManufacturedHousingMultiWide and ManufacturedHomeCondominiumOrPUDOrCooperative AUS 2.3.1 -->
+<!-- ManufacturedHousingDoubleWide and ManufacturedHomeCondominium are marked for deprecation 2.3.1-->
+<!-- LoanDocumentationType added enumeration to AUS 2.3.1 -->
+<!ELEMENT LOAN_FEATURES EMPTY>
+<!ATTLIST LOAN_FEATURES
+	NameDocumentsDrawnInType (Broker | Lender | Investor) #IMPLIED
+	AssumabilityIndicator (Y | N) #IMPLIED
+	BalloonIndicator (Y | N) #IMPLIED
+	BalloonLoanMaturityTermMonths CDATA #IMPLIED
+	BuydownTemporarySubsidyIndicator (Y | N) #IMPLIED
+	CounselingConfirmationIndicator (Y | N) #IMPLIED
+	CounselingConfirmationType (AmericanHomeownerEducationInstituteApprovedCounseling | LenderTrainedCounseling | NoBorrowerCounseling | ThirdPartyCounseling) #IMPLIED
+	DownPaymentOptionType (ThreeTwoOption | FivePercentOption | FNM97Option) #IMPLIED
+	EscrowAggregateAccountingAdjustmentAmount CDATA #IMPLIED
+	EscrowWaiverIndicator (Y | N) #IMPLIED
+	EscrowCushionNumberOfMonthsCount CDATA #IMPLIED
+	FREOfferingIdentifier CDATA #IMPLIED
+	FNMProductPlanIdentifier CDATA #IMPLIED
+	FNMProductPlanIndentifier CDATA #IMPLIED
+	GSEProjectClassificationType (A_IIICondominium | ApprovedFHA_VACondominiumProjectOrSpotLoan | B_IICondominium | C_ICondominium | OneCooperative | TwoCooperative | E_PUD | F_PUD | III_PUD) #IMPLIED
+	GSEPropertyType (Attached | Condominium | Cooperative | Detached | HighRiseCondominium | ManufacturedHousing | Modular | PUD | ManufacturedHousingSingleWide | ManufacturedHousingDoubleWide | DetachedCondominium | ManufacturedHomeCondominium | ManufacturedHousingMultiWide | ManufacturedHomeCondominiumOrPUDOrCooperative) #IMPLIED
+	HELOCMaximumBalanceAmount CDATA #IMPLIED
+	HELOCInitialAdvanceAmount CDATA #IMPLIED
+	InterestOnlyTerm CDATA #IMPLIED
+	LenderSelfInsuredIndicator (Y | N) #IMPLIED
+	LienPriorityType (FirstLien | Other | SecondLien) #IMPLIED
+	LoanDocumentationType (Alternative | FullDocumentation | NoDepositVerification | NoDepositVerificationEmploymentVerificationOrIncomeVerification | NoDocumentation | NoEmploymentVerificationOrIncomeVerification | Reduced | StreamlineRefinance | NoRatio | NoIncomeNoEmploymentNoAssetsOn1003 | NoIncomeOn1003 | NoVerificationOfStatedIncomeEmploymentOrAssets | NoVerificationOfStatedIncomeOrAssests | NoVerificationOfStatedAssets | NoVerificationOfStatedIncomeOrEmployment | NoVerificationOfStatedIncome | VerbalVerificationOfEmployment | OnePaystub | OnePaystubAndVerbalVerificationOfEmployment | OnePaystubAndOneW2AndVerbalVerificationOfEmploymentOrOneYear1040) #IMPLIED
+	LoanRepaymentType (InterestOnly | NoNegativeAmortization | PotentialNegativeAmortization | ScheduledAmortization | ScheduledNegativeAmortization) #IMPLIED
+	LoanScheduledClosingDate CDATA #IMPLIED
+	MICertificationStatusType (LenderToObtain | SellerOfLoanToObtain) #IMPLIED
+	MICoveragePercent CDATA #IMPLIED
+	MICompanyNameType (AmerinGuaranteeCorporation | CMG_MICompany | CommonwealthMortgageAssuranceCompany | GECapitalMICorporation | MortgageGuarantyInsuranceCorporation | PMI_MICorporation | RadianGuarantyIncorporated | RepublicMICompany | TriadGuarantyInsuranceCorporation | UnitedGuarantyCorporation) #IMPLIED
+	NegativeAmortizationLimitPercent CDATA #IMPLIED
+	PaymentFrequencyType (Biweekly | Monthly) #IMPLIED
+	PrepaymentPenaltyIndicator (Y | N) #IMPLIED
+	FullPrepaymentPenaltyOptionType (Hard | Soft) #IMPLIED
+	PrepaymentPenaltyTermMonths CDATA #IMPLIED
+	PrepaymentRestrictionIndicator (Y | N) #IMPLIED
+	ProductDescription CDATA #IMPLIED
+	ProductName CDATA #IMPLIED
+	ScheduledFirstPaymentDate CDATA #IMPLIED
+	LoanClosingStatusType (Closed | TableFunded) #IMPLIED
+	ServicingTransferStatusType (Retained | Released) #IMPLIED
+	DemandFeatureIndicator (Y | N) #IMPLIED
+	EstimatedPrepaidDays CDATA #IMPLIED
+	EstimatedPrepaidDaysPaidByType (Buyer | Lender | Other | Seller) #IMPLIED
+	EstimatedPrepaidDaysPaidByOtherTypeDescription CDATA #IMPLIED
+	InitialPaymentRatePercent CDATA #IMPLIED
+	PrepaymentFinanceChargeRefundableIndicator (Y | N) #IMPLIED
+	RefundableApplicationFeeIndicator (Y | N) #IMPLIED
+	RequiredDepositIndicator (Y | N) #IMPLIED
+	OriginalBalloonTermMonths CDATA #IMPLIED
+	ConditionsToAssumabilityIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT PAYMENT_ADJUSTMENT EMPTY>
+<!ATTLIST PAYMENT_ADJUSTMENT
+	FirstPaymentAdjustmentMonths CDATA #IMPLIED
+	_Amount CDATA #IMPLIED
+	_CalculationType (AddFixedDollarAmountToTheCurrentPayment | AddPercentToCurrentPaymentAmount | AddPercentToEffectivePaymentRate) #IMPLIED
+	_DurationMonths CDATA #IMPLIED
+	_Percent CDATA #IMPLIED
+	_PeriodicCapAmount CDATA #IMPLIED
+	_PeriodicCapPercent CDATA #IMPLIED
+	_PeriodNumber CDATA #IMPLIED
+	SubsequentPaymentAdjustmentMonths CDATA #IMPLIED
+>
+<!ELEMENT RATE_ADJUSTMENT EMPTY>
+<!ATTLIST RATE_ADJUSTMENT
+	FirstRateAdjustmentMonths CDATA #IMPLIED
+	_CalculationType (AddPercentToCurrentRate | AddPercentToOriginalRate | IndexPlusMargin) #IMPLIED
+	_DurationMonths CDATA #IMPLIED
+	_Percent CDATA #IMPLIED
+	_PeriodNumber CDATA #IMPLIED
+	_SubsequentCapPercent CDATA #IMPLIED
+	SubsequentRateAdjustmentMonths CDATA #IMPLIED
+	_InitialCapPercent CDATA #IMPLIED
+>
+<!ELEMENT LOAN_PURPOSE (CONSTRUCTION_REFINANCE_DATA?)>
+<!ATTLIST LOAN_PURPOSE
+	GSETitleMannerHeldDescription CDATA #IMPLIED
+	_Type (ConstructionOnly | ConstructionToPermanent | Other | Purchase | Refinance) #IMPLIED
+	OtherLoanPurposeDescription CDATA #IMPLIED
+	PropertyLeaseholdExpirationDate CDATA #IMPLIED
+	PropertyRightsType (FeeSimple | Leasehold) #IMPLIED
+	PropertyUsageType (Investor | PrimaryResidence | SecondHome) #IMPLIED
+>
+<!--added to AUS 2.2 SecondaryFinancingRefinanceIndicator Boolean-->
+<!--added to AUS 2.3 ConstructionPurposeType Enumerated-->
+<!ELEMENT CONSTRUCTION_REFINANCE_DATA EMPTY>
+<!ATTLIST CONSTRUCTION_REFINANCE_DATA
+	ConstructionImprovementCostsAmount CDATA #IMPLIED
+	ConstructionPurposeType (ConstructionOnly | ConstructionToPermanent) #IMPLIED
+	FRECashOutAmount CDATA #IMPLIED
+	GSERefinancePurposeType (CashOutDebtConsolidation | CashOutHomeImprovement | CashOutLimited | CashOutOther | NoCashOutFHAStreamlinedRefinance | NoCashOutFREOwnedRefinance | NoCashOutOther | NoCashOutStreamlinedRefinance | ChangeInRateTerm) #IMPLIED
+	LandEstimatedValueAmount CDATA #IMPLIED
+	LandOriginalCostAmount CDATA #IMPLIED
+	PropertyAcquiredYear CDATA #IMPLIED
+	PropertyExistingLienAmount CDATA #IMPLIED
+	PropertyOriginalCostAmount CDATA #IMPLIED
+	RefinanceImprovementCostsAmount CDATA #IMPLIED
+	RefinanceImprovementsType (Made | ToBeMade | Unknown) #IMPLIED
+	RefinanceProposedImprovementsDescription CDATA #IMPLIED
+	SecondaryFinancingRefinanceIndicator (Y | N) #IMPLIED
+	ConstructionPeriodInterestRatePercent CDATA #IMPLIED
+	ConstructionPeriodNumberOfMonthsCount CDATA #IMPLIED
+>
+<!-- Next three attributes added to AUS 2.3.1-->
+<!ATTLIST CONSTRUCTION_REFINANCE_DATA
+	FNMSecondMortgageFinancingOriginalPropertyIndicator (Y | N) #IMPLIED
+	StructuralAlterationsConventionalAmount CDATA #IMPLIED
+	NonStructuralAlterationsConventionalAmount CDATA #IMPLIED
+>
+<!ELEMENT LOAN_QUALIFICATION EMPTY>
+<!ATTLIST LOAN_QUALIFICATION
+	AdditionalBorrowerAssetsNotConsideredIndicator (Y | N) #IMPLIED
+	AdditionalBorrowerAssetsConsideredIndicator (Y | N) #IMPLIED
+>
+<!--added to AUS 2.2 Conventional enumeration to MortgageType-->
+<!--added to AUS 2.2 HELOC enumeration to MortgageType-->
+<!--Note: Farmers Home Administration is the same as Farm Service Agency, or Rural Housing Service or 
+USDA/Rural Housing Service-->
+<!ELEMENT MORTGAGE_TERMS EMPTY>
+<!ATTLIST MORTGAGE_TERMS
+	AgencyCaseIdentifier CDATA #IMPLIED
+	ARMTypeDescription CDATA #IMPLIED
+	BaseLoanAmount CDATA #IMPLIED
+	BorrowerRequestedLoanAmount CDATA #IMPLIED
+	LenderCaseIdentifier CDATA #IMPLIED
+	LoanAmortizationTermMonths CDATA #IMPLIED
+	LoanAmortizationType (AdjustableRate | Fixed | GraduatedPaymentMortgage | GrowingEquityMortgage | OtherAmortizationType) #IMPLIED
+	MortgageType (Conventional | FarmersHomeAdministration | FHA | Other | VA | HELOC) #IMPLIED
+	OtherAmortizationTypeDescription CDATA #IMPLIED
+	OtherMortgageTypeDescription CDATA #IMPLIED
+	RequestedInterestRatePercent CDATA #IMPLIED
+	LendersContactPrimaryTelephoneNumber CDATA #IMPLIED
+	LoanEstimatedClosingDate CDATA #IMPLIED
+>
+<!--added to AUS 2.2 _StreetAddress2 String-->
+<!--added to AUS 2.2 _AcquiredDate Date/Time-->
+<!--added to AUS 2.2 PlannedUnitDevelopmentIndicator Boolean-->
+<!--added to AUS 2.2 _AcreageNumber Numeric-->
+<!--added to AUS 2.3.1 PARSED_STREET_ADDRESS and _VALUATION-->
+<!ELEMENT PROPERTY (_LEGAL_DESCRIPTION*, PARSED_STREET_ADDRESS?, _VALUATION*)>
+<!ATTLIST PROPERTY
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_County CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	BuildingStatusType (Existing | Proposed | SubjectToAlterationImprovementRepairAndRehabilitation | SubstantiallyRehabilitated | UnderConstruction) #IMPLIED
+	_FinancedNumberOfUnits CDATA #IMPLIED
+	_StructureBuiltYear CDATA #IMPLIED
+	_AcquiredDate CDATA #IMPLIED
+	PlannedUnitDevelopmentIndicator (Y | N) #IMPLIED
+	_AcreageNumber CDATA #IMPLIED
+>
+<!ELEMENT PARSED_STREET_ADDRESS EMPTY>
+<!ATTLIST PARSED_STREET_ADDRESS
+	_ApartmentOrUnit CDATA #IMPLIED
+	_DirectionPrefix CDATA #IMPLIED
+	_DirectionSuffix CDATA #IMPLIED
+	_BuildingNumber CDATA #IMPLIED
+	_HouseNumber CDATA #IMPLIED
+	_Military_APO_FPO CDATA #IMPLIED
+	_PostOfficeBox CDATA #IMPLIED
+	_RuralRoute CDATA #IMPLIED
+	_StreetName CDATA #IMPLIED
+	_StreetSuffix CDATA #IMPLIED
+>
+<!ELEMENT _VALUATION (APPRAISER*)>
+<!ATTLIST _VALUATION
+	_MethodType (FNM1004 | EmployeeRelocationCouncil2001 | FNM1073 | FNM1025 | FNM2055Exterior | FNM2065 | FRE2070Interior | FRE2070Exterior | FNM2075 | BrokerPriceOpinion | AutomatedValuationModel | TaxValuation | DriveBy | FullAppraisal | None | FNM2055InteriorAndExterior | FNM2095Exterior | FNM2095InteriorAndExterior | PriorAppraisalUsed | Form261805 | Form268712 | Other) #IMPLIED
+>
+<!--added to AUS 2.3.1 -->
+<!ATTLIST _VALUATION
+	_MethodTypeOtherDescription CDATA #IMPLIED
+>
+<!ELEMENT APPRAISER EMPTY>
+<!ATTLIST APPRAISER
+	_Name CDATA #IMPLIED
+	_CompanyName CDATA #IMPLIED
+	_LicenseIdentifier CDATA #IMPLIED
+	_LicenseState CDATA #IMPLIED
+>
+<!ELEMENT _LEGAL_DESCRIPTION EMPTY>
+<!ATTLIST _LEGAL_DESCRIPTION
+	_TextDescription CDATA #IMPLIED
+	_Type (MetesAndBounds | Other) #IMPLIED
+>
+<!ELEMENT PROPOSED_HOUSING_EXPENSE EMPTY>
+<!ATTLIST PROPOSED_HOUSING_EXPENSE
+	HousingExpenseType (FirstMortgagePrincipalAndInterest | GroundRent | HazardInsurance | HomeownersAssociationDuesAndCondominiumFees | MI | OtherHousingExpense | OtherMortgageLoanPrincipalAndInterest | RealEstateTax) #IMPLIED
+	_PaymentAmount CDATA #IMPLIED
+>
+<!--added to AUS 2.2 _StreetAddress2 String-->
+<!ELEMENT REO_PROPERTY EMPTY>
+<!ATTLIST REO_PROPERTY
+	REO_ID ID #IMPLIED
+	BorrowerID IDREFS #IMPLIED
+	LiabilityID IDREFS #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_CurrentResidenceIndicator (Y | N) #IMPLIED
+	_DispositionStatusType (PendingSale | RetainForRental | RetainForPrimaryOrSecondaryResidence | Sold) #IMPLIED
+	_GSEPropertyType (SingleFamily | Condominium | Townhouse | Cooperative | TwoToFourUnitProperty | MultifamilyMoreThanFourUnits | ManufacturedMobileHome | CommercialNonResidential | MixedUseResidential | Farm | HomeAndBusinessCombined | Land) #IMPLIED
+	_LienInstallmentAmount CDATA #IMPLIED
+	_LienUPBAmount CDATA #IMPLIED
+	_MaintenanceExpenseAmount CDATA #IMPLIED
+	_MarketValueAmount CDATA #IMPLIED
+	_RentalIncomeGrossAmount CDATA #IMPLIED
+	_RentalIncomeNetAmount CDATA #IMPLIED
+	_SubjectIndicator (Y | N) #IMPLIED
+>
+<!--Added to AUS 2.2 LandTrustType Boolean-->
+<!ELEMENT TITLE_HOLDER EMPTY>
+<!ATTLIST TITLE_HOLDER
+	_Name CDATA #IMPLIED
+	LandTrustType (IllinoisLandTrust) #IMPLIED
+>
+<!--added to AUS 2.3 FREReserveAmount Money-->
+<!-- FREReserveAmount marked for deprecation to correct spelling in AUS 2.3.1-->
+<!ELEMENT TRANSACTION_DETAIL (PURCHASE_CREDIT*)>
+<!ATTLIST TRANSACTION_DETAIL
+	AlterationsImprovementsAndRepairsAmount CDATA #IMPLIED
+	BorrowerPaidDiscountPointsTotalAmount CDATA #IMPLIED
+	EstimatedClosingCostsAmount CDATA #IMPLIED
+	MIAndFundingFeeFinancedAmount CDATA #IMPLIED
+	MIAndFundingFeeTotalAmount CDATA #IMPLIED
+	PrepaidItemsEstimatedAmount CDATA #IMPLIED
+	PurchasePriceAmount CDATA #IMPLIED
+	RefinanceIncludingDebtsToBePaidOffAmount CDATA #IMPLIED
+	SalesConcessionAmount CDATA #IMPLIED
+	SellerPaidClosingCostsAmount CDATA #IMPLIED
+	SubordinateLienAmount CDATA #IMPLIED
+	SubordinateLienHELOCAmount CDATA #IMPLIED
+	FREReserveAmount CDATA #IMPLIED
+	FREReservesAmount CDATA #IMPLIED
+>
+<!--added to AUS 2.2 NonParentRelative enumeration to _SourceType-->
+<!ELEMENT PURCHASE_CREDIT EMPTY>
+<!ATTLIST PURCHASE_CREDIT
+	_Amount CDATA #IMPLIED
+	_SourceType (BorrowerPaidOutsideClosing | PropertySeller | Lender | NonParentRelative) #IMPLIED
+	_Type (EarnestMoney | RelocationFunds | EmployerAssistedHousing | LeasePurchaseFund | Other) #IMPLIED
+>
+<!--added to AUS 2.3 additional element _MAIL_TO-->
+<!--added to AUS 2.3 _BirthDate Date\Time-->
+<!--Added additional element CONTACT_POINT to AUS 2.3.1 _HomeTelephoneNumber marked for deprecation-->
+<!--added to AUS 2.3.1 CreditReportIdentifier-->
+<!ELEMENT BORROWER (_ALIAS*, _MAIL_TO?, _RESIDENCE*, CURRENT_INCOME*, DECLARATION?, DEPENDENT*, EMPLOYER*, FHA_VA_BORROWER?, GOVERNMENT_MONITORING?, PRESENT_HOUSING_EXPENSE*, SUMMARY*, VA_BORROWER?, FHA_BORROWER?, _NEAREST_LIVING_RELATIVE?, CONTACT_POINT*)>
+<!ATTLIST BORROWER
+	BorrowerID ID #IMPLIED
+	JointAssetBorrowerID IDREF #IMPLIED
+	_FirstName CDATA #REQUIRED
+	_MiddleName CDATA #IMPLIED
+	_LastName CDATA #REQUIRED
+	_NameSuffix CDATA #IMPLIED
+	_AgeAtApplicationYears CDATA #IMPLIED
+	_ApplicationSignedDate CDATA #IMPLIED
+	_HomeTelephoneNumber CDATA #IMPLIED
+	_PrintPositionType (Borrower | CoBorrower) #IMPLIED
+	_SSN CDATA #REQUIRED
+	_BirthDate CDATA #IMPLIED
+	_UnparsedName CDATA #IMPLIED
+	DependentCount CDATA #IMPLIED
+	JointAssetLiabilityReportingType (Jointly | NotJointly) #IMPLIED
+	MaritalStatusType (Married | NotProvided | Separated | Unknown | Unmarried) #IMPLIED
+	SchoolingYears CDATA #IMPLIED
+	CreditReportIdentifier CDATA #IMPLIED
+>
+<!ELEMENT _ALIAS EMPTY>
+<!ATTLIST _ALIAS
+	_FirstName CDATA #IMPLIED
+	_LastName CDATA #IMPLIED
+	_MiddleName CDATA #IMPLIED
+	_AccountIdentifier CDATA #IMPLIED
+	_CreditorName CDATA #IMPLIED
+>
+<!--added to AUS 2.3 _StreetAddress String-->
+<!--added to AUS 2.3 _StreetAddress2 String-->
+<!--added to AUS 2.3 _City String-->
+<!--added to AUS 2.3 _State String-->
+<!--added to AUS 2.3 _PostalCode String-->
+<!--added to AUS 2.3 _Country String-->
+<!ELEMENT _MAIL_TO EMPTY>
+<!ATTLIST _MAIL_TO
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_Country CDATA #IMPLIED
+>
+<!ELEMENT _RESIDENCE (LANDLORD?)>
+<!ATTLIST _RESIDENCE
+	_StreetAddress CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_Country CDATA #IMPLIED
+	BorrowerResidencyBasisType (LivingRentFree | Own | Rent) #IMPLIED
+	BorrowerResidencyDurationMonths CDATA #IMPLIED
+	BorrowerResidencyDurationYears CDATA #IMPLIED
+	BorrowerResidencyType (Current | Prior) #IMPLIED
+>
+<!ELEMENT CURRENT_INCOME EMPTY>
+<!ATTLIST CURRENT_INCOME
+	IncomeType (AlimonyChildSupport | AutomobileExpenseAccount | Base | Bonus | Commissions | DividendsInterest | FosterCare | NetRentalIncome | NotesReceivableInstallment | OtherTypesOfIncome | Overtime | Pension | SocialSecurity | SubjectPropertyNetCashFlow | Trust | Unemployment | PublicAssistance | VABenefitsNonEducational | MortgageDifferential | MilitaryBasePay | MilitaryRationsAllowance | MilitaryFlightPay | MilitaryHazardPay | MilitaryClothesAllowance | MilitaryQuartersAllowance | MilitaryPropPay | MilitaryOverseasPay | MilitaryCombatPay | MilitaryVariableHousingAllowance) #IMPLIED
+	_MonthlyTotalAmount CDATA #IMPLIED
+>
+<!-- Updated for AUS 2.3.1, added enumerated values NonResidentAlien and Unknown -->
+<!ELEMENT DECLARATION (_EXPLANATION*)>
+<!ATTLIST DECLARATION
+	AlimonyChildSupportObligationIndicator (Y | N) #IMPLIED
+	BankruptcyIndicator (Y | N) #IMPLIED
+	BorrowedDownPaymentIndicator (Y | N) #IMPLIED
+	CitizenshipResidencyType (USCitizen | PermanentResidentAlien | NonPermanentResidentAlien | NonResidentAlien | Unknown) #IMPLIED
+	CoMakerEndorserOfNoteIndicator (Y | N) #IMPLIED
+	HomeownerPastThreeYearsType (Yes | No | Unknown) #IMPLIED
+	IntentToOccupyType (Yes | No | Unknown) #IMPLIED
+	LoanForeclosureOrJudgementIndicator (Y | N) #IMPLIED
+	OutstandingJudgementsIndicator (Y | N) #IMPLIED
+	PartyToLawsuitIndicator (Y | N) #IMPLIED
+	PresentlyDelinquentIndicator (Y | N) #IMPLIED
+	PriorPropertyTitleType (Sole | JointWithSpouse | JointWithOtherThanSpouse) #IMPLIED
+	PriorPropertyUsageType (Investment | PrimaryResidence | SecondaryResidence) #IMPLIED
+	PropertyForeclosedPastSevenYearsIndicator (Y | N) #IMPLIED
+	BorrowerFirstTimeHomebuyerIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT _EXPLANATION EMPTY>
+<!ATTLIST _EXPLANATION
+	_Description CDATA #IMPLIED
+	_Type (AlimonyChildSupport | BorrowedDownPayment | CoMakerEndorserOnNote | DeclaredBankruptcyPastSevenYears | DelinquencyOrDefault | DirectIndirectForeclosedPropertyPastSevenYears | ObligatedOnLoanForeclosedOrDeedInLieuOfJudgement | OutstandingJudgments | PartyToLawsuit) #IMPLIED
+>
+<!ELEMENT DEPENDENT EMPTY>
+<!ATTLIST DEPENDENT
+	_AgeYears CDATA #IMPLIED
+>
+<!ELEMENT EMPLOYER EMPTY>
+<!ATTLIST EMPLOYER
+	_Name CDATA #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_TelephoneNumber CDATA #IMPLIED
+	CurrentEmploymentMonthsOnJob CDATA #IMPLIED
+	CurrentEmploymentTimeInLineOfWorkYears CDATA #IMPLIED
+	CurrentEmploymentYearsOnJob CDATA #IMPLIED
+	EmploymentBorrowerSelfEmployedIndicator (Y | N) #IMPLIED
+	EmploymentCurrentIndicator (Y | N) #IMPLIED
+	EmploymentPositionDescription CDATA #IMPLIED
+	EmploymentPrimaryIndicator (Y | N) #IMPLIED
+	IncomeEmploymentMonthlyAmount CDATA #IMPLIED
+	PreviousEmploymentEndDate CDATA #IMPLIED
+	PreviousEmploymentStartDate CDATA #IMPLIED
+>
+<!ELEMENT FHA_VA_BORROWER EMPTY>
+<!ATTLIST FHA_VA_BORROWER
+	CAIVRSIdentifier CDATA #IMPLIED
+	FNMBankruptcyCount CDATA #IMPLIED
+	FNMBorrowerCreditRating CDATA #IMPLIED
+	FNMCreditReportScoreType (CreditQuote | FICO) #IMPLIED
+	FNMForeclosureCount CDATA #IMPLIED
+	VeteranStatusIndicator (Y | N) #IMPLIED
+	_CertificationSalesPriceExceeedsAppraisedValueType (A | B) #IMPLIED
+>
+<!--Added to AUS 2.3 HMDA_RACE element-->
+<!--Added to AUS 2.3 NotApplicable enumeration to GenderType-->
+<!--Added to AUS 2.3 HMDAEthnicityType enumerated-->
+<!ELEMENT GOVERNMENT_MONITORING (HMDA_RACE*)>
+<!ATTLIST GOVERNMENT_MONITORING
+	GenderType (Female | InformationNotProvidedUnknown | Male | NotApplicable) #IMPLIED
+	OtherRaceNationalOriginDescription CDATA #IMPLIED
+	RaceNationalOriginRefusalIndicator (Y | N) #IMPLIED
+	RaceNationalOriginType (AmericanIndianOrAlaskanNative | AsianOrPacificIslander | BlackNotOfHispanicOrigin | Hispanic | InformationNotProvided | Other | WhiteNotOfHispanicOrigin) #IMPLIED
+	HMDAEthnicityType (HispanicOrLatino | NotHispanicOrLatino | InformationNotProvidedByApplicantInMailInternetOrTelephoneApplication | NotApplicable) #IMPLIED
+>
+<!--Added to AUS 2.3 _Type Enumerated-->
+<!ELEMENT HMDA_RACE EMPTY>
+<!ATTLIST HMDA_RACE
+	_Type (AmericanIndianOrAlaskaNative | Asian | BlackOrAfricanAmerican | NativeHawaiianOrOtherPacificIslander | White | InformationNotProvidedByApplicantInMailInternetOrTelephoneApplication | NotApplicable) #IMPLIED
+>
+<!ELEMENT PRESENT_HOUSING_EXPENSE EMPTY>
+<!ATTLIST PRESENT_HOUSING_EXPENSE
+	HousingExpenseType (FirstMortgagePrincipalAndInterest | HazardInsurance | HomeownersAssociationDuesAndCondominiumFees | MI | OtherHousingExpense | OtherMortgageLoanPrincipalAndInterest | RealEstateTax | Rent) #IMPLIED
+	_PaymentAmount CDATA #IMPLIED
+>
+<!--Corrected mis-spellings in AUS 2.2 for _AmountType
+Correct enumerated values added(incorrect in parens) are:
+TotalLiabilitiesBalance (TotalLiabilitesBalance), 
+SubtotalLiabilitiesMonthlyPayment (SubtotalLiabilitesMonthlyPayment),
+SubtotalOmittedLiabilitiesBalance (SubtotalOmittedLiabilitesBalance),
+SubtotalResubordinatedLiabilitiesMonthlyPaymentForSubjectProperty (SubtotalResubordinatedLiabilitesMonthlyPaymentForSubjectProperty)
+-->
+<!-- added enumeration UndrawnHELOC to AUS 2.3.1 -->
+<!ELEMENT SUMMARY EMPTY>
+<!ATTLIST SUMMARY
+	_Amount CDATA #IMPLIED
+	_AmountType (TotalMonthlyIncomeNotIncludingNetRentalIncome | SubtotalLiabilitiesPaidByClosingNotIncludingSubjectPropertyLiensBalance | TotalPresentHousingExpense | TotalLiabilitesBalance | SubtotalLiabilitesMonthlyPayment | SubtotalOmittedLiabilitesBalance | SubtotalOmittedLiabilitiesMonthlyPayment | SubtotalLiabilitiesPaidByClosingNotIncludingSubjectPropertyLiensMonthlyPayment | SubtotalResubordinatedLiabilitesMonthlyPaymentForSubjectProperty | SubtotalSubjectPropertyLiensPaidByClosingBalance | SubtotalSubjectPropertyLiensPaidByClosingMonthlyPayment | SubtotalLiabilitiesForRentalPropertyBalance | SubtotalLiabilitiesForRentalPropertyMonthlyPayment | SubtotalResubordinatedLiabilitiesBalanceForSubjectProperty | SubtotalLiquidAssetsNotIncludingGift | SubtotalNonLiquidAssets | TotalLiabilitiesBalance | SubtotalLiabilitiesMonthlyPayment | SubtotalOmittedLiabilitiesBalance | SubtotalResubordinatedLiabilitiesMonthlyPaymentForSubjectProperty | UndrawnHELOC) #IMPLIED
+>
+<!ELEMENT VA_BORROWER EMPTY>
+<!ATTLIST VA_BORROWER
+	VACoBorrowerNonTaxableIncomeAmount CDATA #IMPLIED
+	VACoBorrowerTaxableIncomeAmount CDATA #IMPLIED
+	VAFederalTaxAmount CDATA #IMPLIED
+	VALocalTaxAmount CDATA #IMPLIED
+	VAPrimaryBorrowerNonTaxableIncomeAmount CDATA #IMPLIED
+	VAPrimaryBorrowerTaxableIncomeAmount CDATA #IMPLIED
+	VASocialSecurityTaxAmount CDATA #IMPLIED
+	VAStateTaxAmount CDATA #IMPLIED
+	_CertificationOccupancyType (A | B | C | D) #IMPLIED
+>
+<!ELEMENT FHA_BORROWER EMPTY>
+<!ATTLIST FHA_BORROWER
+	_CertificationLeadPaintIndicator (Y | N) #IMPLIED
+	_CertificationOriginalMortgageAmount CDATA #IMPLIED
+	_CertificationOwn4OrMoreDwellingsIndicator (Y | N) #IMPLIED
+	_CertificationOwnOtherPropertyIndicator (Y | N) #IMPLIED
+	_CertificationPropertySoldCity CDATA #IMPLIED
+	_CertificationPropertySoldPostalCode CDATA #IMPLIED
+	_CertificationPropertySoldState CDATA #IMPLIED
+	_CertificationPropertySoldStreetAddress CDATA #IMPLIED
+	_CertificationPropertyToBeSoldIndicator (Y | N) #IMPLIED
+	_CertificationRentalIndicator (Y | N) #IMPLIED
+	_CertificationSalesPriceAmount CDATA #IMPLIED
+>
+<!ELEMENT RESPA_FEE (_PAYMENT+, _REQUIRED_SERVICE_PROVIDER*, _PAID_TO?)>
+<!ATTLIST RESPA_FEE
+	RESPASectionClassificationType (100:GrossAmountDueFromBorrower | 1000:ReservesDepositedWithLender | 1100:TitleCharges | 1200:RecordingAndTransferCharges | 1300:AdditionalSettlementFees | 200:AmountsPaidByOrInBehalfOfBorrower | 300:CashAtSettlementFromToBorrower | 400:GrossAmountDueToSeller | 500:ReductionsInAmountDueToSeller | 600:CashAtSettlementToFromSeller | 700:DivisionOfCommission | 800:LoanFees | 900:RequiredLenderPaidInAdvance) #IMPLIED
+	_PaidToName CDATA #IMPLIED
+	_RequiredProviderOfServiceIndicator (Y | N) #IMPLIED
+	_ResponsiblePartyType (Buyer | Seller) #IMPLIED
+	_SpecifiedHUDLineNumber CDATA #IMPLIED
+	_Type (203KDiscountOnRepairs | 203KPermits | 203KArchitecturalAndEngineeringFee | 203KInspectionFee | 203KSupplementalOriginationFee | 203KConsultantFee | 203KTitleUpdate | AbstractOrTitleSearchFee | AmortizationFee | ApplicationFee | AppraisalFee | AssignmentFee | AssignmentRecordingFee | AssumptionFee | AttorneyFee | BondReviewFee | CityCountyDeedTaxStampFee | CityCountyMortgageTaxStampFee | CLOAccessFee | CommitmentFee | CopyFaxFee | CourierFee | CreditReportFee | DeedRecordingFee | DocumentPreparationFee | DocumentaryStampFee | EscrowWaiverFee | FloodCertification | GeneralCounselFee | InspectionFee | LoanDiscountPoints | LoanOriginationFee | ModificationFee | MortgageBrokerFee | MortgageRecordingFee | MunicipalLienCertificateFee | MunicipalLienCertificateRecordingFee | NewLoanAdministrationFee | NotaryFee | Other | PestInspectionFee | ProcessingFee | RedrawFee | ReinspectionFee | ReleaseRecordingFee | RuralHousingFee | SettlementOrClosingFee | StateDeedTaxStampFee | StateMortgageTaxStampFee | SurveyFee | TaxRelatedServiceFee | TitleExaminationFee | TitleInsuranceBinderFee | TitleInsuranceFee | UnderwritingFee) #IMPLIED
+	_TypeOtherDescription CDATA #IMPLIED
+	_PaidToType (Broker | Lender | Investor | Other) #IMPLIED
+	_PaidToTypeOtherDescription CDATA #IMPLIED
+>
+<!ELEMENT _PAID_TO (CONTACT_DETAIL?)>
+<!ATTLIST _PAID_TO
+	_Name CDATA #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_Country CDATA #IMPLIED
+	_County CDATA #IMPLIED
+	NonPersonEntityIndication (Y | N) #IMPLIED
+>
+<!ELEMENT _PAYMENT EMPTY>
+<!ATTLIST _PAYMENT
+	_Amount CDATA #IMPLIED
+	_AllowableFHAClosingCostIndicator (Y | N) #IMPLIED
+	_CollectedByType (Broker | Lender | Investor) #IMPLIED
+	_IncludedInAPRIndicator (Y | N) #IMPLIED
+	_PaidByType (Buyer | Lender | Seller | ThirdParty) #IMPLIED
+	_PaidOutsideOfClosingIndicator (Y | N) #IMPLIED
+	_Percent CDATA #IMPLIED
+	_ProcessType (Closing | Processing) #IMPLIED
+	_Section32Indicator (Y | N) #IMPLIED
+>
+<!ELEMENT _REQUIRED_SERVICE_PROVIDER EMPTY>
+<!ATTLIST _REQUIRED_SERVICE_PROVIDER
+	_Name CDATA #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+	_TelephoneNumber CDATA #IMPLIED
+	_NatureOfRelationshipDescription CDATA #IMPLIED
+>
+<!-- In version 2.3 added _PAYMENTS container to replace _UNEQUAL_PAYMENTS which is marked for deprecation in a future non-backwardly compatible release. -->
+<!ELEMENT ESCROW (_UNEQUAL_PAYMENTS*, _PAYMENTS*, _PAID_TO?)>
+<!-- Begining with version 2.3 do not us _PaidToName in this container. It is marked for deprecation in a future non-backwardly compatible release. Use _PAID_TO container. -->
+<!ATTLIST ESCROW
+	_AnnualPaymentAmount CDATA #IMPLIED
+	_CollectedNumberOfMonthsCount CDATA #IMPLIED
+	_DueDate CDATA #IMPLIED
+	_ItemType (Assessment | CityPropertyTax | CountyPropertyTax | EarthquakeInsurance | FloodInsurance | HazardInsurance | Other | SchoolPropertyTax | TownPropertyTax | VillagePropertyTax | WindstormInsurance) #IMPLIED
+	_PaidByType (Buyer | LenderPremium | Seller) #IMPLIED
+	_PaidToName CDATA #IMPLIED
+	_PaymentFrequencyType (Annual | Monthly | Quarterly | SemiAnnual | Unequal | Other) #IMPLIED
+	_PaymentFrequencyTypeOtherDescription CDATA #IMPLIED
+	_PremiumAmount CDATA #IMPLIED
+	_PremiumPaidByType (Buyer | Lender | Seller) #IMPLIED
+	_PremiumPaymentType (CollectAtClosing | PaidOutsideOfClosing | Waived) #IMPLIED
+	_ItemTypeOtherDescription CDATA #IMPLIED
+>
+<!-- The _UNEQUAL_PPAYMENTS container is marked for deprecation in the next non-backwardly compatible release. Beginning with this version use the _PAYMENTS container for _DueDate and _PaymentAmount. -->
+<!ELEMENT _UNEQUAL_PAYMENTS EMPTY>
+<!ATTLIST _UNEQUAL_PAYMENTS
+	_DueDate CDATA #IMPLIED
+	_PaymentAmount CDATA #IMPLIED
+>
+<!ELEMENT _PAYMENTS EMPTY>
+<!-- Added in version 2.3 to be used in place of _UNEQUAL_PAYMENTS -->
+<!ATTLIST _PAYMENTS
+	_DueDate CDATA #IMPLIED
+	_PaymentAmount CDATA #IMPLIED
+	_SequenceIdentifier CDATA #IMPLIED
+>
+<!-- Added for Mortgage Application 3/5/2002 -->
+<!ELEMENT MI_DATA (MI_RENEWAL_PREMIUM*, MI_PREMIUM_TAX*)>
+<!ATTLIST MI_DATA
+	MIPremiumFinancedIndicator (Y | N) #IMPLIED
+	MIPremiumPaymentType (BorrowerPaid | BothBorrowerAndLenderPaid | LenderPaid) #IMPLIED
+	MIPremiumRefundableType (NotRefundable | Refundable | RefundableWithLimits) #IMPLIED
+	MIPremiumTermMonths CDATA #IMPLIED
+	MIRenewalCalculationType (Constant | Declining | NoRenewals | NotApplicable) #IMPLIED
+	MIDurationType (Annual | NotApplicable | PeriodicMonthly | SingleLifeOfLoan | SingleSpecific) #IMPLIED
+	MIInitialPremiumRateDurationMonths CDATA #IMPLIED
+	MIInitialPremiumRatePercent CDATA #IMPLIED
+	MIEscrowIncludedInAggregateIndicator (Y | N) #IMPLIED
+	MI_LTVCutoffPercent CDATA #IMPLIED
+	MI_LTVCutoffType (AppraisedValue | SalesPrice) #IMPLIED
+	MICollectedNumberOfMonthsCount CDATA #IMPLIED
+	MICushionNumberOfMonthsCount CDATA #IMPLIED
+>
+<!ELEMENT MI_PREMIUM_TAX EMPTY>
+<!ATTLIST MI_PREMIUM_TAX
+	_CodeType (County | Municipal | State | AllTaxes) #IMPLIED
+	_CodePercent CDATA #IMPLIED
+	_CodeAmount CDATA #IMPLIED
+>
+<!ELEMENT MI_RENEWAL_PREMIUM EMPTY>
+<!ATTLIST MI_RENEWAL_PREMIUM
+	_Sequence (First | Second | Third | Fourth | Fifth) #IMPLIED
+	_Rate CDATA #IMPLIED
+	_RateDurationMonths CDATA #IMPLIED
+>
+<!ELEMENT CONTACT_DETAIL (CONTACT_POINT*)>
+<!ATTLIST CONTACT_DETAIL
+	_Name CDATA #IMPLIED
+>
+<!ELEMENT CONTACT_POINT EMPTY>
+<!ATTLIST CONTACT_POINT
+	_RoleType (Home | Mobile | Work) #IMPLIED
+	_Type (Email | Fax | Other | Phone) #IMPLIED
+	_TypeOtherDescription CDATA #IMPLIED
+	_Value CDATA #IMPLIED
+	_PreferenceIndicator (Y | N) #IMPLIED
+>
+<!ELEMENT LANDLORD (CONTACT_DETAIL?)>
+<!ATTLIST LANDLORD
+	_Name CDATA #IMPLIED
+	_StreetAddress CDATA #IMPLIED
+	_StreetAddress2 CDATA #IMPLIED
+	_City CDATA #IMPLIED
+	_State CDATA #IMPLIED
+	_PostalCode CDATA #IMPLIED
+>
+<!--2.3.1 PAYMENT_DETAILS Element contains data fields necessary to complete Truth In Lending Disclosure, Amortization Schedule, Itemization of Amount Financed.-->
+<!ELEMENT PAYMENT_DETAILS (PAYMENT_SCHEDULE*)>
+<!--PAYMENT SCHEDULE Element contains the data fields necessary to reflect the payment stream on the document TRUTH IN LENDING DISCLOSURE-->
+<!ELEMENT PAYMENT_SCHEDULE EMPTY>
+<!ATTLIST PAYMENT_SCHEDULE
+	_PaymentSequenceIdentifier CDATA #IMPLIED
+	_TotalNumberOfPaymentsCount CDATA #IMPLIED
+	_PaymentAmount CDATA #IMPLIED
+	_PaymentStartDate CDATA #IMPLIED
+	_PaymentVaryingToAmount CDATA #IMPLIED
+>
+<!--2.3.1  RESPA SERVICING DATA Element contains all the data fields necessary to complete the document RESPA SERVICING DISCLOSURE-->
+<!ELEMENT RESPA_SERVICING_DATA EMPTY>
+<!ATTLIST RESPA_SERVICING_DATA
+	_AreAbleToServiceIndicator (Y | N) #IMPLIED
+	_AssignSellOrTransferSomeServicingIndicator (Y | N) #IMPLIED
+	_DoNotServiceIndicator (Y | N) #IMPLIED
+	_ExpectToAssignSellOrTransferPercentOfServicingIndicator (Y | N) #IMPLIED
+	_ExpectToAssignSellOrTransferPercent CDATA #IMPLIED
+	_ExpectToRetainAllServicingIndicator (Y | N) #IMPLIED
+	_ExpectToSellAllServicingIndicator (Y | N) #IMPLIED
+	_FirstTransferYear CDATA #IMPLIED
+	_FirstTransferYearValue CDATA #IMPLIED
+	_HaveNotDecidedToServiceIndicator (Y | N) #IMPLIED
+	_HaveNotServicedInPastThreeYearsIndicator (Y | N) #IMPLIED
+	_HavePreviouslyAssignedServicingIndicator (Y | N) #IMPLIED
+	_MayAssignServicingIndicator (Y | N) #IMPLIED
+	_PresentlyIntendToAssignSellOrTransferServicingIndicator (Y | N) #IMPLIED
+	_SecondTransferYear CDATA #IMPLIED
+	_SecondTransferYearValue CDATA #IMPLIED
+	_ThirdTransferYear CDATA #IMPLIED
+	_ThirdTransferYearValue CDATA #IMPLIED
+	_ThisEstimateIncludesAssignmentsSalesOrTransfersIndicator (Y | N) #IMPLIED
+	_ThisInformationDoesIncludeAssignmentsSalesOrTransfersIndicator (Y | N) #IMPLIED
+	_ThisIsOurRecordOfTransferringServicingIndicator (Y | N) #IMPLIED
+	_TwelveMonthPeriodTransferPercent CDATA #IMPLIED
+	_WillNotServiceIndicator (Y | N) #IMPLIED
+	_WillServiceIndicator (Y | N) #IMPLIED
+>
+<!--2.3.1  RESPA SUMMARY Element contains all the data fields necessary to complete the document TRUTH IN LENDING DISCLOSURE.-->
+<!ELEMENT RESPA_SUMMARY (_TOTAL_FEES_PAID_TO*, _TOTAL_FEES_PAID_BY*)>
+<!ATTLIST RESPA_SUMMARY
+	_DisclosedTotalSalesPriceAmount CDATA #IMPLIED
+	_TotalAmountFinancedAmount CDATA #IMPLIED
+	_TotalAPRFeesAmount CDATA #IMPLIED
+	_TotalNonAPRFeesAmount CDATA #IMPLIED
+	_TotalPaidToOthersAmount CDATA #IMPLIED
+	_TotalDepositedReservesAmount CDATA #IMPLIED
+	_TotalFinanceChargeAmount CDATA #IMPLIED
+	_TotalNetBorrowerFeesAmount CDATA #IMPLIED
+	_TotalNetProceedsForFundingAmount CDATA #IMPLIED
+	_TotalNetSellerFeesAmount CDATA #IMPLIED
+	_TotalOfAllPaymentsAmount CDATA #IMPLIED
+	_TotalPrepaidFinanceChargeAmount CDATA #IMPLIED
+	APR CDATA #IMPLIED
+	_TotalFilingRecordingFeeAmount CDATA #IMPLIED
+>
+<!ELEMENT _TOTAL_FEES_PAID_TO EMPTY>
+<!ATTLIST _TOTAL_FEES_PAID_TO
+	_Type (Broker | Lender | Investor | Other) #IMPLIED
+	_TypeOtherDescription CDATA #IMPLIED
+	_TypeAmount CDATA #IMPLIED
+>
+<!ELEMENT _TOTAL_FEES_PAID_BY EMPTY>
+<!ATTLIST _TOTAL_FEES_PAID_BY
+	_Type (Broker | Buyer | Investor | Lender | Seller | Other) #IMPLIED
+	_TypeOtherDescription CDATA #IMPLIED
+	_TypeAmount CDATA #IMPLIED
+>

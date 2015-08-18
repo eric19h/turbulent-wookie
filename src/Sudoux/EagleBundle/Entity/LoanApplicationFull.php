@@ -3,6 +3,7 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sudoux\Cms\LocationBundle\Entity\Location;
 
 /**
  * Class LoanApplicationFull
@@ -11,7 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoanApplicationFull
 {
-
+    ##################################################
+    ##Public Properties
+    ##
+    ###################################################
 
     /**
      * @var array
@@ -132,6 +136,11 @@ class LoanApplicationFull
         3 => 'Stock',
         4 => 'Other'
     );
+
+    ##################################################
+    ##Private Properties
+    ##
+    ###################################################
 
     /**
      * @var integer
@@ -458,6 +467,58 @@ class LoanApplicationFull
      */
     private $milestone;
 
+    ##################################################
+    ##Private Array Collections
+    ##
+    ###################################################
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     */
+    private $co_borrower;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     */
+    private $asset_account;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     */
+    private $asset_real_estate;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     */
+    private $income_monthly;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     */
+    private $income_other;
+
+    /**
+     * @var  \Doctrine\Common\Collections\Collection
+     * @author Eric Haynes
+     *
+     */
+    private $email;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $document;
+
+    ##################################################
+    ##Functions
+    ##
+    ###################################################
 
 
     /**
@@ -487,6 +548,363 @@ class LoanApplicationFull
         $this->loan_type = 0;
         $this->source = 0;
         $this->no_property_location = false;
+    }
+
+    ##################################################
+    ##Getters and Setters
+    ##
+    ###################################################
+
+    /**
+     * @return int
+     * @author Eric Haynes
+     */
+    public function getLoanTypeText()
+    {
+
+        if(isset($this->loan_type)) {
+            return $this->loan_type[$this->loan_type];
+        }
+
+        return $this->loan_type;
+    }
+
+    /**
+     * @return int
+     * @author Eric Haynes
+     */
+    public function getPropertyTypeText()
+    {
+        if(isset($this->property_type)) {
+            return $this->propertyTypes[$this->property_type];
+        }
+
+        return $this->property_type;
+    }
+
+    /**
+     * @return string
+     * @author Eric Haynes
+     */
+    public function getTitleMannerText()
+    {
+        if(isset($this->title_manner)) {
+            return $this->titleManners[$this->title_manner];
+        }
+
+        return $this->title_manner;
+    }
+
+    /**
+     * @return null
+     * @author Eric Haynes
+     */
+    public function getResidencyTypeText()
+    {
+        if(isset($this->residency_type)) {
+            return $this->residencyTypes[$this->residency_type];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return float|int
+     * @author Eric Haynes
+     */
+    public function getLoanTermsFromMonthsToYears()
+    {
+        if(isset($this->loan_term)) {
+            $this->loan_term = ($this->loan_term / 12);
+        }
+
+        return $this->loan_term;
+    }
+
+    /**
+     * Set completed
+     *
+     * @param boolean $completed
+     * @return LoanApplicationFull
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+        $this->completed_date = new \DateTime();
+        $this->lock_status = 1;
+        $this->last_step_completed = 7;
+        $this->is_prequal = false;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $borrower
+     * @author Eric Haynes
+     */
+    public function removeIncomeMonthlyByBorrower(\Sudoux\EagleBundle\Entity\BorrowerFull $borrower)
+    {
+        if($this->income_monthly->count() > 0) {
+            foreach($this->income_monthly as $income) {
+                if($income->getBorrower()->getId() == $borrower->getId()) {
+                    $this->removeIncomeMonthly($income);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @author Eric Haynes
+     */
+    public function getIncomeMonthly()
+    {
+        return $this->income_monthly;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\IncomeMonthlyFull $incomeMonthly
+     * @author Eric Haynes
+     */
+    public function removeIncomeMonthly(\Sudoux\EagleBundle\Entity\IncomeMonthlyFull $incomeMonthly)
+    {
+        $this->income_monthly->removeElement($incomeMonthly);
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $coBorrower
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addCoBorrower(\Sudoux\EagleBundle\Entity\BorrowerFull $coBorrower)
+    {
+        $this->co_borrower[] = $coBorrower;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $coBorrower
+     * @author Eric Haynes
+     */
+    public function removeCoBorrower(\Sudoux\EagleBundle\Entity\BorrowerFull $coBorrower)
+    {
+        $this->co_borrower->removeElement($coBorrower);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @author Eric Haynes
+     */
+    public function getCoBorrower()
+    {
+        return $this->co_borrower;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\AssetAccountFull $assetAccount
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addAssetAccount(\Sudoux\EagleBundle\Entity\AssetAccountFull $assetAccount)
+    {
+        $this->asset_account[] = $assetAccount;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\AssetAccountFull $assetAccount
+     * @author Eric Haynes
+     */
+    public function removeAssetAccount(\Sudoux\EagleBundle\Entity\AssetAccountFull $assetAccount)
+    {
+        $this->asset_account->removeElement($assetAccount);
+    }
+
+    public function removeAllAssetAccount()
+    {
+        if(count($this->asset_account) > 0) {
+            $this->asset_account->clear();
+        }
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $borrower
+     * @author Eric Haynes
+     */
+    public function removeAllAssetAccountByBorrower(BorrowerFull $borrower)
+    {
+        if(count($this->asset_account) > 0) {
+            foreach($this->asset_account as $asset) {
+                if($borrower->getId() == $asset->getBorrower()->getId()) {
+                    $this->removeAssetAccount($asset);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get asset_account
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssetAccount()
+    {
+        return $this->asset_account;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\AssetRealEstateFull $assetRealEstate
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addAssetRealEstate(\Sudoux\EagleBundle\Entity\AssetRealEstateFull $assetRealEstate)
+    {
+        $this->asset_real_estate[] = $assetRealEstate;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\AssetRealEstateFull $assetRealEstate
+     * @author Eric Haynes
+     */
+    public function removeAssetRealEstate(\Sudoux\EagleBundle\Entity\AssetRealEstateFull $assetRealEstate)
+    {
+        $this->asset_real_estate->removeElement($assetRealEstate);
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $borrower
+     * @author Eric Haynes
+     */
+    public function removeAllAssetRealEstateByBorrower(BorrowerFull $borrower)
+    {
+        if(count($this->asset_real_estate) > 0) {
+            foreach($this->asset_real_estate as $asset) {
+                if($borrower->getId() == $asset->getBorrower()->getId()) {
+                    $this->removeAssetRealEstate($asset);
+                }
+            }
+        }
+    }
+
+    /**
+     * @author Eric Haynes
+     */
+    public function removeAllAssetRealEstate()
+    {
+        if(count($this->asset_real_estate) > 0) {
+            $this->asset_real_estate->clear();
+        }
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @author Eric Haynes
+     */
+    public function getAssetRealEstate()
+    {
+        return $this->asset_real_estate;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\IncomeMonthlyFull $incomeMonthly
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addIncomeMonthly(\Sudoux\EagleBundle\Entity\IncomeMonthlyFull $incomeMonthly)
+    {
+        $this->income_monthly[] = $incomeMonthly;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\IncomeOtherFull $incomeOther
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addIncomeOther(\Sudoux\EagleBundle\Entity\IncomeOtherFull $incomeOther)
+    {
+        $this->income_other[] = $incomeOther;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\IncomeOtherFull $incomeOther
+     * @author Eric Haynes
+     */
+    public function removeIncomeOther(\Sudoux\EagleBundle\Entity\IncomeOtherFull $incomeOther)
+    {
+        $this->income_other->removeElement($incomeOther);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @author Eric Haynes
+     */
+    public function getIncomeOther()
+    {
+        return $this->income_other;
+    }
+
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\IncomeMonthlyFull|null $incomeMonthly
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function setIncomeMonthly(\Sudoux\EagleBundle\Entity\IncomeMonthlyFull $incomeMonthly = null)
+    {
+        $this->income_monthly = $incomeMonthly;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\LoanDocumentFull $document
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addDocument(\Sudoux\EagleBundle\Entity\LoanDocumentFull $document)
+    {
+        $this->document[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\EagleBundle\Entity\LoanDocumentFull $document
+     * @author Eric Haynes
+     */
+    public function removeDocument(\Sudoux\EagleBundle\Entity\LoanDocumentFull $document)
+    {
+        $this->document->removeElement($document);
+    }
+
+    /**
+     * @param \Sudoux\Cms\MessageBundle\Entity\Email $email
+     * @return $this
+     * @author Eric Haynes
+     */
+    public function addEmail(\Sudoux\Cms\MessageBundle\Entity\Email $email)
+    {
+        $this->email[] = $email;
+
+        return $this;
+    }
+
+    /**
+     * @param \Sudoux\Cms\MessageBundle\Entity\Email $email
+     * @author Eric Haynes
+     */
+    public function removeEmail(\Sudoux\Cms\MessageBundle\Entity\Email $email)
+    {
+        $this->email->removeElement($email);
     }
 
     /**
@@ -1212,18 +1630,6 @@ class LoanApplicationFull
         return $this->comments;
     }
 
-    /**
-     * Set completed
-     *
-     * @param boolean $completed
-     * @return LoanApplicationFull
-     */
-    public function setCompleted($completed)
-    {
-        $this->completed = $completed;
-    
-        return $this;
-    }
 
     /**
      * Get completed

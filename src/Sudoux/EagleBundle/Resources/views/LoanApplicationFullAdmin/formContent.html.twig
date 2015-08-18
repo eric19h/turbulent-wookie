@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="span12">
+		<h3>Loan Officer/Realtor</h3>
+		<div id="realtor-info-wrapper">
+			<div id="has-realtor" class="form-inline">
+				{{ form_label(form.has_realtor) }} {{ form_widget(form.has_realtor, { 'attr' : { 'class': 'radio-group' } }) }}
+			</div>
+			<div id="realtor-form" class="clearfix hide">
+				<div class="pull-left form-group">
+					{{ form_label(form.realtor_name) }}
+					{{ form_widget(form.realtor_name) }}
+				</div>
+				<div class="pull-left form-group">
+					{{ form_label(form.realtor_company) }}
+					{{ form_widget(form.realtor_company) }}
+				</div>
+				<div class="pull-left form-group">
+					{{ form_label(form.realtor_phone) }}
+					{{ form_widget(form.realtor_phone) }}
+				</div>
+			</div>
+		</div>
+
+		<div id="loan-officer-wrapper" class="form-inline">
+			<label>Loan Officer</label>
+			{{ form_widget(form.loan_officer) }}
+		</div>
+	</div>
+</div>
+
+<!-- Start borrower info -->
+<div class="borrower-form">
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.borrower, title: 'Borrower Information', deletable: false } %}
+</div>
+
+<div id="co-borrowers-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.co_borrower.vars.prototype, title: 'Co-Borrower', deletable: true } %}{% endfilter %}">
+	{% for borrower in form.co_borrower %}
+		<div class="borrower-form">
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: borrower, title: 'Co-Borrower', deletable: true } %}
+		</div>
+	{% endfor %}
+</div>
+<button id="add-co-borrower" class="btn btn-default" type="button">Add Co-Borrower</button>
+<!-- End borrower info -->
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:propertyInfo.html.twig' %}
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:employment.html.twig' %}
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:assets.html.twig' %}
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:housing.html.twig' %}
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:income.html.twig' %}	
+		
+<h3>Borrower Declarations</h3>
+{% include 'SudouxMortgageBundle:LoanApplicationShared:declarations.html.twig' with { form: form.borrower } %}	
+{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoring.html.twig' with { form: form.borrower, borrower: loanApplication.borrower } %}
+
+{% for borrower_form in form.co_borrower %}
+	<h3>Co-Borrower Declarations for {{ loanApplication.coBorrower[loop.index0].fullName }}</h3>
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:declarations.html.twig' with { form: borrower_form } %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:governmentMonitoring.html.twig' with { form: borrower_form, borrower: loanApplication.coBorrower[loop.index0] } %}
+{% endfor %}
+
+{% include 'SudouxMortgageBundle:LoanApplicationShared:acknowledgementAndAgreement.html.twig' with { application: loanApplication } %}
+
+<div class="comments">
+	{{ form_widget(form.comments) }}
+</div>
+
+<div class="hide">{{ form_rest(form) }}</div>

@@ -1,7 +1,55 @@
 parameters:
-#    sudoux_eagle.example.class: Sudoux\EagleBundle\Example
+#    sudoux_mortgage.example.class: Sudoux\MortgageBundle\Example
 
 services:
-#    sudoux_eagle.example:
-#        class: %sudoux_eagle.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+  sudoux_mortgage_notification.twig.notification_extension:
+      class: Sudoux\MortgageBundle\Twig\NotificationExtension
+      arguments:
+        - @service_container
+        - @doctrine.orm.entity_manager
+      tags:
+        - { name: twig.extension }
+  sudoux_mortgage.los_util:
+      class: Sudoux\MortgageBundle\DependencyInjection\LosUtil
+      arguments:
+        - @service_container
+        - @twig
+  sudoux_mortgage.fanniemae_util:
+      class: Sudoux\MortgageBundle\DependencyInjection\FannieMaeUtil
+      arguments:
+        - @doctrine.orm.entity_manager
+
+  sudoux_mortgage.loanformat_util:
+      class: Sudoux\MortgageBundle\DependencyInjection\LoanFormatUtil
+      arguments:
+        - @doctrine.orm.entity_manager
+        - @service_container
+
+  sudoux_mortgage.loanofficer_listener:
+      class: Sudoux\MortgageBundle\EventListener\LoanOfficerListener
+      arguments:
+        - @service_container
+        - @router
+      tags:
+        - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+        - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+  sudoux_mortgage.site_listener:
+      class: Sudoux\MortgageBundle\EventListener\SiteListener
+      arguments: 
+        - @service_container
+      tags:
+        - { name: doctrine.event_listener, event: postPersist, method: postPersist, priority: 1 }
+        - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+  sudoux_mortgage.loan_listener:
+      class: Sudoux\EagleBundle\EventListener\LoanApplicationFullListener
+      arguments:
+        - @service_container
+      tags:
+        - { name: doctrine.event_listener, event: onFlush, method: onFlush }
+  sudoux_mortgage.branch_listener:
+      class: Sudoux\MortgageBundle\EventListener\BranchListener
+      arguments:
+        - @service_container
+      tags:
+        - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+        - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }

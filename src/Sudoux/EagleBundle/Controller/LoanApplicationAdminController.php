@@ -143,7 +143,7 @@ class LoanApplicationAdminController extends BaseController
 			}
 			$newApplication = false;
 		} else {
-			$application = new LoanApplication();
+			$application = new LoanApplicationFull();
 			$siteLoanOfficer = $site->getSettings()->getLoanOfficer();
 			if(isset($siteLoanOfficer)) {
 				$application->setLoanOfficer($siteLoanOfficer);
@@ -162,7 +162,7 @@ class LoanApplicationAdminController extends BaseController
 			$showReferralSources = true;
 		}
 	
-		$form = $this->createForm(new LoanApplicationType($site, $application), $application, array('validation_groups' => array('step1')));
+		$form = $this->createForm(new LoanApplicationFullType($site, $application), $application, array('validation_groups' => array('step1')));
 		 
 		if($request->getMethod() == 'POST') {
 	
