@@ -1,0 +1,49 @@
+Sudoux\EagleBundle\Entity\IncomeMonthlyFull:
+    type: entity
+    table: income_monthly_full
+    manyToOne:
+      borrower:
+        targetEntity: Sudoux\EagleBundle\Entity\BorrowerFull
+        inversedBy: income_monthly
+        cascade: ["persist"]
+        joinColumns:
+          borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      base_idx:
+        columns: [ base ]
+      overtime_idx:
+        columns: [ overtime ]
+      bonus_idx:
+        columns: [ bonus ]
+      commission_idx:
+        columns: [ commission ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        base:
+            type: float
+            nullable: true
+        overtime:
+            type: float
+            nullable: true
+        bonus:
+            type: float
+            nullable: true
+        commission:
+            type: float
+            nullable: true
+        interest:
+            type: float
+            nullable: true
+        rent_net:
+            type: float
+            nullable: true
+        other:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

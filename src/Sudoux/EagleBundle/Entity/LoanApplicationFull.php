@@ -1704,4 +1704,284 @@ class LoanApplicationFull
     {
         return $this->has_communities;
     }
+    /**
+     * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     */
+    private $property_location;
+
+    /**
+     * @var \Sudoux\Cms\UserBundle\Entity\User
+     */
+    private $user;
+
+    /**
+     * @var \Sudoux\Cms\UserBundle\Entity\User
+     */
+    private $admin_user;
+
+    /**
+     * @var \Sudoux\Cms\SiteBundle\Entity\Site
+     */
+    private $site;
+
+    /**
+     * @var \Sudoux\EagleBundle\Entity\BorrowerFull
+     */
+    private $borrower;
+
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\ExpenseHousing
+     */
+    private $expense_housing;
+
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\LoanOfficer
+     */
+    private $loan_officer;
+
+    /**
+     * @var \Sudoux\Cms\MessageBundle\Entity\Thread
+     */
+    private $message_thread;
+
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\LoanMilestoneGroup
+     */
+    private $milestone_group;
+
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\LoanMilestone
+     */
+    private $milestone;
+
+
+    /**
+     * Set property_location
+     *
+     * @param \Sudoux\Cms\LocationBundle\Entity\Location $propertyLocation
+     * @return LoanApplicationFull
+     */
+    public function setPropertyLocation(\Sudoux\Cms\LocationBundle\Entity\Location $propertyLocation = null)
+    {
+        $this->property_location = $propertyLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get property_location
+     *
+     * @return \Sudoux\Cms\LocationBundle\Entity\Location 
+     */
+    public function getPropertyLocation()
+    {
+        return $this->property_location;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Sudoux\Cms\UserBundle\Entity\User $user
+     * @return LoanApplicationFull
+     */
+    public function setUser(\Sudoux\Cms\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Sudoux\Cms\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set admin_user
+     *
+     * @param \Sudoux\Cms\UserBundle\Entity\User $adminUser
+     * @return LoanApplicationFull
+     */
+    public function setAdminUser(\Sudoux\Cms\UserBundle\Entity\User $adminUser = null)
+    {
+        $this->admin_user = $adminUser;
+    
+        return $this;
+    }
+
+    /**
+     * Get admin_user
+     *
+     * @return \Sudoux\Cms\UserBundle\Entity\User 
+     */
+    public function getAdminUser()
+    {
+        return $this->admin_user;
+    }
+
+    /**
+     * Set site
+     *
+     * @param \Sudoux\Cms\SiteBundle\Entity\Site $site
+     * @return LoanApplicationFull
+     */
+    public function setSite(\Sudoux\Cms\SiteBundle\Entity\Site $site)
+    {
+        $this->site = $site;
+    
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \Sudoux\Cms\SiteBundle\Entity\Site 
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Set borrower
+     *
+     * @param \Sudoux\EagleBundle\Entity\BorrowerFull $borrower
+     * @return LoanApplicationFull
+     */
+    public function setBorrower(\Sudoux\EagleBundle\Entity\BorrowerFull $borrower = null)
+    {
+        $this->borrower = $borrower;
+    
+        return $this;
+    }
+
+    /**
+     * Get borrower
+     *
+     * @return \Sudoux\EagleBundle\Entity\BorrowerFull 
+     */
+    public function getBorrower()
+    {
+        return $this->borrower;
+    }
+
+    /**
+     * Set expense_housing
+     *
+     * @param \Sudoux\MortgageBundle\Entity\ExpenseHousing $expenseHousing
+     * @return LoanApplicationFull
+     */
+    public function setExpenseHousing(\Sudoux\MortgageBundle\Entity\ExpenseHousing $expenseHousing = null)
+    {
+        $this->expense_housing = $expenseHousing;
+    
+        return $this;
+    }
+
+    /**
+     * Get expense_housing
+     *
+     * @return \Sudoux\MortgageBundle\Entity\ExpenseHousing 
+     */
+    public function getExpenseHousing()
+    {
+        return $this->expense_housing;
+    }
+
+    /**
+     * Set loan_officer
+     *
+     * @param \Sudoux\MortgageBundle\Entity\LoanOfficer $loanOfficer
+     * @return LoanApplicationFull
+     */
+    public function setLoanOfficer(\Sudoux\MortgageBundle\Entity\LoanOfficer $loanOfficer = null)
+    {
+        $this->loan_officer = $loanOfficer;
+    
+        return $this;
+    }
+
+    /**
+     * Get loan_officer
+     *
+     * @return \Sudoux\MortgageBundle\Entity\LoanOfficer 
+     */
+    public function getLoanOfficer()
+    {
+        return $this->loan_officer;
+    }
+
+    /**
+     * Set message_thread
+     *
+     * @param \Sudoux\Cms\MessageBundle\Entity\Thread $messageThread
+     * @return LoanApplicationFull
+     */
+    public function setMessageThread(\Sudoux\Cms\MessageBundle\Entity\Thread $messageThread = null)
+    {
+        $this->message_thread = $messageThread;
+    
+        return $this;
+    }
+
+    /**
+     * Get message_thread
+     *
+     * @return \Sudoux\Cms\MessageBundle\Entity\Thread 
+     */
+    public function getMessageThread()
+    {
+        return $this->message_thread;
+    }
+
+    /**
+     * Set milestone_group
+     *
+     * @param \Sudoux\MortgageBundle\Entity\LoanMilestoneGroup $milestoneGroup
+     * @return LoanApplicationFull
+     */
+    public function setMilestoneGroup(\Sudoux\MortgageBundle\Entity\LoanMilestoneGroup $milestoneGroup = null)
+    {
+        $this->milestone_group = $milestoneGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get milestone_group
+     *
+     * @return \Sudoux\MortgageBundle\Entity\LoanMilestoneGroup 
+     */
+    public function getMilestoneGroup()
+    {
+        return $this->milestone_group;
+    }
+
+    /**
+     * Set milestone
+     *
+     * @param \Sudoux\MortgageBundle\Entity\LoanMilestone $milestone
+     * @return LoanApplicationFull
+     */
+    public function setMilestone(\Sudoux\MortgageBundle\Entity\LoanMilestone $milestone = null)
+    {
+        $this->milestone = $milestone;
+    
+        return $this;
+    }
+
+    /**
+     * Get milestone
+     *
+     * @return \Sudoux\MortgageBundle\Entity\LoanMilestone 
+     */
+    public function getMilestone()
+    {
+        return $this->milestone;
+    }
 }

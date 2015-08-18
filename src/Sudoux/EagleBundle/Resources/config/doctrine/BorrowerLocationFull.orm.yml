@@ -8,7 +8,7 @@ Sudoux\EagleBundle\Entity\BorrowerLocationFull:
         joinColumns:
           location_id:
             referencedColumnName: id
-            nullable: false
+            nullable: true
         orphanRemoval: false
     indexes:
       created_idx:
@@ -32,4 +32,5 @@ Sudoux\EagleBundle\Entity\BorrowerLocationFull:
             nullable: true
         has_foreign_address:
             type: boolean
+            nullable: true
     lifecycleCallbacks: {  }

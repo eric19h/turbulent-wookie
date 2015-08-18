@@ -1595,4 +1595,406 @@ class BorrowerFull
     {
         return $this->consent_to_share_info;
     }
+    /**
+     * @var \Sudoux\MortgageBundle\Entity\CreditReport
+     */
+    private $credit_report;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $loan;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $loan_coborrower;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $asset_account;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $asset_realestate;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $income_monthly;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $income_other;
+
+    /**
+     * @var \Sudoux\EagleBundle\Entity\BorrowerLocationFull
+     */
+    private $location;
+
+    /**
+     * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     */
+    private $mailing_location;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $previous_location;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $employment;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->loan = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->loan_coborrower = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asset_account = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asset_realestate = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->income_monthly = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->income_other = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->previous_location = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->employment = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set credit_report
+     *
+     * @param \Sudoux\MortgageBundle\Entity\CreditReport $creditReport
+     * @return BorrowerFull
+     */
+    public function setCreditReport(\Sudoux\MortgageBundle\Entity\CreditReport $creditReport = null)
+    {
+        $this->credit_report = $creditReport;
+    
+        return $this;
+    }
+
+    /**
+     * Get credit_report
+     *
+     * @return \Sudoux\MortgageBundle\Entity\CreditReport 
+     */
+    public function getCreditReport()
+    {
+        return $this->credit_report;
+    }
+
+    /**
+     * Add loan
+     *
+     * @param \Sudoux\EagleBundle\Entity\LoanApplicationFull $loan
+     * @return BorrowerFull
+     */
+    public function addLoan(\Sudoux\EagleBundle\Entity\LoanApplicationFull $loan)
+    {
+        $this->loan[] = $loan;
+    
+        return $this;
+    }
+
+    /**
+     * Remove loan
+     *
+     * @param \Sudoux\EagleBundle\Entity\LoanApplicationFull $loan
+     */
+    public function removeLoan(\Sudoux\EagleBundle\Entity\LoanApplicationFull $loan)
+    {
+        $this->loan->removeElement($loan);
+    }
+
+    /**
+     * Get loan
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLoan()
+    {
+        return $this->loan;
+    }
+
+    /**
+     * Add loan_coborrower
+     *
+     * @param \Sudoux\EagleBundle\Entity\LoanApplicationFull $loanCoborrower
+     * @return BorrowerFull
+     */
+    public function addLoanCoborrower(\Sudoux\EagleBundle\Entity\LoanApplicationFull $loanCoborrower)
+    {
+        $this->loan_coborrower[] = $loanCoborrower;
+    
+        return $this;
+    }
+
+    /**
+     * Remove loan_coborrower
+     *
+     * @param \Sudoux\EagleBundle\Entity\LoanApplicationFull $loanCoborrower
+     */
+    public function removeLoanCoborrower(\Sudoux\EagleBundle\Entity\LoanApplicationFull $loanCoborrower)
+    {
+        $this->loan_coborrower->removeElement($loanCoborrower);
+    }
+
+    /**
+     * Get loan_coborrower
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLoanCoborrower()
+    {
+        return $this->loan_coborrower;
+    }
+
+    /**
+     * Add asset_account
+     *
+     * @param \Sudoux\MortgageBundle\Entity\AssetAccount $assetAccount
+     * @return BorrowerFull
+     */
+    public function addAssetAccount(\Sudoux\MortgageBundle\Entity\AssetAccount $assetAccount)
+    {
+        $this->asset_account[] = $assetAccount;
+    
+        return $this;
+    }
+
+    /**
+     * Remove asset_account
+     *
+     * @param \Sudoux\MortgageBundle\Entity\AssetAccount $assetAccount
+     */
+    public function removeAssetAccount(\Sudoux\MortgageBundle\Entity\AssetAccount $assetAccount)
+    {
+        $this->asset_account->removeElement($assetAccount);
+    }
+
+    /**
+     * Get asset_account
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAssetAccount()
+    {
+        return $this->asset_account;
+    }
+
+    /**
+     * Add asset_realestate
+     *
+     * @param \Sudoux\MortgageBundle\Entity\AssetRealEstate $assetRealestate
+     * @return BorrowerFull
+     */
+    public function addAssetRealestate(\Sudoux\MortgageBundle\Entity\AssetRealEstate $assetRealestate)
+    {
+        $this->asset_realestate[] = $assetRealestate;
+    
+        return $this;
+    }
+
+    /**
+     * Remove asset_realestate
+     *
+     * @param \Sudoux\MortgageBundle\Entity\AssetRealEstate $assetRealestate
+     */
+    public function removeAssetRealestate(\Sudoux\MortgageBundle\Entity\AssetRealEstate $assetRealestate)
+    {
+        $this->asset_realestate->removeElement($assetRealestate);
+    }
+
+    /**
+     * Get asset_realestate
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAssetRealestate()
+    {
+        return $this->asset_realestate;
+    }
+
+    /**
+     * Add income_monthly
+     *
+     * @param \Sudoux\MortgageBundle\Entity\IncomeMonthly $incomeMonthly
+     * @return BorrowerFull
+     */
+    public function addIncomeMonthly(\Sudoux\MortgageBundle\Entity\IncomeMonthly $incomeMonthly)
+    {
+        $this->income_monthly[] = $incomeMonthly;
+    
+        return $this;
+    }
+
+    /**
+     * Remove income_monthly
+     *
+     * @param \Sudoux\MortgageBundle\Entity\IncomeMonthly $incomeMonthly
+     */
+    public function removeIncomeMonthly(\Sudoux\MortgageBundle\Entity\IncomeMonthly $incomeMonthly)
+    {
+        $this->income_monthly->removeElement($incomeMonthly);
+    }
+
+    /**
+     * Get income_monthly
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncomeMonthly()
+    {
+        return $this->income_monthly;
+    }
+
+    /**
+     * Add income_other
+     *
+     * @param \Sudoux\MortgageBundle\Entity\IncomeOther $incomeOther
+     * @return BorrowerFull
+     */
+    public function addIncomeOther(\Sudoux\MortgageBundle\Entity\IncomeOther $incomeOther)
+    {
+        $this->income_other[] = $incomeOther;
+    
+        return $this;
+    }
+
+    /**
+     * Remove income_other
+     *
+     * @param \Sudoux\MortgageBundle\Entity\IncomeOther $incomeOther
+     */
+    public function removeIncomeOther(\Sudoux\MortgageBundle\Entity\IncomeOther $incomeOther)
+    {
+        $this->income_other->removeElement($incomeOther);
+    }
+
+    /**
+     * Get income_other
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncomeOther()
+    {
+        return $this->income_other;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \Sudoux\EagleBundle\Entity\BorrowerLocationFull $location
+     * @return BorrowerFull
+     */
+    public function setLocation(\Sudoux\EagleBundle\Entity\BorrowerLocationFull $location)
+    {
+        $this->location = $location;
+    
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \Sudoux\EagleBundle\Entity\BorrowerLocationFull 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set mailing_location
+     *
+     * @param \Sudoux\Cms\LocationBundle\Entity\Location $mailingLocation
+     * @return BorrowerFull
+     */
+    public function setMailingLocation(\Sudoux\Cms\LocationBundle\Entity\Location $mailingLocation = null)
+    {
+        $this->mailing_location = $mailingLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get mailing_location
+     *
+     * @return \Sudoux\Cms\LocationBundle\Entity\Location 
+     */
+    public function getMailingLocation()
+    {
+        return $this->mailing_location;
+    }
+
+    /**
+     * Add previous_location
+     *
+     * @param \Sudoux\EagleBundle\Entity\BorrowerLocationFull $previousLocation
+     * @return BorrowerFull
+     */
+    public function addPreviousLocation(\Sudoux\EagleBundle\Entity\BorrowerLocationFull $previousLocation)
+    {
+        $this->previous_location[] = $previousLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Remove previous_location
+     *
+     * @param \Sudoux\EagleBundle\Entity\BorrowerLocationFull $previousLocation
+     */
+    public function removePreviousLocation(\Sudoux\EagleBundle\Entity\BorrowerLocationFull $previousLocation)
+    {
+        $this->previous_location->removeElement($previousLocation);
+    }
+
+    /**
+     * Get previous_location
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPreviousLocation()
+    {
+        return $this->previous_location;
+    }
+
+    /**
+     * Add employment
+     *
+     * @param \Sudoux\MortgageBundle\Entity\Employment $employment
+     * @return BorrowerFull
+     */
+    public function addEmployment(\Sudoux\MortgageBundle\Entity\Employment $employment)
+    {
+        $this->employment[] = $employment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove employment
+     *
+     * @param \Sudoux\MortgageBundle\Entity\Employment $employment
+     */
+    public function removeEmployment(\Sudoux\MortgageBundle\Entity\Employment $employment)
+    {
+        $this->employment->removeElement($employment);
+    }
+
+    /**
+     * Get employment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEmployment()
+    {
+        return $this->employment;
+    }
 }

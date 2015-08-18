@@ -1427,4 +1427,172 @@ class BorrowerFull
     {
         return $this->citizen_status;
     }
+    /**
+     * @var integer
+     */
+    private $preferred_contact_time;
+
+    /**
+     * @var integer
+     */
+    private $preferred_contact_method;
+
+    /**
+     * @var boolean
+     */
+    private $credit_report_authorized;
+
+    /**
+     * @var boolean
+     */
+    private $consent_to_contact;
+
+    /**
+     * @var boolean
+     */
+    private $electronic_delivery_consent;
+
+    /**
+     * @var boolean
+     */
+    private $consent_to_share_info;
+
+
+    /**
+     * Set preferred_contact_time
+     *
+     * @param integer $preferredContactTime
+     * @return BorrowerFull
+     */
+    public function setPreferredContactTime($preferredContactTime)
+    {
+        $this->preferred_contact_time = $preferredContactTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get preferred_contact_time
+     *
+     * @return integer 
+     */
+    public function getPreferredContactTime()
+    {
+        return $this->preferred_contact_time;
+    }
+
+    /**
+     * Set preferred_contact_method
+     *
+     * @param integer $preferredContactMethod
+     * @return BorrowerFull
+     */
+    public function setPreferredContactMethod($preferredContactMethod)
+    {
+        $this->preferred_contact_method = $preferredContactMethod;
+    
+        return $this;
+    }
+
+    /**
+     * Get preferred_contact_method
+     *
+     * @return integer 
+     */
+    public function getPreferredContactMethod()
+    {
+        return $this->preferred_contact_method;
+    }
+
+    /**
+     * Set credit_report_authorized
+     *
+     * @param boolean $creditReportAuthorized
+     * @return BorrowerFull
+     */
+    public function setCreditReportAuthorized($creditReportAuthorized)
+    {
+        $this->credit_report_authorized = $creditReportAuthorized;
+    
+        return $this;
+    }
+
+    /**
+     * Get credit_report_authorized
+     *
+     * @return boolean 
+     */
+    public function getCreditReportAuthorized()
+    {
+        return $this->credit_report_authorized;
+    }
+
+    /**
+     * Set consent_to_contact
+     *
+     * @param boolean $consentToContact
+     * @return BorrowerFull
+     */
+    public function setConsentToContact($consentToContact)
+    {
+        $this->consent_to_contact = $consentToContact;
+    
+        return $this;
+    }
+
+    /**
+     * Get consent_to_contact
+     *
+     * @return boolean 
+     */
+    public function getConsentToContact()
+    {
+        return $this->consent_to_contact;
+    }
+
+    /**
+     * Set electronic_delivery_consent
+     *
+     * @param boolean $electronicDeliveryConsent
+     * @return BorrowerFull
+     */
+    public function setElectronicDeliveryConsent($electronicDeliveryConsent)
+    {
+        $this->electronic_delivery_consent = $electronicDeliveryConsent;
+    
+        return $this;
+    }
+
+    /**
+     * Get electronic_delivery_consent
+     *
+     * @return boolean 
+     */
+    public function getElectronicDeliveryConsent()
+    {
+        return $this->electronic_delivery_consent;
+    }
+
+    /**
+     * Set consent_to_share_info
+     *
+     * @param boolean $consentToShareInfo
+     * @return BorrowerFull
+     */
+    public function setConsentToShareInfo($consentToShareInfo)
+    {
+        $this->consent_to_share_info = $consentToShareInfo;
+    
+        return $this;
+    }
+
+    /**
+     * Get consent_to_share_info
+     *
+     * @return boolean 
+     */
+    public function getConsentToShareInfo()
+    {
+        return $this->consent_to_share_info;
+    }
 }

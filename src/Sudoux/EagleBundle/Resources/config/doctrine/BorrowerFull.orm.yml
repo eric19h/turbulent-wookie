@@ -2,6 +2,75 @@ Sudoux\EagleBundle\Entity\BorrowerFull:
     type: entity
     table: borrower_full
     repositoryClass: Sudoux\EagleBundle\Entity\BorrowerFullRepository
+    manyToOne:
+      location:
+        targetEntity: Sudoux\EagleBundle\Entity\BorrowerLocationFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+      mailing_location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          mailing_location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    manyToMany:
+      previous_location:
+        targetEntity: Sudoux\EagleBundle\Entity\BorrowerLocationFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          previous_location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      employment:
+        targetEntity: Sudoux\MortgageBundle\Entity\Employment
+        cascade: ["persist", "remove"]
+        joinColumns:
+          employment_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    oneToMany:
+      loan:
+        targetEntity: Sudoux\EagleBundle\Entity\LoanApplicationFull
+        mappedBy: borrower
+      loan_coborrower:
+        targetEntity: Sudoux\EagleBundle\Entity\LoanApplicationFull
+        mappedBy: co_borrower
+      asset_account:
+        targetEntity: Sudoux\MortgageBundle\Entity\AssetAccount
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      asset_realestate:
+        targetEntity: Sudoux\MortgageBundle\Entity\AssetRealEstate
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      income_monthly:
+        targetEntity: Sudoux\MortgageBundle\Entity\IncomeMonthly
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      income_other:
+        targetEntity: Sudoux\MortgageBundle\Entity\IncomeOther
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+    oneToOne:
+      credit_report:
+        targetEntity: Sudoux\MortgageBundle\Entity\CreditReport
+        cascade: ["persist", "remove"]
+        inversedBy: borrower
+        joinColumns:
+          credit_report_id:
+            referencedColumnName: id
+            onDelete: SET NULL
+        orphanRemoval: false
+    indexes:
+      first_name_idx:
+        columns: [ first_name ]
+      last_name_idx:
+        columns: [ last_name ]
     fields:
         id:
             type: integer
@@ -166,16 +235,23 @@ Sudoux\EagleBundle\Entity\BorrowerFull:
             nullable: true
         citizen_status:
             type: smallint
+            nullable: true
         preferred_contact_time:
             type: smallint
+            nullable: true
         preferred_contact_method:
             type: smallint
+            nullable: true
         credit_report_authorized:
             type: boolean
+            nullable: true
         consent_to_contact:
             type: boolean
+            nullable: true
         electronic_delivery_consent:
             type: boolean
+            nullable: true
         consent_to_share_info:
             type: boolean
+            nullable: true
     lifecycleCallbacks: {  }

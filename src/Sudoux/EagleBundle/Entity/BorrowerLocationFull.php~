@@ -39,6 +39,10 @@ class BorrowerLocationFull
      */
     private $has_foreign_address;
 
+    /**
+     * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     */
+    private $location;
 
     /**
      * Get id
@@ -163,5 +167,28 @@ class BorrowerLocationFull
     public function getHasForeignAddress()
     {
         return $this->has_foreign_address;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \Sudoux\Cms\LocationBundle\Entity\Location $location
+     * @return BorrowerLocationFull
+     */
+    public function setLocation(\Sudoux\Cms\LocationBundle\Entity\Location $location)
+    {
+        $this->location = $location;
+    
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \Sudoux\Cms\LocationBundle\Entity\Location 
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }
