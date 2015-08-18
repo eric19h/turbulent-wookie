@@ -5,7 +5,9 @@ namespace Sudoux\EagleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AssetAccountFull
+ * Class AssetAccountFull
+ * @package Sudoux\EagleBundle\Entity
+ * @author Eric Haynes
  */
 class AssetAccountFull
 {

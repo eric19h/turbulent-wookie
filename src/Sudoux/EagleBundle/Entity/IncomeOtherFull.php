@@ -5,7 +5,9 @@ namespace Sudoux\EagleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * IncomeOtherFull
+ * Class IncomeOtherFull
+ * @package Sudoux\EagleBundle\Entity
+ * @author Eric Haynes
  */
 class IncomeOtherFull
 {

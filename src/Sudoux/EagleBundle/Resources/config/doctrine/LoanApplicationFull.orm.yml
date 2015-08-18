@@ -83,28 +83,28 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
                 referencedColumnName: id
             orphanRemoval: false
           asset_account:
-            targetEntity: Sudoux\MortgageBundle\Entity\AssetAccount
+            targetEntity: Sudoux\EagleBundle\Entity\AssetAccountFull
             cascade: ["persist", "remove"]
             joinColumns:
               asset_account_id:
                 referencedColumnName: id
             orphanRemoval: false
           asset_real_estate:
-            targetEntity: Sudoux\MortgageBundle\Entity\AssetRealEstate
+            targetEntity: Sudoux\EagleBundle\Entity\AssetRealEstateFull
             cascade: ["persist", "remove"]
             joinColumns:
               asset_real_estate_id:
                 referencedColumnName: id
             orphanRemoval: false
           income_other:
-            targetEntity: Sudoux\MortgageBundle\Entity\IncomeOther
+            targetEntity: Sudoux\EagleBundle\Entity\IncomeOtherFull
             cascade: ["persist", "remove"]
             joinColumns:
               income_other_id:
                 referencedColumnName: id
             orphanRemoval: false
           income_monthly:
-            targetEntity: Sudoux\MortgageBundle\Entity\IncomeMonthly
+            targetEntity: Sudoux\EagleBundle\Entity\IncomeMonthlyFull
             cascade: ["persist", "remove"]
             joinColumns:
               income_monthly_id:
@@ -118,7 +118,7 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
                 referencedColumnName: id
             orphanRemoval: false
           document:
-            targetEntity: Sudoux\MortgageBundle\Entity\LoanDocument
+            targetEntity: Sudoux\EagleBundle\Entity\LoanDocumentFull
             cascade: ["remove"]
             orderBy:
               created: DESC
@@ -329,7 +329,7 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
         rent_own_status:
             type: smallint
             nullable: true
-        joint_borrowers:
+        are_joint_borrowers:
             type: boolean
             nullable: true
         down_payment_amount:
@@ -348,6 +348,5 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
             nullable: true
         has_communities:
             type: boolean
-            nullable: true
             nullable: true
     lifecycleCallbacks: {  }

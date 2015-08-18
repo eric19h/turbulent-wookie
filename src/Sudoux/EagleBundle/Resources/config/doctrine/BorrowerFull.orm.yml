@@ -254,4 +254,7 @@ Sudoux\EagleBundle\Entity\BorrowerFull:
         consent_to_share_info:
             type: boolean
             nullable: true
+        living_status:
+            type: smallint
+            nullable: true
     lifecycleCallbacks: {  }

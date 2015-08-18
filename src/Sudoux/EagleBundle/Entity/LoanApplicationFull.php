@@ -5,10 +5,134 @@ namespace Sudoux\EagleBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LoanApplicationFull
+ * Class LoanApplicationFull
+ * @package Sudoux\EagleBundle\Entity
+ * @author Eric Haynes
  */
 class LoanApplicationFull
 {
+
+
+    /**
+     * @var array
+     */
+    public $loanStatuses = array(
+        0 => 'Incomplete',
+        1 => 'New',
+        2 => 'Viewed',
+        3 => 'In Process',
+        4 => 'Junk',
+        5 => 'Closed',
+        6 => 'Upserted from Destiny',
+        7 => 'Imported From Velma',
+        8 => 'Imported From API'
+    );
+
+    /**
+     * @var array
+     */
+    public $refinancePurposes = array(
+        0 => 'Cash-Out Debt Consolidation',
+        1 => 'Cash-Out Home Improvement',
+        2 => 'Cash-Out Other',
+        3 => 'No Cash-Out',
+        4 => 'Limited Cash-Out',
+    );
+
+    /**
+     * @var array
+     */
+    public $titleManners = array(
+        'Community property' => 'Community property',
+        'Joint tenants' => 'Joint tenants',
+        'Single man' => 'Single man',
+        'Single woman' => 'Single woman',
+        'Married man' => 'Married man',
+        'Married woman' => 'Married woman',
+        'Tenants in common' => 'Tenants in common',
+        'To be decided in escrow' => 'To be decided in escrow',
+        'Unmarried man' => 'Unmarried man',
+        'Unmarried woman' => 'Unmarried woman',
+        'Other' => 'Other',
+    );
+
+    /**
+     * @var array
+     */
+    public $loanTypes = array(
+        0 => 'FHA',
+        1 => 'VA',
+        2 => 'CONV',
+        3 => 'ARM',
+        4 => 'JUMBO'
+    );
+
+    /**
+     * @var array
+     * @author Eric Haynes
+     */
+    public $loanPurposes = array(
+        0 => 'Purchase',
+        1 => 'Refinance'
+    );
+
+
+    /**
+     * @var array
+     */
+    public $propertyTypes = array(
+        0 => 'Single Family',
+        1 => 'Attached',
+        2 => 'Condominium',
+        3 => 'Planned Unit Development (PUD)',
+        4 => 'Multi-Family (2 - 4 Units)',
+        5 => 'High Rise Condo',
+        6 => 'Manufactured Home',
+        7 => 'Detached Condo',
+        8 => 'Manufactured Home: Condo/PUD/Co-Op',
+        9 => 'Other',
+    );
+
+    /**
+     * @var array
+     */
+    public $residencyTypes = array(
+        0 => 'Primary',
+        1 => 'Second Home',
+        2 => 'Investment'
+    );
+
+    /**
+     * @var array
+     */
+    public $lockStatuses = array(
+        0 => 'Unlocked',
+        1 => 'Applicant Locked',
+        2 => 'Locked'
+    );
+
+    /**
+     * @var array
+     */
+    public $sources = array(
+        0 => 'Website',
+        1 => 'LOS',
+        2 => 'Fannie Mae 3.2 File',
+        3 => 'API',
+        4 => 'POST'
+    );
+
+    /**
+     * @var array
+     */
+    public $downPaymentSources = array(
+        0 => 'Sale',
+        1 => 'Savings',
+        2 => 'Gift',
+        3 => 'Stock',
+        4 => 'Other'
+    );
+
     /**
      * @var integer
      */
@@ -257,7 +381,7 @@ class LoanApplicationFull
     /**
      * @var boolean
      */
-    private $joint_borrowers;
+    private $are_joint_borrowers;
 
     /**
      * @var float
@@ -282,1428 +406,8 @@ class LoanApplicationFull
     /**
      * @var boolean
      */
-    private $credit_report_authorized;
-
-    /**
-     * @var boolean
-     */
-    private $consent_to_contact;
-
-    /**
-     * @var boolean
-     */
-    private $electronic_delivery_consent;
-
-    /**
-     * @var boolean
-     */
-    private $consent_to_share_info;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set guid
-     *
-     * @param guid $guid
-     * @return LoanApplication
-     */
-    public function setGuid($guid)
-    {
-        $this->guid = $guid;
-    
-        return $this;
-    }
-
-    /**
-     * Get guid
-     *
-     * @return guid 
-     */
-    public function getGuid()
-    {
-        return $this->guid;
-    }
-
-    /**
-     * Set sale_price
-     *
-     * @param integer $salePrice
-     * @return LoanApplication
-     */
-    public function setSalePrice($salePrice)
-    {
-        $this->sale_price = $salePrice;
-    
-        return $this;
-    }
-
-    /**
-     * Get sale_price
-     *
-     * @return integer 
-     */
-    public function getSalePrice()
-    {
-        return $this->sale_price;
-    }
-
-    /**
-     * Set loan_amount
-     *
-     * @param integer $loanAmount
-     * @return LoanApplication
-     */
-    public function setLoanAmount($loanAmount)
-    {
-        $this->loan_amount = $loanAmount;
-    
-        return $this;
-    }
-
-    /**
-     * Get loan_amount
-     *
-     * @return integer 
-     */
-    public function getLoanAmount()
-    {
-        return $this->loan_amount;
-    }
-
-    /**
-     * Set los_id
-     *
-     * @param string $losId
-     * @return LoanApplication
-     */
-    public function setLosId($losId)
-    {
-        $this->los_id = $losId;
-    
-        return $this;
-    }
-
-    /**
-     * Get los_id
-     *
-     * @return string 
-     */
-    public function getLosId()
-    {
-        return $this->los_id;
-    }
-
-    /**
-     * Set los_loan_number
-     *
-     * @param string $losLoanNumber
-     * @return LoanApplication
-     */
-    public function setLosLoanNumber($losLoanNumber)
-    {
-        $this->los_loan_number = $losLoanNumber;
-    
-        return $this;
-    }
-
-    /**
-     * Get los_loan_number
-     *
-     * @return string 
-     */
-    public function getLosLoanNumber()
-    {
-        return $this->los_loan_number;
-    }
-
-    /**
-     * Set loan_term
-     *
-     * @param integer $loanTerm
-     * @return LoanApplication
-     */
-    public function setLoanTerm($loanTerm)
-    {
-        $this->loan_term = $loanTerm;
-    
-        return $this;
-    }
-
-    /**
-     * Get loan_term
-     *
-     * @return integer 
-     */
-    public function getLoanTerm()
-    {
-        return $this->loan_term;
-    }
-
-    /**
-     * Set loan_type
-     *
-     * @param integer $loanType
-     * @return LoanApplication
-     */
-    public function setLoanType($loanType)
-    {
-        $this->loan_type = $loanType;
-    
-        return $this;
-    }
-
-    /**
-     * Get loan_type
-     *
-     * @return integer 
-     */
-    public function getLoanType()
-    {
-        return $this->loan_type;
-    }
-
-    /**
-     * Set num_units
-     *
-     * @param integer $numUnits
-     * @return LoanApplication
-     */
-    public function setNumUnits($numUnits)
-    {
-        $this->num_units = $numUnits;
-    
-        return $this;
-    }
-
-    /**
-     * Get num_units
-     *
-     * @return integer 
-     */
-    public function getNumUnits()
-    {
-        return $this->num_units;
-    }
-
-    /**
-     * Set property_type
-     *
-     * @param integer $propertyType
-     * @return LoanApplication
-     */
-    public function setPropertyType($propertyType)
-    {
-        $this->property_type = $propertyType;
-    
-        return $this;
-    }
-
-    /**
-     * Get property_type
-     *
-     * @return integer 
-     */
-    public function getPropertyType()
-    {
-        return $this->property_type;
-    }
-
-    /**
-     * Set property_year_built
-     *
-     * @param integer $propertyYearBuilt
-     * @return LoanApplication
-     */
-    public function setPropertyYearBuilt($propertyYearBuilt)
-    {
-        $this->property_year_built = $propertyYearBuilt;
-    
-        return $this;
-    }
-
-    /**
-     * Get property_year_built
-     *
-     * @return integer 
-     */
-    public function getPropertyYearBuilt()
-    {
-        return $this->property_year_built;
-    }
-
-    /**
-     * Set residency_type
-     *
-     * @param integer $residencyType
-     * @return LoanApplication
-     */
-    public function setResidencyType($residencyType)
-    {
-        $this->residency_type = $residencyType;
-    
-        return $this;
-    }
-
-    /**
-     * Get residency_type
-     *
-     * @return integer 
-     */
-    public function getResidencyType()
-    {
-        return $this->residency_type;
-    }
-
-    /**
-     * Set title_company1
-     *
-     * @param string $titleCompany1
-     * @return LoanApplication
-     */
-    public function setTitleCompany1($titleCompany1)
-    {
-        $this->title_company1 = $titleCompany1;
-    
-        return $this;
-    }
-
-    /**
-     * Get title_company1
-     *
-     * @return string 
-     */
-    public function getTitleCompany1()
-    {
-        return $this->title_company1;
-    }
-
-    /**
-     * Set title_company2
-     *
-     * @param string $titleCompany2
-     * @return LoanApplication
-     */
-    public function setTitleCompany2($titleCompany2)
-    {
-        $this->title_company2 = $titleCompany2;
-    
-        return $this;
-    }
-
-    /**
-     * Get title_company2
-     *
-     * @return string 
-     */
-    public function getTitleCompany2()
-    {
-        return $this->title_company2;
-    }
-
-    /**
-     * Set title_company3
-     *
-     * @param string $titleCompany3
-     * @return LoanApplication
-     */
-    public function setTitleCompany3($titleCompany3)
-    {
-        $this->title_company3 = $titleCompany3;
-    
-        return $this;
-    }
-
-    /**
-     * Get title_company3
-     *
-     * @return string 
-     */
-    public function getTitleCompany3()
-    {
-        return $this->title_company3;
-    }
-
-    /**
-     * Set title_manner
-     *
-     * @param string $titleManner
-     * @return LoanApplication
-     */
-    public function setTitleManner($titleManner)
-    {
-        $this->title_manner = $titleManner;
-    
-        return $this;
-    }
-
-    /**
-     * Get title_manner
-     *
-     * @return string 
-     */
-    public function getTitleManner()
-    {
-        return $this->title_manner;
-    }
-
-    /**
-     * Set has_realtor
-     *
-     * @param boolean $hasRealtor
-     * @return LoanApplication
-     */
-    public function setHasRealtor($hasRealtor)
-    {
-        $this->has_realtor = $hasRealtor;
-    
-        return $this;
-    }
-
-    /**
-     * Get has_realtor
-     *
-     * @return boolean 
-     */
-    public function getHasRealtor()
-    {
-        return $this->has_realtor;
-    }
-
-    /**
-     * Set realtor_name
-     *
-     * @param string $realtorName
-     * @return LoanApplication
-     */
-    public function setRealtorName($realtorName)
-    {
-        $this->realtor_name = $realtorName;
-    
-        return $this;
-    }
-
-    /**
-     * Get realtor_name
-     *
-     * @return string 
-     */
-    public function getRealtorName()
-    {
-        return $this->realtor_name;
-    }
-
-    /**
-     * Set realtor_company
-     *
-     * @param string $realtorCompany
-     * @return LoanApplication
-     */
-    public function setRealtorCompany($realtorCompany)
-    {
-        $this->realtor_company = $realtorCompany;
-    
-        return $this;
-    }
-
-    /**
-     * Get realtor_company
-     *
-     * @return string 
-     */
-    public function getRealtorCompany()
-    {
-        return $this->realtor_company;
-    }
-
-    /**
-     * Set realtor_phone
-     *
-     * @param string $realtorPhone
-     * @return LoanApplication
-     */
-    public function setRealtorPhone($realtorPhone)
-    {
-        $this->realtor_phone = $realtorPhone;
-    
-        return $this;
-    }
-
-    /**
-     * Get realtor_phone
-     *
-     * @return string 
-     */
-    public function getRealtorPhone()
-    {
-        return $this->realtor_phone;
-    }
-
-    /**
-     * Set is_prequal
-     *
-     * @param boolean $isPrequal
-     * @return LoanApplication
-     */
-    public function setIsPrequal($isPrequal)
-    {
-        $this->is_prequal = $isPrequal;
-    
-        return $this;
-    }
-
-    /**
-     * Get is_prequal
-     *
-     * @return boolean 
-     */
-    public function getIsPrequal()
-    {
-        return $this->is_prequal;
-    }
-
-    /**
-     * Set refinance_year_acquired
-     *
-     * @param integer $refinanceYearAcquired
-     * @return LoanApplication
-     */
-    public function setRefinanceYearAcquired($refinanceYearAcquired)
-    {
-        $this->refinance_year_acquired = $refinanceYearAcquired;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_year_acquired
-     *
-     * @return integer 
-     */
-    public function getRefinanceYearAcquired()
-    {
-        return $this->refinance_year_acquired;
-    }
-
-    /**
-     * Set refinance_original_cost
-     *
-     * @param float $refinanceOriginalCost
-     * @return LoanApplication
-     */
-    public function setRefinanceOriginalCost($refinanceOriginalCost)
-    {
-        $this->refinance_original_cost = $refinanceOriginalCost;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_original_cost
-     *
-     * @return float 
-     */
-    public function getRefinanceOriginalCost()
-    {
-        return $this->refinance_original_cost;
-    }
-
-    /**
-     * Set refinance_existing_liens
-     *
-     * @param float $refinanceExistingLiens
-     * @return LoanApplication
-     */
-    public function setRefinanceExistingLiens($refinanceExistingLiens)
-    {
-        $this->refinance_existing_liens = $refinanceExistingLiens;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_existing_liens
-     *
-     * @return float 
-     */
-    public function getRefinanceExistingLiens()
-    {
-        return $this->refinance_existing_liens;
-    }
-
-    /**
-     * Set refinance_current_rate
-     *
-     * @param float $refinanceCurrentRate
-     * @return LoanApplication
-     */
-    public function setRefinanceCurrentRate($refinanceCurrentRate)
-    {
-        $this->refinance_current_rate = $refinanceCurrentRate;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_current_rate
-     *
-     * @return float 
-     */
-    public function getRefinanceCurrentRate()
-    {
-        return $this->refinance_current_rate;
-    }
-
-    /**
-     * Set refinance_current_loan_type
-     *
-     * @param string $refinanceCurrentLoanType
-     * @return LoanApplication
-     */
-    public function setRefinanceCurrentLoanType($refinanceCurrentLoanType)
-    {
-        $this->refinance_current_loan_type = $refinanceCurrentLoanType;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_current_loan_type
-     *
-     * @return string 
-     */
-    public function getRefinanceCurrentLoanType()
-    {
-        return $this->refinance_current_loan_type;
-    }
-
-    /**
-     * Set refinance_current_lender
-     *
-     * @param string $refinanceCurrentLender
-     * @return LoanApplication
-     */
-    public function setRefinanceCurrentLender($refinanceCurrentLender)
-    {
-        $this->refinance_current_lender = $refinanceCurrentLender;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_current_lender
-     *
-     * @return string 
-     */
-    public function getRefinanceCurrentLender()
-    {
-        return $this->refinance_current_lender;
-    }
-
-    /**
-     * Set refinance_purpose
-     *
-     * @param integer $refinancePurpose
-     * @return LoanApplication
-     */
-    public function setRefinancePurpose($refinancePurpose)
-    {
-        $this->refinance_purpose = $refinancePurpose;
-    
-        return $this;
-    }
-
-    /**
-     * Get refinance_purpose
-     *
-     * @return integer 
-     */
-    public function getRefinancePurpose()
-    {
-        return $this->refinance_purpose;
-    }
-
-    /**
-     * Set agreement_one
-     *
-     * @param boolean $agreementOne
-     * @return LoanApplication
-     */
-    public function setAgreementOne($agreementOne)
-    {
-        $this->agreement_one = $agreementOne;
-    
-        return $this;
-    }
-
-    /**
-     * Get agreement_one
-     *
-     * @return boolean 
-     */
-    public function getAgreementOne()
-    {
-        return $this->agreement_one;
-    }
-
-    /**
-     * Set agreement_two
-     *
-     * @param boolean $agreementTwo
-     * @return LoanApplication
-     */
-    public function setAgreementTwo($agreementTwo)
-    {
-        $this->agreement_two = $agreementTwo;
-    
-        return $this;
-    }
-
-    /**
-     * Get agreement_two
-     *
-     * @return boolean 
-     */
-    public function getAgreementTwo()
-    {
-        return $this->agreement_two;
-    }
-
-    /**
-     * Set agreement_three
-     *
-     * @param boolean $agreementThree
-     * @return LoanApplication
-     */
-    public function setAgreementThree($agreementThree)
-    {
-        $this->agreement_three = $agreementThree;
-    
-        return $this;
-    }
-
-    /**
-     * Get agreement_three
-     *
-     * @return boolean 
-     */
-    public function getAgreementThree()
-    {
-        return $this->agreement_three;
-    }
-
-    /**
-     * Set comments
-     *
-     * @param string $comments
-     * @return LoanApplication
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-    
-        return $this;
-    }
-
-    /**
-     * Get comments
-     *
-     * @return string 
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * Set completed
-     *
-     * @param boolean $completed
-     * @return LoanApplication
-     */
-    public function setCompleted($completed)
-    {
-        $this->completed = $completed;
-    
-        return $this;
-    }
-
-    /**
-     * Get completed
-     *
-     * @return boolean 
-     */
-    public function getCompleted()
-    {
-        return $this->completed;
-    }
-
-    /**
-     * Set completed_date
-     *
-     * @param \DateTime $completedDate
-     * @return LoanApplication
-     */
-    public function setCompletedDate($completedDate)
-    {
-        $this->completed_date = $completedDate;
-    
-        return $this;
-    }
-
-    /**
-     * Get completed_date
-     *
-     * @return \DateTime 
-     */
-    public function getCompletedDate()
-    {
-        return $this->completed_date;
-    }
-
-    /**
-     * Set lock_status
-     *
-     * @param integer $lockStatus
-     * @return LoanApplication
-     */
-    public function setLockStatus($lockStatus)
-    {
-        $this->lock_status = $lockStatus;
-    
-        return $this;
-    }
-
-    /**
-     * Get lock_status
-     *
-     * @return integer 
-     */
-    public function getLockStatus()
-    {
-        return $this->lock_status;
-    }
-
-    /**
-     * Set last_step_completed
-     *
-     * @param integer $lastStepCompleted
-     * @return LoanApplication
-     */
-    public function setLastStepCompleted($lastStepCompleted)
-    {
-        $this->last_step_completed = $lastStepCompleted;
-    
-        return $this;
-    }
-
-    /**
-     * Get last_step_completed
-     *
-     * @return integer 
-     */
-    public function getLastStepCompleted()
-    {
-        return $this->last_step_completed;
-    }
-
-    /**
-     * Set status
-     *
-     * @param integer $status
-     * @return LoanApplication
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return integer 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set status_date
-     *
-     * @param \DateTime $statusDate
-     * @return LoanApplication
-     */
-    public function setStatusDate($statusDate)
-    {
-        $this->status_date = $statusDate;
-    
-        return $this;
-    }
-
-    /**
-     * Get status_date
-     *
-     * @return \DateTime 
-     */
-    public function getStatusDate()
-    {
-        return $this->status_date;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     * @return LoanApplication
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    
-        return $this;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean 
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return LoanApplication
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set modified
-     *
-     * @param \DateTime $modified
-     * @return LoanApplication
-     */
-    public function setModified($modified)
-    {
-        $this->modified = $modified;
-    
-        return $this;
-    }
-
-    /**
-     * Get modified
-     *
-     * @return \DateTime 
-     */
-    public function getModified()
-    {
-        return $this->modified;
-    }
-
-    /**
-     * Set los_modified
-     *
-     * @param \DateTime $losModified
-     * @return LoanApplication
-     */
-    public function setLosModified($losModified)
-    {
-        $this->los_modified = $losModified;
-    
-        return $this;
-    }
-
-    /**
-     * Get los_modified
-     *
-     * @return \DateTime 
-     */
-    public function getLosModified()
-    {
-        return $this->los_modified;
-    }
-
-    /**
-     * Set sent_to_los
-     *
-     * @param boolean $sentToLos
-     * @return LoanApplication
-     */
-    public function setSentToLos($sentToLos)
-    {
-        $this->sent_to_los = $sentToLos;
-    
-        return $this;
-    }
-
-    /**
-     * Get sent_to_los
-     *
-     * @return boolean 
-     */
-    public function getSentToLos()
-    {
-        return $this->sent_to_los;
-    }
-
-    /**
-     * Set source
-     *
-     * @param integer $source
-     * @return LoanApplication
-     */
-    public function setSource($source)
-    {
-        $this->source = $source;
-    
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return integer 
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
-     * Set no_property_location
-     *
-     * @param boolean $noPropertyLocation
-     * @return LoanApplication
-     */
-    public function setNoPropertyLocation($noPropertyLocation)
-    {
-        $this->no_property_location = $noPropertyLocation;
-    
-        return $this;
-    }
-
-    /**
-     * Get no_property_location
-     *
-     * @return boolean 
-     */
-    public function getNoPropertyLocation()
-    {
-        return $this->no_property_location;
-    }
-
-    /**
-     * Set is_lennar_home
-     *
-     * @param boolean $isLennarHome
-     * @return LoanApplication
-     */
-    public function setIsLennarHome($isLennarHome)
-    {
-        $this->is_lennar_home = $isLennarHome;
-    
-        return $this;
-    }
-
-    /**
-     * Get is_lennar_home
-     *
-     * @return boolean 
-     */
-    public function getIsLennarHome()
-    {
-        return $this->is_lennar_home;
-    }
-
-    /**
-     * Set loan_purpose
-     *
-     * @param integer $loanPurpose
-     * @return LoanApplication
-     */
-    public function setLoanPurpose($loanPurpose)
-    {
-        $this->loan_purpose = $loanPurpose;
-    
-        return $this;
-    }
-
-    /**
-     * Get loan_purpose
-     *
-     * @return integer 
-     */
-    public function getLoanPurpose()
-    {
-        return $this->loan_purpose;
-    }
-
-    /**
-     * Set need_to_sell
-     *
-     * @param boolean $needToSell
-     * @return LoanApplication
-     */
-    public function setNeedToSell($needToSell)
-    {
-        $this->need_to_sell = $needToSell;
-    
-        return $this;
-    }
-
-    /**
-     * Get need_to_sell
-     *
-     * @return boolean 
-     */
-    public function getNeedToSell()
-    {
-        return $this->need_to_sell;
-    }
-
-    /**
-     * Set rent_own_status
-     *
-     * @param integer $rentOwnStatus
-     * @return LoanApplication
-     */
-    public function setRentOwnStatus($rentOwnStatus)
-    {
-        $this->rent_own_status = $rentOwnStatus;
-    
-        return $this;
-    }
-
-    /**
-     * Get rent_own_status
-     *
-     * @return integer 
-     */
-    public function getRentOwnStatus()
-    {
-        return $this->rent_own_status;
-    }
-
-    /**
-     * Set joint_borrowers
-     *
-     * @param boolean $jointBorrowers
-     * @return LoanApplication
-     */
-    public function setJointBorrowers($jointBorrowers)
-    {
-        $this->joint_borrowers = $jointBorrowers;
-    
-        return $this;
-    }
-
-    /**
-     * Get joint_borrowers
-     *
-     * @return boolean 
-     */
-    public function getJointBorrowers()
-    {
-        return $this->joint_borrowers;
-    }
-
-    /**
-     * Set down_payment_amount
-     *
-     * @param float $downPaymentAmount
-     * @return LoanApplication
-     */
-    public function setDownPaymentAmount($downPaymentAmount)
-    {
-        $this->down_payment_amount = $downPaymentAmount;
-    
-        return $this;
-    }
-
-    /**
-     * Get down_payment_amount
-     *
-     * @return float 
-     */
-    public function getDownPaymentAmount()
-    {
-        return $this->down_payment_amount;
-    }
-
-    /**
-     * Set down_payment_source
-     *
-     * @param integer $downPaymentSource
-     * @return LoanApplication
-     */
-    public function setDownPaymentSource($downPaymentSource)
-    {
-        $this->down_payment_source = $downPaymentSource;
-    
-        return $this;
-    }
-
-    /**
-     * Get down_payment_source
-     *
-     * @return integer 
-     */
-    public function getDownPaymentSource()
-    {
-        return $this->down_payment_source;
-    }
-
-    /**
-     * Set lennar_community_name
-     *
-     * @param string $lennarCommunityName
-     * @return LoanApplication
-     */
-    public function setLennarCommunityName($lennarCommunityName)
-    {
-        $this->lennar_community_name = $lennarCommunityName;
-    
-        return $this;
-    }
-
-    /**
-     * Get lennar_community_name
-     *
-     * @return string 
-     */
-    public function getLennarCommunityName()
-    {
-        return $this->lennar_community_name;
-    }
-
-    /**
-     * Set lennar_builder_name
-     *
-     * @param string $lennarBuilderName
-     * @return LoanApplication
-     */
-    public function setLennarBuilderName($lennarBuilderName)
-    {
-        $this->lennar_builder_name = $lennarBuilderName;
-    
-        return $this;
-    }
-
-    /**
-     * Get lennar_builder_name
-     *
-     * @return string 
-     */
-    public function getLennarBuilderName()
-    {
-        return $this->lennar_builder_name;
-    }
-
-    /**
-     * Set credit_report_authorized
-     *
-     * @param boolean $creditReportAuthorized
-     * @return LoanApplication
-     */
-    public function setCreditReportAuthorized($creditReportAuthorized)
-    {
-        $this->credit_report_authorized = $creditReportAuthorized;
-    
-        return $this;
-    }
-
-    /**
-     * Get credit_report_authorized
-     *
-     * @return boolean 
-     */
-    public function getCreditReportAuthorized()
-    {
-        return $this->credit_report_authorized;
-    }
-
-    /**
-     * Set consent_to_contact
-     *
-     * @param boolean $consentToContact
-     * @return LoanApplication
-     */
-    public function setConsentToContact($consentToContact)
-    {
-        $this->consent_to_contact = $consentToContact;
-    
-        return $this;
-    }
-
-    /**
-     * Get consent_to_contact
-     *
-     * @return boolean 
-     */
-    public function getConsentToContact()
-    {
-        return $this->consent_to_contact;
-    }
-
-    /**
-     * Set electronic_delivery_consent
-     *
-     * @param boolean $electronicDeliveryConsent
-     * @return LoanApplication
-     */
-    public function setElectronicDeliveryConsent($electronicDeliveryConsent)
-    {
-        $this->electronic_delivery_consent = $electronicDeliveryConsent;
-    
-        return $this;
-    }
-
-    /**
-     * Get electronic_delivery_consent
-     *
-     * @return boolean 
-     */
-    public function getElectronicDeliveryConsent()
-    {
-        return $this->electronic_delivery_consent;
-    }
-
-    /**
-     * Set consent_to_share_info
-     *
-     * @param boolean $consentToShareInfo
-     * @return LoanApplication
-     */
-    public function setConsentToShareInfo($consentToShareInfo)
-    {
-        $this->consent_to_share_info = $consentToShareInfo;
-    
-        return $this;
-    }
-
-    /**
-     * Get consent_to_share_info
-     *
-     * @return boolean 
-     */
-    public function getConsentToShareInfo()
-    {
-        return $this->consent_to_share_info;
-    }
-    /**
-     * @var integer
-     */
-    private $preferred_contact_time;
-
-    /**
-     * @var integer
-     */
-    private $preferred_contact_method;
-
-
-    /**
-     * Set preferred_contact_time
-     *
-     * @param integer $preferredContactTime
-     * @return LoanApplication
-     */
-    public function setPreferredContactTime($preferredContactTime)
-    {
-        $this->preferred_contact_time = $preferredContactTime;
-    
-        return $this;
-    }
-
-    /**
-     * Get preferred_contact_time
-     *
-     * @return integer 
-     */
-    public function getPreferredContactTime()
-    {
-        return $this->preferred_contact_time;
-    }
-
-    /**
-     * Set preferred_contact_method
-     *
-     * @param integer $preferredContactMethod
-     * @return LoanApplication
-     */
-    public function setPreferredContactMethod($preferredContactMethod)
-    {
-        $this->preferred_contact_method = $preferredContactMethod;
-    
-        return $this;
-    }
-
-    /**
-     * Get preferred_contact_method
-     *
-     * @return integer 
-     */
-    public function getPreferredContactMethod()
-    {
-        return $this->preferred_contact_method;
-    }
-    /**
-     * @var boolean
-     */
     private $has_communities;
 
-
-    /**
-     * Set has_communities
-     *
-     * @param boolean $hasCommunities
-     * @return LoanApplication
-     */
-    public function setHasCommunities($hasCommunities)
-    {
-        $this->has_communities = $hasCommunities;
-    
-        return $this;
-    }
-
-    /**
-     * Get has_communities
-     *
-     * @return boolean 
-     */
-    public function getHasCommunities()
-    {
-        return $this->has_communities;
-    }
     /**
      * @var \Sudoux\Cms\LocationBundle\Entity\Location
      */
@@ -1754,6 +458,1288 @@ class LoanApplicationFull
      */
     private $milestone;
 
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->is_prequal = false;
+        $this->borrower = new BorrowerFull();
+        $this->co_borrower = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asset_account = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->asset_real_estate = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->income_monthly = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->income_other = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->completed = false;
+        $this->modified = new \DateTime();
+        $this->created = new \DateTime();
+        $this->setStatus(0);
+        $this->deleted = false;
+        $this->lock_status = 0;
+        $this->message_thread = new \Sudoux\Cms\MessageBundle\Entity\Thread();
+        $this->message_thread->setSubject('Loan Application Thread');
+        $this->last_step_completed = 1;
+        $this->sent_to_los = false;
+        $this->property_location = new Location();
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->loan_type = 0;
+        $this->source = 0;
+        $this->no_property_location = false;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set guid
+     *
+     * @param guid $guid
+     * @return LoanApplicationFull
+     */
+    public function setGuid($guid)
+    {
+        $this->guid = $guid;
+    
+        return $this;
+    }
+
+    /**
+     * Get guid
+     *
+     * @return guid 
+     */
+    public function getGuid()
+    {
+        return $this->guid;
+    }
+
+    /**
+     * Set sale_price
+     *
+     * @param integer $salePrice
+     * @return LoanApplicationFull
+     */
+    public function setSalePrice($salePrice)
+    {
+        $this->sale_price = $salePrice;
+    
+        return $this;
+    }
+
+    /**
+     * Get sale_price
+     *
+     * @return integer 
+     */
+    public function getSalePrice()
+    {
+        return $this->sale_price;
+    }
+
+    /**
+     * Set loan_amount
+     *
+     * @param integer $loanAmount
+     * @return LoanApplicationFull
+     */
+    public function setLoanAmount($loanAmount)
+    {
+        $this->loan_amount = $loanAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get loan_amount
+     *
+     * @return integer 
+     */
+    public function getLoanAmount()
+    {
+        return $this->loan_amount;
+    }
+
+    /**
+     * Set los_id
+     *
+     * @param string $losId
+     * @return LoanApplicationFull
+     */
+    public function setLosId($losId)
+    {
+        $this->los_id = $losId;
+    
+        return $this;
+    }
+
+    /**
+     * Get los_id
+     *
+     * @return string 
+     */
+    public function getLosId()
+    {
+        return $this->los_id;
+    }
+
+    /**
+     * Set los_loan_number
+     *
+     * @param string $losLoanNumber
+     * @return LoanApplicationFull
+     */
+    public function setLosLoanNumber($losLoanNumber)
+    {
+        $this->los_loan_number = $losLoanNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get los_loan_number
+     *
+     * @return string 
+     */
+    public function getLosLoanNumber()
+    {
+        return $this->los_loan_number;
+    }
+
+    /**
+     * Set loan_term
+     *
+     * @param integer $loanTerm
+     * @return LoanApplicationFull
+     */
+    public function setLoanTerm($loanTerm)
+    {
+        $this->loan_term = $loanTerm;
+    
+        return $this;
+    }
+
+    /**
+     * Get loan_term
+     *
+     * @return integer 
+     */
+    public function getLoanTerm()
+    {
+        return $this->loan_term;
+    }
+
+    /**
+     * Set loan_type
+     *
+     * @param integer $loanType
+     * @return LoanApplicationFull
+     */
+    public function setLoanType($loanType)
+    {
+        $this->loan_type = $loanType;
+    
+        return $this;
+    }
+
+    /**
+     * Get loan_type
+     *
+     * @return integer 
+     */
+    public function getLoanType()
+    {
+        return $this->loan_type;
+    }
+
+    /**
+     * Set num_units
+     *
+     * @param integer $numUnits
+     * @return LoanApplicationFull
+     */
+    public function setNumUnits($numUnits)
+    {
+        $this->num_units = $numUnits;
+    
+        return $this;
+    }
+
+    /**
+     * Get num_units
+     *
+     * @return integer 
+     */
+    public function getNumUnits()
+    {
+        return $this->num_units;
+    }
+
+    /**
+     * Set property_type
+     *
+     * @param integer $propertyType
+     * @return LoanApplicationFull
+     */
+    public function setPropertyType($propertyType)
+    {
+        $this->property_type = $propertyType;
+    
+        return $this;
+    }
+
+    /**
+     * Get property_type
+     *
+     * @return integer 
+     */
+    public function getPropertyType()
+    {
+        return $this->property_type;
+    }
+
+    /**
+     * Set property_year_built
+     *
+     * @param integer $propertyYearBuilt
+     * @return LoanApplicationFull
+     */
+    public function setPropertyYearBuilt($propertyYearBuilt)
+    {
+        $this->property_year_built = $propertyYearBuilt;
+    
+        return $this;
+    }
+
+    /**
+     * Get property_year_built
+     *
+     * @return integer 
+     */
+    public function getPropertyYearBuilt()
+    {
+        return $this->property_year_built;
+    }
+
+    /**
+     * Set residency_type
+     *
+     * @param integer $residencyType
+     * @return LoanApplicationFull
+     */
+    public function setResidencyType($residencyType)
+    {
+        $this->residency_type = $residencyType;
+    
+        return $this;
+    }
+
+    /**
+     * Get residency_type
+     *
+     * @return integer 
+     */
+    public function getResidencyType()
+    {
+        return $this->residency_type;
+    }
+
+    /**
+     * Set title_company1
+     *
+     * @param string $titleCompany1
+     * @return LoanApplicationFull
+     */
+    public function setTitleCompany1($titleCompany1)
+    {
+        $this->title_company1 = $titleCompany1;
+    
+        return $this;
+    }
+
+    /**
+     * Get title_company1
+     *
+     * @return string 
+     */
+    public function getTitleCompany1()
+    {
+        return $this->title_company1;
+    }
+
+    /**
+     * Set title_company2
+     *
+     * @param string $titleCompany2
+     * @return LoanApplicationFull
+     */
+    public function setTitleCompany2($titleCompany2)
+    {
+        $this->title_company2 = $titleCompany2;
+    
+        return $this;
+    }
+
+    /**
+     * Get title_company2
+     *
+     * @return string 
+     */
+    public function getTitleCompany2()
+    {
+        return $this->title_company2;
+    }
+
+    /**
+     * Set title_company3
+     *
+     * @param string $titleCompany3
+     * @return LoanApplicationFull
+     */
+    public function setTitleCompany3($titleCompany3)
+    {
+        $this->title_company3 = $titleCompany3;
+    
+        return $this;
+    }
+
+    /**
+     * Get title_company3
+     *
+     * @return string 
+     */
+    public function getTitleCompany3()
+    {
+        return $this->title_company3;
+    }
+
+    /**
+     * Set title_manner
+     *
+     * @param string $titleManner
+     * @return LoanApplicationFull
+     */
+    public function setTitleManner($titleManner)
+    {
+        $this->title_manner = $titleManner;
+    
+        return $this;
+    }
+
+    /**
+     * Get title_manner
+     *
+     * @return string 
+     */
+    public function getTitleManner()
+    {
+        return $this->title_manner;
+    }
+
+    /**
+     * Set has_realtor
+     *
+     * @param boolean $hasRealtor
+     * @return LoanApplicationFull
+     */
+    public function setHasRealtor($hasRealtor)
+    {
+        $this->has_realtor = $hasRealtor;
+    
+        return $this;
+    }
+
+    /**
+     * Get has_realtor
+     *
+     * @return boolean 
+     */
+    public function getHasRealtor()
+    {
+        return $this->has_realtor;
+    }
+
+    /**
+     * Set realtor_name
+     *
+     * @param string $realtorName
+     * @return LoanApplicationFull
+     */
+    public function setRealtorName($realtorName)
+    {
+        $this->realtor_name = $realtorName;
+    
+        return $this;
+    }
+
+    /**
+     * Get realtor_name
+     *
+     * @return string 
+     */
+    public function getRealtorName()
+    {
+        return $this->realtor_name;
+    }
+
+    /**
+     * Set realtor_company
+     *
+     * @param string $realtorCompany
+     * @return LoanApplicationFull
+     */
+    public function setRealtorCompany($realtorCompany)
+    {
+        $this->realtor_company = $realtorCompany;
+    
+        return $this;
+    }
+
+    /**
+     * Get realtor_company
+     *
+     * @return string 
+     */
+    public function getRealtorCompany()
+    {
+        return $this->realtor_company;
+    }
+
+    /**
+     * Set realtor_phone
+     *
+     * @param string $realtorPhone
+     * @return LoanApplicationFull
+     */
+    public function setRealtorPhone($realtorPhone)
+    {
+        $this->realtor_phone = $realtorPhone;
+    
+        return $this;
+    }
+
+    /**
+     * Get realtor_phone
+     *
+     * @return string 
+     */
+    public function getRealtorPhone()
+    {
+        return $this->realtor_phone;
+    }
+
+    /**
+     * Set is_prequal
+     *
+     * @param boolean $isPrequal
+     * @return LoanApplicationFull
+     */
+    public function setIsPrequal($isPrequal)
+    {
+        $this->is_prequal = $isPrequal;
+    
+        return $this;
+    }
+
+    /**
+     * Get is_prequal
+     *
+     * @return boolean 
+     */
+    public function getIsPrequal()
+    {
+        return $this->is_prequal;
+    }
+
+    /**
+     * Set refinance_year_acquired
+     *
+     * @param integer $refinanceYearAcquired
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceYearAcquired($refinanceYearAcquired)
+    {
+        $this->refinance_year_acquired = $refinanceYearAcquired;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_year_acquired
+     *
+     * @return integer 
+     */
+    public function getRefinanceYearAcquired()
+    {
+        return $this->refinance_year_acquired;
+    }
+
+    /**
+     * Set refinance_original_cost
+     *
+     * @param float $refinanceOriginalCost
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceOriginalCost($refinanceOriginalCost)
+    {
+        $this->refinance_original_cost = $refinanceOriginalCost;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_original_cost
+     *
+     * @return float 
+     */
+    public function getRefinanceOriginalCost()
+    {
+        return $this->refinance_original_cost;
+    }
+
+    /**
+     * Set refinance_existing_liens
+     *
+     * @param float $refinanceExistingLiens
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceExistingLiens($refinanceExistingLiens)
+    {
+        $this->refinance_existing_liens = $refinanceExistingLiens;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_existing_liens
+     *
+     * @return float 
+     */
+    public function getRefinanceExistingLiens()
+    {
+        return $this->refinance_existing_liens;
+    }
+
+    /**
+     * Set refinance_current_rate
+     *
+     * @param float $refinanceCurrentRate
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceCurrentRate($refinanceCurrentRate)
+    {
+        $this->refinance_current_rate = $refinanceCurrentRate;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_current_rate
+     *
+     * @return float 
+     */
+    public function getRefinanceCurrentRate()
+    {
+        return $this->refinance_current_rate;
+    }
+
+    /**
+     * Set refinance_current_loan_type
+     *
+     * @param string $refinanceCurrentLoanType
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceCurrentLoanType($refinanceCurrentLoanType)
+    {
+        $this->refinance_current_loan_type = $refinanceCurrentLoanType;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_current_loan_type
+     *
+     * @return string 
+     */
+    public function getRefinanceCurrentLoanType()
+    {
+        return $this->refinance_current_loan_type;
+    }
+
+    /**
+     * Set refinance_current_lender
+     *
+     * @param string $refinanceCurrentLender
+     * @return LoanApplicationFull
+     */
+    public function setRefinanceCurrentLender($refinanceCurrentLender)
+    {
+        $this->refinance_current_lender = $refinanceCurrentLender;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_current_lender
+     *
+     * @return string 
+     */
+    public function getRefinanceCurrentLender()
+    {
+        return $this->refinance_current_lender;
+    }
+
+    /**
+     * Set refinance_purpose
+     *
+     * @param integer $refinancePurpose
+     * @return LoanApplicationFull
+     */
+    public function setRefinancePurpose($refinancePurpose)
+    {
+        $this->refinance_purpose = $refinancePurpose;
+    
+        return $this;
+    }
+
+    /**
+     * Get refinance_purpose
+     *
+     * @return integer 
+     */
+    public function getRefinancePurpose()
+    {
+        return $this->refinance_purpose;
+    }
+
+    /**
+     * Set agreement_one
+     *
+     * @param boolean $agreementOne
+     * @return LoanApplicationFull
+     */
+    public function setAgreementOne($agreementOne)
+    {
+        $this->agreement_one = $agreementOne;
+    
+        return $this;
+    }
+
+    /**
+     * Get agreement_one
+     *
+     * @return boolean 
+     */
+    public function getAgreementOne()
+    {
+        return $this->agreement_one;
+    }
+
+    /**
+     * Set agreement_two
+     *
+     * @param boolean $agreementTwo
+     * @return LoanApplicationFull
+     */
+    public function setAgreementTwo($agreementTwo)
+    {
+        $this->agreement_two = $agreementTwo;
+    
+        return $this;
+    }
+
+    /**
+     * Get agreement_two
+     *
+     * @return boolean 
+     */
+    public function getAgreementTwo()
+    {
+        return $this->agreement_two;
+    }
+
+    /**
+     * Set agreement_three
+     *
+     * @param boolean $agreementThree
+     * @return LoanApplicationFull
+     */
+    public function setAgreementThree($agreementThree)
+    {
+        $this->agreement_three = $agreementThree;
+    
+        return $this;
+    }
+
+    /**
+     * Get agreement_three
+     *
+     * @return boolean 
+     */
+    public function getAgreementThree()
+    {
+        return $this->agreement_three;
+    }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return LoanApplicationFull
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set completed
+     *
+     * @param boolean $completed
+     * @return LoanApplicationFull
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+    
+        return $this;
+    }
+
+    /**
+     * Get completed
+     *
+     * @return boolean 
+     */
+    public function getCompleted()
+    {
+        return $this->completed;
+    }
+
+    /**
+     * Set completed_date
+     *
+     * @param \DateTime $completedDate
+     * @return LoanApplicationFull
+     */
+    public function setCompletedDate($completedDate)
+    {
+        $this->completed_date = $completedDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get completed_date
+     *
+     * @return \DateTime 
+     */
+    public function getCompletedDate()
+    {
+        return $this->completed_date;
+    }
+
+    /**
+     * Set lock_status
+     *
+     * @param integer $lockStatus
+     * @return LoanApplicationFull
+     */
+    public function setLockStatus($lockStatus)
+    {
+        $this->lock_status = $lockStatus;
+    
+        return $this;
+    }
+
+    /**
+     * Get lock_status
+     *
+     * @return integer 
+     */
+    public function getLockStatus()
+    {
+        return $this->lock_status;
+    }
+
+    /**
+     * Set last_step_completed
+     *
+     * @param integer $lastStepCompleted
+     * @return LoanApplicationFull
+     */
+    public function setLastStepCompleted($lastStepCompleted)
+    {
+        $this->last_step_completed = $lastStepCompleted;
+    
+        return $this;
+    }
+
+    /**
+     * Get last_step_completed
+     *
+     * @return integer 
+     */
+    public function getLastStepCompleted()
+    {
+        return $this->last_step_completed;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return LoanApplicationFull
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status_date
+     *
+     * @param \DateTime $statusDate
+     * @return LoanApplicationFull
+     */
+    public function setStatusDate($statusDate)
+    {
+        $this->status_date = $statusDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get status_date
+     *
+     * @return \DateTime 
+     */
+    public function getStatusDate()
+    {
+        return $this->status_date;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     * @return LoanApplicationFull
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return LoanApplicationFull
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return LoanApplicationFull
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+    
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set los_modified
+     *
+     * @param \DateTime $losModified
+     * @return LoanApplicationFull
+     */
+    public function setLosModified($losModified)
+    {
+        $this->los_modified = $losModified;
+    
+        return $this;
+    }
+
+    /**
+     * Get los_modified
+     *
+     * @return \DateTime 
+     */
+    public function getLosModified()
+    {
+        return $this->los_modified;
+    }
+
+    /**
+     * Set sent_to_los
+     *
+     * @param boolean $sentToLos
+     * @return LoanApplicationFull
+     */
+    public function setSentToLos($sentToLos)
+    {
+        $this->sent_to_los = $sentToLos;
+    
+        return $this;
+    }
+
+    /**
+     * Get sent_to_los
+     *
+     * @return boolean 
+     */
+    public function getSentToLos()
+    {
+        return $this->sent_to_los;
+    }
+
+    /**
+     * Set source
+     *
+     * @param integer $source
+     * @return LoanApplicationFull
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+    
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return integer 
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set no_property_location
+     *
+     * @param boolean $noPropertyLocation
+     * @return LoanApplicationFull
+     */
+    public function setNoPropertyLocation($noPropertyLocation)
+    {
+        $this->no_property_location = $noPropertyLocation;
+    
+        return $this;
+    }
+
+    /**
+     * Get no_property_location
+     *
+     * @return boolean 
+     */
+    public function getNoPropertyLocation()
+    {
+        return $this->no_property_location;
+    }
+
+    /**
+     * Set is_lennar_home
+     *
+     * @param boolean $isLennarHome
+     * @return LoanApplicationFull
+     */
+    public function setIsLennarHome($isLennarHome)
+    {
+        $this->is_lennar_home = $isLennarHome;
+    
+        return $this;
+    }
+
+    /**
+     * Get is_lennar_home
+     *
+     * @return boolean 
+     */
+    public function getIsLennarHome()
+    {
+        return $this->is_lennar_home;
+    }
+
+    /**
+     * Set loan_purpose
+     *
+     * @param integer $loanPurpose
+     * @return LoanApplicationFull
+     */
+    public function setLoanPurpose($loanPurpose)
+    {
+        $this->loan_purpose = $loanPurpose;
+    
+        return $this;
+    }
+
+    /**
+     * Get loan_purpose
+     *
+     * @return integer 
+     */
+    public function getLoanPurpose()
+    {
+        return $this->loan_purpose;
+    }
+
+    /**
+     * Set need_to_sell
+     *
+     * @param boolean $needToSell
+     * @return LoanApplicationFull
+     */
+    public function setNeedToSell($needToSell)
+    {
+        $this->need_to_sell = $needToSell;
+    
+        return $this;
+    }
+
+    /**
+     * Get need_to_sell
+     *
+     * @return boolean 
+     */
+    public function getNeedToSell()
+    {
+        return $this->need_to_sell;
+    }
+
+    /**
+     * Set rent_own_status
+     *
+     * @param integer $rentOwnStatus
+     * @return LoanApplicationFull
+     */
+    public function setRentOwnStatus($rentOwnStatus)
+    {
+        $this->rent_own_status = $rentOwnStatus;
+    
+        return $this;
+    }
+
+    /**
+     * Get rent_own_status
+     *
+     * @return integer 
+     */
+    public function getRentOwnStatus()
+    {
+        return $this->rent_own_status;
+    }
+
+    /**
+     * Set are_joint_borrowers
+     *
+     * @param boolean $areJointBorrowers
+     * @return LoanApplicationFull
+     */
+    public function setAreJointBorrowers($areJointBorrowers)
+    {
+        $this->are_joint_borrowers = $areJointBorrowers;
+    
+        return $this;
+    }
+
+    /**
+     * Get are_joint_borrowers
+     *
+     * @return boolean 
+     */
+    public function getAreJointBorrowers()
+    {
+        return $this->are_joint_borrowers;
+    }
+
+    /**
+     * Set down_payment_amount
+     *
+     * @param float $downPaymentAmount
+     * @return LoanApplicationFull
+     */
+    public function setDownPaymentAmount($downPaymentAmount)
+    {
+        $this->down_payment_amount = $downPaymentAmount;
+    
+        return $this;
+    }
+
+    /**
+     * Get down_payment_amount
+     *
+     * @return float 
+     */
+    public function getDownPaymentAmount()
+    {
+        return $this->down_payment_amount;
+    }
+
+    /**
+     * Set down_payment_source
+     *
+     * @param integer $downPaymentSource
+     * @return LoanApplicationFull
+     */
+    public function setDownPaymentSource($downPaymentSource)
+    {
+        $this->down_payment_source = $downPaymentSource;
+    
+        return $this;
+    }
+
+    /**
+     * Get down_payment_source
+     *
+     * @return integer 
+     */
+    public function getDownPaymentSource()
+    {
+        return $this->down_payment_source;
+    }
+
+    /**
+     * Set lennar_community_name
+     *
+     * @param string $lennarCommunityName
+     * @return LoanApplicationFull
+     */
+    public function setLennarCommunityName($lennarCommunityName)
+    {
+        $this->lennar_community_name = $lennarCommunityName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lennar_community_name
+     *
+     * @return string 
+     */
+    public function getLennarCommunityName()
+    {
+        return $this->lennar_community_name;
+    }
+
+    /**
+     * Set lennar_builder_name
+     *
+     * @param string $lennarBuilderName
+     * @return LoanApplicationFull
+     */
+    public function setLennarBuilderName($lennarBuilderName)
+    {
+        $this->lennar_builder_name = $lennarBuilderName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lennar_builder_name
+     *
+     * @return string 
+     */
+    public function getLennarBuilderName()
+    {
+        return $this->lennar_builder_name;
+    }
+
+    /**
+     * Set has_communities
+     *
+     * @param boolean $hasCommunities
+     * @return LoanApplicationFull
+     */
+    public function setHasCommunities($hasCommunities)
+    {
+        $this->has_communities = $hasCommunities;
+    
+        return $this;
+    }
+
+    /**
+     * Get has_communities
+     *
+     * @return boolean 
+     */
+    public function getHasCommunities()
+    {
+        return $this->has_communities;
+    }
 
     /**
      * Set property_location
