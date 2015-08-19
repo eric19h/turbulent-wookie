@@ -2509,7 +2509,9 @@ class LoanApplication
     }
 
     /**
-     *
+     * @param \Sudoux\Cms\UserBundle\Entity\User $user
+     * @return bool
+     * @author Eric Haynes
      */
     public function isClientUser(User $user)
     {
@@ -2529,8 +2531,9 @@ class LoanApplication
     }
 
     /**
-     * @param User $user
+     * @param \Sudoux\Cms\UserBundle\Entity\User $user
      * @return string
+     * @author Eric Haynes
      */
     public function getLoanUserRoleType(User $user)
     {

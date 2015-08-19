@@ -3,77 +3,95 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Class CreditReportFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class CreditReportFull
 {
+
+
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var integer
+     * @Expose()
      */
     private $experian_score;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $transunion_score;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $equifax_score;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $created;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $modified;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $borrower;
-
-    /**
      * @var \Sudoux\Cms\FileBundle\Entity\File
+     * @Expose()
      */
     private $report_file;
 
     /**
      * @var \Sudoux\MortgageBundle\Entity\CreditProvider
+     * @Expose()
      */
     private $credit_provider;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @author Eric Haynes
+     */
+    private $borrower;
+    /**
      * Constructor
      */
+
+
     public function __construct()
     {
         $this->borrower = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created = new \DateTime();
+        $this->modified = new \DateTime();
     }
-    
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * Set experian_score
      *

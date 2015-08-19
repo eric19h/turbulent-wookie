@@ -3,69 +3,82 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Class IncomeMonthlyFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy()
  */
 class IncomeMonthlyFull
 {
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var float
+     * @Expose()
      */
     private $base;
 
     /**
      * @var float
+     * @Expose()
      */
     private $overtime;
 
     /**
      * @var float
+     * @Expose()
      */
     private $bonus;
 
     /**
      * @var float
+     * @Expose()
      */
     private $commission;
 
     /**
      * @var float
+     * @Expose()
      */
     private $interest;
 
     /**
      * @var float
+     * @Expose()
      */
     private $rent_net;
 
     /**
      * @var float
+     * @Expose()
      */
     private $other;
 
     /**
      * @var \Sudoux\EagleBundle\Entity\BorrowerFull
+     * @Expose()
      */
     private $borrower;
 
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set base

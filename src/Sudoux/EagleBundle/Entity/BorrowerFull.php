@@ -3,16 +3,26 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use Sudoux\Cms\SecurityBundle\DependencyInjection\EncryptionUtil;
 
 /**
  * Class BorrowerFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class BorrowerFull
 {
 
     const SSN_PASSPHRASE = "d72e62a6efc36";
+
+    ##################################################
+    ##public properties
+    ##
+    ###################################################
 
     public $property_ownership_types =  array(
         0 => 'Primary Residence',
@@ -70,355 +80,443 @@ class BorrowerFull
         2 => 'Rent Free'
     );
 
-
+    ##################################################
+    ##private properties
+    ##
+    ###################################################
 
 
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
     /**
      * @var string
+     * @Expose()
      */
     private $first_name;
 
     /**
      * @var string
+     * @Expose()
      */
     private $last_name;
 
     /**
      * @var string
+     * @Expose()
      */
     private $email;
 
     /**
      * @var string
+     * @Expose()
      */
     private $middle_name;
 
     /**
      * @var string
+     * @Expose()
      */
     private $suffix;
 
     /**
      * @var string
+     * @Expose()
      */
     private $phone_home;
 
     /**
      * @var string
+     * @Expose()
      */
     private $phone_mobile;
 
     /**
      * @var string
+     * @Accessor(getter="getSsn",setter="setSsn")
+     * @Expose()
      */
     private $ssn;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $birth_date;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $years_of_school;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $marital_status;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $ethnicity;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $race;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $is_male;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $employed;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $dependents;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $dependents_number;
 
     /**
      * @var string
+     * @Expose()
      */
     private $dependents_ages;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $govt_monitoring_opt_out;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_outstanding_judgement;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_outstanding_judgement_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_bankruptcy;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_bankruptcy_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_forclosure;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_forclosure_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_lawsuit;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_lawsuit_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_forclosure_obligation;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_forclosure_obligation_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_in_default;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_in_default_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_alimony_child_support;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_alimony_child_support_details;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $declaration_alimony_child_support_alimony;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $declaration_alimony_child_support_child_support;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $declaration_alimony_child_support_separate_maintenance;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_down_payment_borrowed;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_down_payment_borrowed_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_note_endorser;
 
     /**
      * @var string
+     * @Expose()
      */
     private $declaration_note_endorser_details;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_us_citizen;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_resident_alien;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_primary_residence;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $declaration_ownership_within_three_years;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $declaration_ownership_within_three_years_property_type;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $declaration_ownership_within_three_years_property_title;
 
     /**
      * @var string
+     * @Expose()
      */
     private $initials;
 
     /**
      * @var string
+     * @Expose()
      */
     private $signature;
 
     /**
      * @var string
+     * @Expose()
      */
     private $los_id;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $citizen_status;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $preferred_contact_time;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $preferred_contact_method;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $credit_report_authorized;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $consent_to_contact;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $electronic_delivery_consent;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $consent_to_share_info;
 
     /**
      * @var \Sudoux\MortgageBundle\Entity\CreditReport
+     * @Expose()
      */
     private $credit_report;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $loan;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $loan_coborrower;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $asset_account;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $asset_realestate;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $income_monthly;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $income_other;
-
-    /**
      * @var \Sudoux\EagleBundle\Entity\BorrowerLocationFull
+     * @Expose()
      */
     private $location;
 
     /**
      * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     * @Expose()
      */
     private $mailing_location;
 
+    ##################################################
+    ##Private Array Collections
+    ##
+    ###################################################
+
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $loan;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $loan_coborrower;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $asset_account;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $asset_realestate;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $income_monthly;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
+     */
+    private $income_other;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
      */
     private $previous_location;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
      */
     private $employment;
+
+    ##################################################
+    ##Functions
+    ##
+    ###################################################
+
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->loan = new \Doctrine\Common\Collections\ArrayCollection();
+
+        //This block was generated by doctrine and NOT in Dan's code
+        //so I am still determining the impact of it
+        //TODO: IS THIS NEEDED?
+     //   $this->loan = new \Doctrine\Common\Collections\ArrayCollection();
         $this->loan_coborrower = new \Doctrine\Common\Collections\ArrayCollection();
         $this->asset_account = new \Doctrine\Common\Collections\ArrayCollection();
         $this->asset_realestate = new \Doctrine\Common\Collections\ArrayCollection();
@@ -426,8 +524,204 @@ class BorrowerFull
         $this->income_other = new \Doctrine\Common\Collections\ArrayCollection();
         $this->previous_location = new \Doctrine\Common\Collections\ArrayCollection();
         $this->employment = new \Doctrine\Common\Collections\ArrayCollection();
+        //
+        $this->setDefaults();
     }
-    
+
+
+    public function setDefaults()
+    {
+        $this->loan = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->employed = true;
+        $this->declaration_outstanding_judgement = false;
+        $this->declaration_bankruptcy = false;
+        $this->declaration_forclosure = false;
+        $this->declaration_forclosure_obligation = false;
+        $this->declaration_lawsuit = false;
+        $this->declaration_in_default = false;
+        $this->declaration_alimony_child_support = false;
+        $this->declaration_down_payment_borrowed = false;
+        $this->declaration_note_endorser = false;
+        $this->declaration_us_citizen = true;
+        $this->declaration_resident_alien = false;
+        $this->declaration_primary_residence = false;
+        $this->declaration_ownership_within_three_years = false;
+        $this->govt_monitoring_opt_out = false;
+        if(!isset($this->location)) {
+            $this->location = new BorrowerLocationFull();
+        }
+    }
+
+    /**
+     * @return bool
+     * @author Eric Haynes
+     */
+    public function validate()
+    {
+        $isValid = true;
+        if(!$this->govt_monitoring_opt_out) {
+            $govtRequiredProperties = array($this->race, $this->ethnicity, $this->is_male);
+            foreach($govtRequiredProperties as $property) {
+                if(!isset($property)) {
+                    $isValid = false;
+                }
+            }
+        }
+
+        $declarationRequiredProperties = array(
+            $this->declaration_outstanding_judgement,
+            $this->declaration_bankruptcy,
+            $this->declaration_forclosure,
+            $this->declaration_lawsuit,
+            $this->declaration_forclosure_obligation,
+            $this->declaration_in_default,
+            $this->declaration_alimony_child_support,
+            $this->declaration_down_payment_borrowed,
+            $this->declaration_note_endorser,
+            $this->declaration_us_citizen,
+            $this->declaration_resident_alien,
+            $this->declaration_primary_residence,
+            $this->declaration_ownership_within_three_years,
+        );
+
+        foreach($declarationRequiredProperties as $property) {
+            if(!isset($property)) {
+                $isValid = false;
+            }
+        }
+
+
+        if($this->declaration_alimony_child_support) {
+            $declarationAlimonyRequiredProperties = array(
+                $this->declaration_alimony_child_support_alimony,
+                $this->declaration_alimony_child_support_child_support,
+                $this->declaration_alimony_child_support_separate_maintenance,
+            );
+
+            foreach($declarationAlimonyRequiredProperties as $property) {
+                if(!isset($property)) {
+                    $isValid = false;
+                }
+            }
+        }
+
+        return $isValid;
+    }
+
+    /**
+     * @author Eric Haynes
+     */
+    public function prePersist()
+    {
+
+        if(!$this->declaration_outstanding_judgement) {
+            $this->declaration_outstanding_judgement_details = null;
+        }
+
+        if(!$this->declaration_bankruptcy) {
+            $this->declaration_bankruptcy_details = null;
+        }
+
+        if(!$this->declaration_forclosure) {
+            $this->declaration_forclosure_details = null;
+        }
+
+        if(!$this->declaration_lawsuit) {
+            $this->declaration_lawsuit_details = null;
+        }
+
+        if(!$this->declaration_forclosure_obligation) {
+            $this->declaration_forclosure_obligation_details = null;
+        }
+
+        if(!$this->declaration_in_default) {
+            $this->declaration_in_default_details = null;
+        }
+
+        if($this->declaration_alimony_child_support) {
+            // generate the details data
+            $alimonyChildSupportDetails = "";
+            if(isset($this->declaration_alimony_child_support_alimony)) {
+                $alimonyChildSupportDetails .= "Alimony: $" . $this->declaration_alimony_child_support_alimony . " ";
+            }
+
+            if(isset($this->declaration_alimony_child_support_child_support)) {
+                $alimonyChildSupportDetails .= "Child Support: $" . $this->declaration_alimony_child_support_child_support . " ";
+            }
+
+            if(isset($this->declaration_alimony_child_support_separate_maintenance)) {
+                $alimonyChildSupportDetails .= "Separate Maintenance: $" . $this->declaration_alimony_child_support_separate_maintenance;
+            }
+
+            $this->declaration_alimony_child_support_details = $alimonyChildSupportDetails;
+
+        } else {
+            $this->declaration_alimony_child_support_details = null;
+            $this->declaration_alimony_child_support_alimony = null;
+            $this->declaration_alimony_child_support_child_support = null;
+            $this->declaration_alimony_child_support_separate_maintenance = null;
+        }
+
+        if(!$this->declaration_down_payment_borrowed) {
+            $this->declaration_down_payment_borrowed_details = null;
+        }
+
+        if(!$this->declaration_note_endorser) {
+            $this->declaration_note_endorser_details = null;
+        }
+
+        if(!$this->declaration_ownership_within_three_years) {
+            $this->declaration_ownership_within_three_years_property_title = null;
+            $this->declaration_ownership_within_three_years_property_type = null;
+        }
+
+        if($this->govt_monitoring_opt_out) {
+            $this->ethnicity = null;
+            $this->race = null;
+            $this->is_male = null;
+        }
+
+        if(!$this->dependents) {
+            $this->dependents_ages = null;
+            $this->dependents_number = 0;
+        }
+    }
+
+    /**
+     * @return int
+     * @author Eric Haynes
+     */
+    public function getAge()
+    {
+        $now = new \DateTime('today');
+        return $this->birth_date->diff($now)->y;
+    }
+
+    ##################################################
+    ##Getters Setters
+    ##Adders Removers
+    ###################################################
+
+
+
+    /**
+     * @return string
+     * @author Eric Haynes
+     */
+    public function getFullName()
+    {
+        $fullName = $this->first_name . ' ';
+        if(!empty($this->middle_initial)) {
+            $fullName .= $this->middle_initial . '. ';
+        }
+        $fullName .= $this->last_name;
+        if(!empty($this->suffix)) {
+            $fullName .= ' ' . $this->suffix . '.';
+        }
+
+        return $fullName;
+    }
+
     /**
      * Get id
      *
@@ -607,8 +901,10 @@ class BorrowerFull
      */
     public function setSsn($ssn)
     {
-        $this->ssn = $ssn;
-    
+        $encryptionUtil = new EncryptionUtil();
+        $encryptedSSN = $encryptionUtil->encrypt($ssn, $this::SSN_PASSPHRASE);
+        $this->ssn = $encryptedSSN;
+
         return $this;
     }
 
@@ -619,7 +915,8 @@ class BorrowerFull
      */
     public function getSsn()
     {
-        return $this->ssn;
+        $encryptionUtil = new EncryptionUtil();
+        return $encryptionUtil->decrypt($this->ssn, $this::SSN_PASSPHRASE);
     }
 
     /**
@@ -714,6 +1011,15 @@ class BorrowerFull
         return $this->ethnicity;
     }
 
+    public function getEthnicityText()
+    {
+        if(isset($this->ethnicity)) {
+            return $this->ethnicities[$this->ethnicity];
+        }
+
+        return null;
+    }
+
     /**
      * Set race
      *
@@ -735,6 +1041,19 @@ class BorrowerFull
     public function getRace()
     {
         return $this->race;
+    }
+
+    /**
+     * @return null
+     * @author Eric Haynes
+     */
+    public function getRaceText()
+    {
+        if(isset($this->race)) {
+            return $this->races[$this->race];
+        }
+
+        return null;
     }
 
     /**
@@ -814,8 +1133,15 @@ class BorrowerFull
      */
     public function setDependentsNumber($dependentsNumber)
     {
+        $this->dependents = false;
+        if(isset($dependentsNumber)) {
+            if($dependentsNumber > 0) {
+                $this->dependents = true;
+            }
+        }
+
         $this->dependents_number = $dependentsNumber;
-    
+
         return $this;
     }
 
@@ -1473,6 +1799,14 @@ class BorrowerFull
         return $this->declaration_ownership_within_three_years_property_type;
     }
 
+    public function getDeclarationOwnershipWithinThreeYearsPropertyTypeName()
+    {
+        if(isset($this->declaration_ownership_within_three_years_property_type)) {
+            return $this->property_ownership_types[$this->declaration_ownership_within_three_years_property_type];
+        }
+        return null;
+    }
+
     /**
      * Set declaration_ownership_within_three_years_property_title
      *
@@ -1495,6 +1829,16 @@ class BorrowerFull
     {
         return $this->declaration_ownership_within_three_years_property_title;
     }
+
+    public function getDeclarationOwnershipWithinThreeYearsPropertyTitleName()
+    {
+        if(isset($this->declaration_ownership_within_three_years_property_title)) {
+            return $this->property_ownership_title_types[$this->declaration_ownership_within_three_years_property_title];
+        }
+
+        return null;
+    }
+
 
     /**
      * Set initials
@@ -1839,6 +2183,17 @@ class BorrowerFull
     }
 
     /**
+     * @author Eric Haynes
+     */
+    public function removeAllAssetAccount()
+    {
+        if(isset($this->asset_account)) {
+            $this->asset_account->clear();
+        }
+
+    }
+
+    /**
      * Get asset_account
      *
      * @return \Doctrine\Common\Collections\Collection 
@@ -1872,6 +2227,17 @@ class BorrowerFull
     }
 
     /**
+     * @author Eric Haynes
+     */
+    public function removeAllAssetRealestate()
+    {
+        if(isset($this->asset_realestate)) {
+            $this->asset_realestate->clear();
+        }
+
+    }
+
+    /**
      * Get asset_realestate
      *
      * @return \Doctrine\Common\Collections\Collection 
@@ -1902,6 +2268,17 @@ class BorrowerFull
     public function removeIncomeMonthly(\Sudoux\MortgageBundle\Entity\IncomeMonthly $incomeMonthly)
     {
         $this->income_monthly->removeElement($incomeMonthly);
+    }
+
+    /**
+     * @author Eric Haynes
+     */
+    public function removeAllIncomeMonthly()
+    {
+        if(isset($this->income_monthly)) {
+            $this->income_monthly->clear();
+        }
+
     }
 
     /**
@@ -2017,6 +2394,17 @@ class BorrowerFull
     }
 
     /**
+     * @author Eric Haynes
+     */
+    public function removeAllPreviousLocations()
+    {
+        if(isset($this->previous_location)) {
+            $this->previous_location->clear();
+        }
+    }
+
+
+    /**
      * Get previous_location
      *
      * @return \Doctrine\Common\Collections\Collection 
@@ -2047,6 +2435,13 @@ class BorrowerFull
     public function removeEmployment(\Sudoux\MortgageBundle\Entity\Employment $employment)
     {
         $this->employment->removeElement($employment);
+    }
+
+    public function removeAllEmployment()
+    {
+        if(isset($this->employment)) {
+            $this->employment->clear();
+        }
     }
 
     /**

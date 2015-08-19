@@ -3,54 +3,84 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Class AssetAccountFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class AssetAccountFull
 {
+    public  $types = array(
+        0 => 'Checking',
+        1 => 'Savings',
+        2 => 'Money Market',
+        3 => 'CD',
+        4 => 'Mutual Fund',
+        5 => 'Retirement',
+        6 => 'Other',
+    );
+
+
+
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var string
+     * @Expose()
      */
     private $institution_name;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $type;
 
     /**
      * @var string
+     * @Expose()
      */
     private $account_number;
 
     /**
      * @var float
+     * @Expose()
      */
     private $balance;
 
     /**
      * @var \Sudoux\EagleBundle\Entity\BorrowerFull
+     * @Expose()
      */
     private $borrower;
 
+    public function getTypeText()
+    {
+        if(isset($this->types)){
+            return $this->types[$this->type];
+        }
+        return null;
+
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set institution_name

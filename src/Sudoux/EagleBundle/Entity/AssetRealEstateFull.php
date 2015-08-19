@@ -3,84 +3,115 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use Sudoux\Cms\LocationBundle\Entity\Location;
 
 /**
  * Class AssetRealEstateFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class AssetRealEstateFull
 {
+    public $statuses = array(
+        0 => 'Retained',
+        1 => 'Need the rest',
+    );
+
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
     /**
      * @var float
+     * @Expose()
      */
     private $market_value;
 
     /**
      * @var float
+     * @Expose()
      */
     private $mortgage_amount;
 
     /**
      * @var float
+     * @Expose()
      */
     private $original_cost;
 
     /**
      * @var float
+     * @Expose()
      */
     private $mortgage_payment;
 
     /**
      * @var float
+     * @Expose()
      */
     private $rent_gross_income;
 
     /**
      * @var float
+     * @Expose()
      */
     private $ins_tax_exp;
 
     /**
      * @var float
+     * @Expose()
      */
     private $rent_net_income;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $date_aquired;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $status;
 
     /**
      * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     * @Expose()
      */
     private $location;
 
     /**
      * @var \Sudoux\EagleBundle\Entity\BorrowerFull
+     * @Expose()
      */
     private $borrower;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->location = new Location();
+        $this->status = 0;
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set market_value

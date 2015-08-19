@@ -3,48 +3,72 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use Sudoux\Cms\LocationBundle\Entity\Location;
 
 /**
  * Class BorrowerLocationFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class BorrowerLocationFull
 {
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $created;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $years_at_location;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $months_at_location;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $own_residence;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $has_foreign_address;
 
     /**
      * @var \Sudoux\Cms\LocationBundle\Entity\Location
+     * @Expose()
      */
     private $location;
+
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->location = new Location();
+    }
+
+    public function setApi()
+    {
+        $this->created = new \DateTime();
+    }
+
 
     /**
      * Get id

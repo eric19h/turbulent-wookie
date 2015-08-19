@@ -1273,6 +1273,7 @@ class Borrower
     {
         return $this->signature;
     }
+
     /**
      * @var \Sudoux\MortgageBundle\Entity\CreditReport
      */
