@@ -3,66 +3,106 @@
 namespace Sudoux\EagleBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Class LoanDocumentFull
  * @package Sudoux\EagleBundle\Entity
  * @author Eric Haynes
+ * @ExclusionPolicy("all")
  */
 class LoanDocumentFull
 {
+
+    /**
+     * @var array
+     */
+    public $statusValues = array(
+        0 => 'New',
+        1 => 'Not Submitted',
+        2 => 'Awaiting Review',
+        3 => 'Accepted',
+        4 => 'Rejected'
+    );
+
+    /**
+     * @var array
+     */
+    public $losStatusValues = array(
+        0 => 'Not Sent',
+        1 => 'Sent',
+        2 => 'Pending Download',
+        3 => 'Pending Upload',
+        4 => 'Received',
+        5 => 'Failed',
+        6 => 'Queued',
+    );
+
+
     /**
      * @var integer
+     * @Expose()
      */
     private $id;
 
     /**
      * @var string
+     * @Expose()
      */
     private $name;
 
     /**
      * @var string
+     * @Expose()
      */
     private $extension;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $status;
 
     /**
      * @var boolean
+     * @Expose()
      */
     private $required;
 
     /**
      * @var string
+     * @Expose()
      */
     private $los_id;
 
     /**
      * @var integer
+     * @Expose()
      */
     private $los_status;
 
     /**
      * @var \DateTime
+     * @Expose()
      */
     private $created;
 
     /**
      * @var \Sudoux\Cms\FileBundle\Entity\File
+     * @Expose()
      */
     private $file;
 
     /**
      * @var \Sudoux\Cms\TaxonomyBundle\Entity\Taxonomy
+     * @Expose()
      */
     private $type;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * @Expose()
      */
     private $loan;
 
@@ -72,8 +112,22 @@ class LoanDocumentFull
     public function __construct()
     {
         $this->loan = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->status = 0;
+        $this->created = new \DateTime();
+        $this->required = false;
+        $this->los_status = 0;
     }
 
+    /**
+     * @author Eric Haynes
+     */
+    public function serialize()
+    {
+        $document = new \stdClass();
+        $document->name = $this->getFile()->getName();
+        $document->filePath = $this->getFile()->getAbsolutePath();
+
+    }
 
     /**
      * Get id
@@ -94,7 +148,12 @@ class LoanDocumentFull
     public function setName($name)
     {
         $this->name = $name;
-    
+
+        /// hack for late processing of the file. document should be subclass of file in next major release
+        if(isset($this->file)) {
+            $this->file->setName($name);
+        }
+
         return $this;
     }
 
@@ -152,6 +211,15 @@ class LoanDocumentFull
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return mixed
+     * @author Eric Haynes
+     */
+    public function getStatusName()
+    {
+        return $this->statusValues[$this->status];
     }
 
     /**
@@ -221,6 +289,15 @@ class LoanDocumentFull
     public function getLosStatus()
     {
         return $this->los_status;
+    }
+
+    /**
+     * @return mixed
+     * @author Eric Haynes
+     */
+    public function getLosStatusValue()
+    {
+        return $this->losStatusValues[$this->los_status];
     }
 
     /**

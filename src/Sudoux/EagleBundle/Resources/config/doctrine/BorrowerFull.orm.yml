@@ -41,24 +41,24 @@ Sudoux\EagleBundle\Entity\BorrowerFull:
         targetEntity: Sudoux\EagleBundle\Entity\LoanApplicationFull
         mappedBy: co_borrower
       asset_account:
-        targetEntity: Sudoux\MortgageBundle\Entity\AssetAccount
+        targetEntity: Sudoux\EagleBundle\Entity\AssetAccountFull
         mappedBy: borrower
         cascade: ["persist","remove"]
       asset_realestate:
-        targetEntity: Sudoux\MortgageBundle\Entity\AssetRealEstate
+        targetEntity: Sudoux\EagleBundle\Entity\AssetRealEstateFull
         mappedBy: borrower
         cascade: ["persist","remove"]
       income_monthly:
-        targetEntity: Sudoux\MortgageBundle\Entity\IncomeMonthly
+        targetEntity: Sudoux\EagleBundle\Entity\IncomeMonthlyFull
         mappedBy: borrower
         cascade: ["persist","remove"]
       income_other:
-        targetEntity: Sudoux\MortgageBundle\Entity\IncomeOther
+        targetEntity: Sudoux\EagleBundle\Entity\IncomeOtherFull
         mappedBy: borrower
         cascade: ["persist","remove"]
     oneToOne:
       credit_report:
-        targetEntity: Sudoux\MortgageBundle\Entity\CreditReport
+        targetEntity: Sudoux\EagleBundle\Entity\CreditReportFull
         cascade: ["persist", "remove"]
         inversedBy: borrower
         joinColumns:

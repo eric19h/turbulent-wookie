@@ -1,0 +1,26 @@
+<div class="government-monitoring">
+	<h3>Information for Government Monitoring</h3>
+	<div class="form-inline">
+		{{ form_widget(form.govt_monitoring_opt_out, { 'attr' : { 'class': 'govt-monitoring-opt-out', 'data-target': 'govt-monitoring-form-' ~ borrower.id  } }) }} {{ form_label(form.govt_monitoring_opt_out) }} 
+	</div>
+	<div id="govt-monitoring-form-{{ borrower.id }}" class="form-horizontal {% if borrower.govtMonitoringOptOut %}hide{% endif %}">
+		<div class="control-group">
+			{{ form_label(form.ethnicity, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.ethnicity) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.race, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.race, { 'attr' : { 'class': 'checkbox-group' } }) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.is_male, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.is_male, { 'attr' : { 'class': 'radio-group' } }) }}
+			</div>
+		</div>
+	</div>
+</div>

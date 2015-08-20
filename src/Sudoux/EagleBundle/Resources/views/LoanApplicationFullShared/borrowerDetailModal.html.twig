@@ -1,0 +1,31 @@
+<div id="borrower-detail-modal-{{ borrower.id }}" class="modal hide fade">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>{{ borrower.firstName }} {{ borrower.middleInitial }} {{ borrower.lastName }} {{ borrower.suffix }}</h3>
+	</div>
+	<div class="modal-body">
+    	<div class="borrower-info">
+			<b>Home Phone: </b> {{ borrower.phoneHome|phoneNumber }}<br>
+			<b>Email: </b> {{ borrower.email }}<br>
+			<b>SSN: </b> {{ borrower.ssn|ssn }}<br>
+			<b>Birth Date: </b> {{ borrower.birthDate|date(date_format) }}<br>
+			<b>Marital Status: </b> {{ borrower.maritalStatusName }}<br>
+			<b>Years at Residence: </b> {{ borrower.location.yearsAtLocation }}<br>
+			{% if borrower.dependents %}
+				<b>Number of Dependents:</b> {{ borrower.dependentsNumber }}<br>
+				<b>Age of Dependents:</b> {{ borrower.dependentsAges }}<br>
+			{% else %}
+				<b>Dependents:</b> None<br>
+			{% endif %}
+			<b>Address: </b><br>{{ borrower.location.location.address1 }}<br>{{ borrower.location.location.city }}, {% if borrower.location.location.state %}{{ borrower.location.location.state.abbreviation }}{% endif %} {{ borrower.location.location.zipcode }}<br>
+			<b>Own Residence: </b> {{ borrower.location.ownResidence|boolToYesNo }}<br>
+			{% if borrower.previousLocation|length > 0 %}
+				<b>Previous Residence(s):</b><br>
+				{% for location in borrower.previousLocation %}
+					{{ location.location.address1 }}<br>{{ location.location.city }}, {% if location.location.state %}{{ location.location.state.abbreviation }}{% endif %} {{ location.location.zipcode }}<br>
+					<b>Own Residence: </b> {{ location.ownResidence|boolToYesNo }}<br>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</div>

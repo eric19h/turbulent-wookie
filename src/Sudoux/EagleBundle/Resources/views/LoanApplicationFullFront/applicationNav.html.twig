@@ -1,0 +1,70 @@
+<ul id="loan-application-nav" class="nav-steps loan-application-nav">
+	<li class="{% if step == 1 %} active {% else %} completed {% endif %} {% if application.lastStepCompleted >= 0 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step1', { id: application.id }) }}">
+			<span class="title">Personal</span>
+			<span class="description">
+				Name<br>
+				Address
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 2 %} active {% elseif step > 2 %} completed {% endif %} {% if application.lastStepCompleted >= 1 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step2', { id: application.id }) }}">
+			<span class="title">Property</span>
+			<span class="description">
+				Location<br>
+				Title
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 3 %} active {% elseif step > 3 %} completed {% endif %} {% if application.lastStepCompleted >= 2 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step3', { id: application.id }) }}">
+			<span class="title">Employment</span>
+			<span class="description">
+				Positions<br>
+				Dates
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 4 %} active {% elseif step > 4 %} completed {% endif %} {% if application.lastStepCompleted >= 3 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step4', { id: application.id }) }}">
+			<span class="title">Assets</span>
+			<span class="description">
+				Bank Accounts<br>
+				Real Estate
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 5 %} active  {% elseif step > 5 %} completed {% endif %} {% if application.lastStepCompleted >= 4 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step5', { id: application.id }) }}">
+			<span class="title">Housing</span>
+			<span class="description">
+				Expenses<br>
+				Income
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 6 %} active  {% elseif step > 6 %} completed {% endif %} {% if application.lastStepCompleted >= 5 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step6', { id: application.id }) }}">
+			<span class="title">Declarations</span>
+			<span class="description">
+				Government<br>
+				Financial
+			</span>
+		</a>
+	</li>
+	<li class="{% if step == 7 %}active{% endif %} {% if application.lastStepCompleted >= 6 %}clickable{% endif %}">
+		<a href="{{ path('sudoux_mortgage_loan_apply_step7', { id: application.id }) }}">
+			<span class="title">Submit App</span>
+			<span class="description">
+				And you're done!			
+			</span>
+		</a>
+	</li>
+</ul>
+
+<noscript>
+    <div class="alert alert-error">
+    	<b>STOP: You need javascript enabled to complete the application. Please enable it to continue.</b>
+    </div>
+</noscript>

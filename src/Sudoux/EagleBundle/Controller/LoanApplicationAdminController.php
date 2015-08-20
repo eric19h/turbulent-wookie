@@ -2,6 +2,8 @@
 
 namespace Sudoux\EagleBundle\Controller;
 
+use Sudoux\EagleBundle\Entity\LoanApplicationFull;
+use Sudoux\EagleBundle\Form\LoanApplicationFullType;
 use Sudoux\MortgageBundle\Controller\LoanApplicationAdminController as BaseController;
 use Sudoux\Cms\UserBundle\Form\UserType;
 use Sudoux\MortgageBundle\Entity\MismoFormat;
@@ -137,7 +139,7 @@ class LoanApplicationAdminController extends BaseController
 				
 		$newApplication = true;
 		if(isset($id)) {
-			$application = $em->getRepository('SudouxMortgageBundle:LoanApplication')->findOneBySite($site, $id);
+			$application = $em->getRepository('SudouxEagleBundle:LoanApplicationFull')->findOneBySite($site, $id);
 			if(!isset($application)) {
 				throw $this->createNotFoundException($this::LOAN_NOT_FOUND_MESSAGE);
 			}
@@ -198,7 +200,7 @@ class LoanApplicationAdminController extends BaseController
 			}
 		}
 	
-		return $this->render('SudouxMortgageBundle:LoanApplicationAdmin:applyStep1.html.twig', array(
+		return $this->render('SudouxEagleBundle:LoanApplicationFullAdmin:applyStep1.html.twig', array(
 			'form' => $form->createView(),
 			'application' => $application,
 			'showReferralSources' => $showReferralSources

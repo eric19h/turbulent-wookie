@@ -2,26 +2,92 @@
 
 namespace Sudoux\EagleBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use Sudoux\Cms\LocationBundle\Form\LocationRequiredType;
+use Sudoux\EagleBundle\Entity\AssetRealEstateFull;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AssetRealEstateFullType extends AbstractType
 {
+    private $applicationId;
+
+    public function __construct($applicationId = null)
+    {
+        if(isset($applicationId)) {
+            $this->applicationId = $applicationId;
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $assetRealEstate = new AssetRealEstateFull();
+        $applicationId = $this->applicationId;
         $builder
-            ->add('market_value')
-            ->add('mortgage_amount')
-            ->add('original_cost')
-            ->add('mortgage_payment')
-            ->add('rent_gross_income')
-            ->add('ins_tax_exp')
-            ->add('rent_net_income')
-            ->add('date_aquired')
-            ->add('status')
-            ->add('location')
-            ->add('borrower')
+            ->add('market_value', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('mortgage_amount', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('mortgage_payment', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('rent_gross_income', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('ins_tax_exp', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('rent_net_income', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('original_cost', 'money', array(
+                'currency' => 'USD',
+                'required' => true,
+                'precision' => 2,
+                'grouping' => true,
+            ))
+            ->add('date_aquired', 'date', array(
+                'widget' => 'single_text',
+                'format' => 'MM-dd-yyyy',
+                'attr' => array('class' => 'datepicker'),
+            ))
+            ->add('status', 'choice', array(
+                'choices' => $assetRealEstate->statuses,
+                'required' => false,
+                'empty_value' => 'Select a Status',
+            ))
+            ->add('location', new LocationRequiredType())
+            ->add('borrower', 'entity', array(
+                'label' => 'Borrower/Co-Borrower',
+                'class' => 'SudouxEagleBundle:BorrowerFull',
+                'property' => 'full_name',
+                'multiple' => false,
+                'empty_value' => 'Choose a borrower',
+                'query_builder' => function(EntityRepository $er) use ($applicationId) {
+                    return $er->findByLoanApplication($applicationId);
+                }
+            ))
         ;
     }
 

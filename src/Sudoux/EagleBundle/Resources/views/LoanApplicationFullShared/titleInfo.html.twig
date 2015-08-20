@@ -1,0 +1,30 @@
+<header>
+	<h3>Title Information</h3>
+	<p class="label">Title will be held by</p>
+</header>
+<div class="form-horizontal clearfix">
+	<div class="span-half">
+		<div class="control-group">
+			{{ form_label(form.title_company1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.title_company1) }}
+			</div>
+		</div>
+		<div class="control-group">
+			{{ form_label(form.title_company2, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+			<div class="controls">
+				{{ form_widget(form.title_company2) }}
+			</div>
+		</div>
+	</div>
+	<div class="span-half">
+		<div class="form-horizontal">
+			<div class="control-group">
+				{{ form_label(form.title_manner, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.title_manner) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -5,7 +5,7 @@
 {% block body_class %}page-loan-apply step1{% endblock %}
 
 {% block head %}
-	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+	{% include 'SudouxEagleBundle:LoanApplicationFullShared:loanApplicationHead.html.twig' %}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -16,10 +16,10 @@
 {% endblock %}
 
 {% block content %}
-	{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationNav.html.twig' with { step: 1, application: application } %}
+	{% include 'SudouxEagleBundle:LoanApplicationFullAdmin:applicationNav.html.twig' with { step: 1, application: application } %}
 	
 	<form id="loan-app-form-step1" action="{{ path('sudoux_mortgage_admin_loan_step1', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
-		{% include 'SudouxMortgageBundle:LoanApplicationAdmin:applicationFormTop.html.twig' %}
+		{% include 'SudouxEagleBundle:LoanApplicationFullAdmin:applicationFormTop.html.twig' %}
 
 
 		<div class="form-inline well well-small">
@@ -43,13 +43,13 @@
 		</div>
 
 		<div class="borrower-form">
-			{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { borrower: application.borrower, form: form.borrower, title: 'Borrower Information', description: "In order to get started, we need to gather some basic personal information along with choosing whether you'll have a co-borrower.", deletable: false } %}
+			{% include 'SudouxEagleBundle:LoanApplicationFullShared:borrowerForm.html.twig' with { borrower: application.borrower, form: form.borrower, title: 'Borrower Information', description: "In order to get started, we need to gather some basic personal information along with choosing whether you'll have a co-borrower.", deletable: false } %}
 		</div>
 		
-		<div id="co-borrowers-wrapper" data-prototype="{% filter escape %}{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { form: form.co_borrower.vars.prototype, title: 'Co-Borrower', deletable: true } %}{% endfilter %}">
+		<div id="co-borrowers-wrapper" data-prototype="{% filter escape %}{% include 'SudouxEagleBundle:LoanApplicationFullShared:borrowerForm.html.twig' with { form: form.co_borrower.vars.prototype, title: 'Co-Borrower', deletable: true } %}{% endfilter %}">
 			{% for borrower in form.co_borrower %}
 				<div class="borrower-form" data-borrower-id="{{ application.coBorrower[loop.index0].id }}" data-loan-id="{{ application.id }}">
-					{% include 'SudouxMortgageBundle:LoanApplicationShared:borrowerForm.html.twig' with { borrower: application.coBorrower[loop.index0], form: borrower, title: 'Co-Borrower', deletable: true } %}
+					{% include 'SudouxEagleBundle:LoanApplicationFullShared:borrowerForm.html.twig' with { borrower: application.coBorrower[loop.index0], form: borrower, title: 'Co-Borrower', deletable: true } %}
 				</div>
 			{% endfor %}
 		</div>

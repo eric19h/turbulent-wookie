@@ -197,7 +197,7 @@ class LoanApplicationFullType extends AbstractType
                     return $er->findAllBySiteType($site);
                 }
             ))
-            ->add('refinance_year_aquired', 'number', array(
+            ->add('refinance_year_acquired', 'number', array(
                 'label' => 'Year Acquired',
                 'required' => true,
                 'attr' => array('class' => 'span1', 'maxlength' => 4),
@@ -255,7 +255,7 @@ class LoanApplicationFullType extends AbstractType
                 'label' => 'I do not have a property yet',
                 'attr' => array('class' => ''),
                 'required' => false,
-            ))
+            ))/*
             /*->add('client_user', 'entity', array(
             		'label' => 'Add Additional Users',
             		'class' => 'SudouxCmsUserBundle:User',

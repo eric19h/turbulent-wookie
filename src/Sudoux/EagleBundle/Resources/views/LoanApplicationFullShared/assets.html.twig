@@ -1,0 +1,33 @@
+
+<h3>Bank Accounts</h3>
+<div id="asset-account-wrapper" class="prototype-table-wrapper" data-prototype="{% filter escape %}{% include 'SudouxEagleBundle:LoanApplicationFullShared:assetAccountFormRow.html.twig' with { form: form.asset_account.vars.prototype } %}{% endfilter %}">
+	<table class="table">
+		<thead>
+			<tr>						
+				<th>Borrower <span class="required-asterisk">*</span></th>
+				<th>Institution Name <span class="required-asterisk">*</span></th>
+				<th>Type of Account <span class="required-asterisk">*</span></th>
+				<th>Account Number</th>
+				<th>Balance <span class="required-asterisk">*</span></th>
+			</tr>
+		</thead>
+		<tbody>		
+			{% for asset in form.asset_account %}
+				{% include 'SudouxEagleBundle:LoanApplicationFullShared:assetAccountFormRow.html.twig' with { form: asset } %}
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="text-center">
+		<a id="add-asset-account" href="#" class="btn-row-add"><span class="icon-plus"></span> Add Account</a>
+	</div>
+</div>
+
+<div id="asset-real-estate-wrapper" data-prototype="{% filter escape %}{% include 'SudouxEagleBundle:LoanApplicationFullShared:assetRealEstateForm.html.twig' with { form: form.asset_real_estate.vars.prototype } %}{% endfilter %}">
+	<h3>Real Estate Owned</h3>
+	
+	{% for asset in form.asset_real_estate %}
+		{% include 'SudouxEagleBundle:LoanApplicationFullShared:assetRealEstateForm.html.twig' with { form: asset } %}
+	{% endfor %}
+
+</div>
+<a id="add-asset-real-estate" href="#" class="btn btn-blank"><span class="icon-plus"></span> Add Property</a>

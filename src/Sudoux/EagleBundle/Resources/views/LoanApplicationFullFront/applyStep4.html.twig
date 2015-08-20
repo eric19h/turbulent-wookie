@@ -1,0 +1,31 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step4{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %}
+
+{% block content %}
+	<div class="visible-desktop">
+		{% include 'SudouxMortgageBundle:LoanApplicationFront:applicationNav.html.twig' with { step: 4, application: application } %}
+		<form action="{{ path('sudoux_mortgage_loan_apply_step4', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+			<div class="errors">{{ form_errors(form) }}</div>
+			
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:assets.html.twig' %}
+			
+			<div class="hidden">
+				{{ form_rest(form) }}
+			</div>
+			<div class="text-center submit-wrapper">
+		    	<a href="{{ path('sudoux_mortgage_loan_apply_step3', { id: application.id }) }}" class="btn btn-default">Back</a> 
+		    	<button type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+		    </div>
+		</form>
+	</div>
+	<div class="hidden-desktop">
+		{{ sudoux.application.messages.loan_screen_too_small|raw }}
+	</div>
+{% endblock %}

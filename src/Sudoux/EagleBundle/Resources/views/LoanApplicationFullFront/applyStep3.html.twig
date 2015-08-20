@@ -1,0 +1,32 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply step3{% endblock %}
+
+{% block head %}
+	{% include 'SudouxMortgageBundle:LoanApplicationShared:loanApplicationHead.html.twig' %}
+{% endblock %} 
+
+{% block content %}
+	<div class="visible-desktop">
+		{% include 'SudouxMortgageBundle:LoanApplicationFront:applicationNav.html.twig'  with { step: 3, application: application } %}
+		<p>One of the things considered when you apply for a mortgage is the relationship of your income to your expenses. In this section of the application, we'll ask the sources and amounts of your income. </p>
+		<form action="{{ path('sudoux_mortgage_loan_apply_step3', { id: application.id }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate" class="loan-application-form">
+			<div class="errors">{{ form_errors(form) }}</div>
+			
+			{% include 'SudouxMortgageBundle:LoanApplicationShared:employment.html.twig' %}
+	
+			<div class="hide">
+				{{ form_rest(form) }}
+			</div>
+			<div class="text-center submit-wrapper">
+		    	<a href="{{ path('sudoux_mortgage_loan_apply_step2', { id: application.id }) }}" class="btn btn-default">Back</a>
+		    	<button type="submit" class="btn btn-default">Save and Continue <span class="icon-ok-sign icon-white"></span></button>
+		    </div>
+		</form>
+	</div>
+	<div class="hidden-desktop">
+		{{ sudoux.application.messages.loan_screen_too_small|raw }}
+	</div>
+{% endblock %}

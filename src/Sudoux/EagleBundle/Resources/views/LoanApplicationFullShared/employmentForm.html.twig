@@ -1,0 +1,70 @@
+<div class="employment-form loan-form {% if borrower.employed == false %}hide {% endif %}">
+	{% if title %}<h3>{% if deletable %}<a href="#" class="icon-remove delete-form"></a>{% endif %} {{ title }}</h3>{% endif %}
+	{% if description is defined %}<p>{{ description|raw }}</p>{% endif %}
+	<div class="form-horizontal clearfix">
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.employer_name, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.employer_name) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.address1, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.address1) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.city, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.city) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.state, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.state) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.location.zipcode, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.location.zipcode) }}
+				</div>
+			</div>
+		</div>
+		<div class="span-half">
+			<div class="control-group">
+				{{ form_label(form.employer_phone, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.employer_phone) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.start_date, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.start_date) }} to {{ form_widget(form.end_date) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.title, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.title) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.self_employed, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.self_employed, { 'attr' : { 'class': 'radio-group' } }) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_label(form.years_employed, label|default(null), { 'label_attr': { 'class': 'control-label' } }) }}
+				<div class="controls">
+					{{ form_widget(form.years_employed) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

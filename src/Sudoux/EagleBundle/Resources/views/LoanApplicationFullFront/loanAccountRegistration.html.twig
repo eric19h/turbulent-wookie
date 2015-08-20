@@ -1,0 +1,55 @@
+{% extends site.getThemeTemplate('fullwidth.html.twig') %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body_class %}page-loan-registration{% endblock %}
+
+{% block content %}
+	{% if showForm %}
+		<div class="loan-info well">
+			<b>Borrower:</b> {{ loanApp.borrower.fullName }}<br>
+			{% if loanApp.coBorrower.count > 0 %}
+				<b>Co-Borrower:</b> {{ loanApp.coBorrower.get(0).fullName }}<br>
+			{% endif %}
+			{% if loanApp.loanOfficer %}
+				<b>Loan Officer:</b> {{ loanApp.loanOfficer.fullName }}<br>
+			{% endif %}
+			<b>Property:</b> <br>{{ loanApp.propertyLocation.addressString }}
+		</div>
+		<form id="loan-user-registration-form"  action="{{ path('sudoux_mortgage_loan_account_registration', { 'guid': loanApp.guid }) }}" method="post" {{ form_enctype(form) }} novalidate="novalidate">
+
+			<div>
+				{{ form_label(form.username) }}
+				{{ form_widget(form.username) }}
+			</div>
+			<div>
+				{{ form_label(form.plain_password) }}
+				{{ form_widget(form.plain_password, { 'help': admin.help.password_requirements }) }}
+			</div>
+			<div>
+				{{ form_label(form.password_confirm) }}
+				{{ form_widget(form.password_confirm) }}
+			</div>
+			<div>
+				{{ form_label(form.email) }}
+				{{ form_widget(form.email) }}
+			</div>
+			<div>
+				{{ form_label(form.ssn) }}
+				{{ form_widget(form.ssn) }}
+			</div>
+			<div>
+				{{ form_label(form.timezone) }}
+				{{ form_widget(form.timezone) }}
+			</div>
+			<div class="submit-wrapper">
+				<div class="hide">{{ form_rest(form) }}</div>
+				<div class="text-center clearfix">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</div>
+		</form>
+	{% else %}
+		<div class="alert alert-error">This loan already has a borrower assigned.</div>
+	{% endif %}
+{% endblock %}

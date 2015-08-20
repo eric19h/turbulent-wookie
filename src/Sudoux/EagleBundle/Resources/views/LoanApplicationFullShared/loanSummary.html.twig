@@ -1,0 +1,32 @@
+{% if application.propertyLocation %}
+	{{ application.propertyLocation.address1 }}<br>
+	{{ application.propertyLocation.city }}, {% if application.propertyLocation.state %}{{ application.propertyLocation.state.abbreviation }}{% endif %} {{ application.propertyLocation.zipcode }}<br>
+{% endif %}
+<b>Loan Type:</b> {{ application.loanTypeText|emptyToNA }}<br>
+<b>Property Type:</b> {{ application.propertyTypeText|emptyToNA }}<br>
+<b>Residency Type:</b> {{ application.residencyTypeText|emptyToNA }}<br>
+{% if application.loanType %}
+	{% if application.loanType == 1 %} {# refi #}
+		<b>Year Acquired:</b> {{ application.refinanceYearAquired }}<br>
+		<b>Current Rate:</b> {{ application.refinanceCurrentRate }}%<br>
+		<b>Current Loan Type:</b> {{ application.refinanceCurrentLoanType }}<br>
+		<b>Current Lender:</b> {{ application.refinanceCurrentLender }}<br>
+		<b>Original Cost:</b> ${{ application.refinanceOriginalCost|number_format }}<br>
+		<b>Existing Liens:</b> ${{ application.refinanceExistingLiens|number_format  }}<br>
+		<b>Purpose of Refinance:</b> {{ application.refinancePurposeName }}<br>
+	{% else %}
+		<b>Sale Price:</b> ${{ application.salePrice|number_format }}<br>
+	{% endif %}
+{% endif %}
+<b>Loan Amount:</b> ${{ application.loanAmount|number_format|emptyToNA }}<br>
+<b>Loan Term:</b> {% if application.loanTerm %}{{ application.loanTerm }} years{% else %}N/A{% endif %}<br>
+<b>Number of Units: </b> {{ application.numUnits }}<br>
+{% if application.propertyYearBuilt %}<b>Year Built:</b> {{ application.propertyYearBuilt }}<br>{% endif %}
+{% if application.referralSource|length > 0 %}
+	<b>Referral Sources:</b>
+	<ul>
+	{% for source in application.referralSource %}
+		<li>{{ source.name }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}
