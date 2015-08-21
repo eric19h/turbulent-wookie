@@ -73,90 +73,90 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
         joinColumns:
           milestone_id:
             referencedColumnName: id
-        manyToMany:
-          co_borrower:
-            targetEntity: Sudoux\EagleBundle\Entity\BorrowerFull
-            cascade: ["persist", "remove"]
-            inversedBy: loan_coborrower
-            joinColumns:
-              co_borrower_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          asset_account:
-            targetEntity: Sudoux\EagleBundle\Entity\AssetAccountFull
-            cascade: ["persist", "remove"]
-            joinColumns:
-              asset_account_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          asset_real_estate:
-            targetEntity: Sudoux\EagleBundle\Entity\AssetRealEstateFull
-            cascade: ["persist", "remove"]
-            joinColumns:
-              asset_real_estate_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          income_other:
-            targetEntity: Sudoux\EagleBundle\Entity\IncomeOtherFull
-            cascade: ["persist", "remove"]
-            joinColumns:
-              income_other_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          income_monthly:
-            targetEntity: Sudoux\EagleBundle\Entity\IncomeMonthlyFull
-            cascade: ["persist", "remove"]
-            joinColumns:
-              income_monthly_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          additional_site:
-            targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
-            cascade: ["persist"]
-            joinColumns:
-              site_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          document:
-            targetEntity: Sudoux\EagleBundle\Entity\LoanDocumentFull
-            cascade: ["remove"]
-            orderBy:
-              created: DESC
-            joinColumns:
-              document_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          email:
-            targetEntity: Sudoux\Cms\MessageBundle\Entity\Email
-            cascade: ["persist", "remove"]
-            orderBy:
-              created: DESC
-            joinColumns:
-              email_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          client_user:
-            targetEntity: Sudoux\Cms\UserBundle\Entity\User
-            cascade: { }
-            joinColumns:
-              client_user_id:
-                referencedColumnName: id
-            orphanRemoval: false
-          pricing_scenario:
-            targetEntity: Sudoux\MortgageBundle\Entity\PricingScenario
-            cascade: ["persist", "remove"]
-            joinColumns:
-              pricing_scenario_id:
-                referencedColumnName: id
-          referral_source:
-            targetEntity: Sudoux\Cms\FormBundle\Entity\ReferralSource
-            cascade: { }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-              referral_source_id:
-                referencedColumnName: id
-            orphanRemoval: false
+    manyToMany:
+      co_borrower:
+        targetEntity: Sudoux\EagleBundle\Entity\BorrowerFull
+        cascade: ["persist", "remove"]
+        inversedBy: loan_coborrower
+        joinColumns:
+          co_borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      asset_account:
+        targetEntity: Sudoux\EagleBundle\Entity\AssetAccountFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          asset_account_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      asset_real_estate:
+        targetEntity: Sudoux\EagleBundle\Entity\AssetRealEstateFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          asset_real_estate_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      income_other:
+        targetEntity: Sudoux\EagleBundle\Entity\IncomeOtherFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          income_other_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      income_monthly:
+        targetEntity: Sudoux\EagleBundle\Entity\IncomeMonthlyFull
+        cascade: ["persist", "remove"]
+        joinColumns:
+          income_monthly_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      additional_site:
+        targetEntity: Sudoux\Cms\SiteBundle\Entity\Site
+        cascade: ["persist"]
+        joinColumns:
+          site_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      document:
+        targetEntity: Sudoux\EagleBundle\Entity\LoanDocumentFull
+        cascade: ["remove"]
+        orderBy:
+          created: DESC
+        joinColumns:
+          document_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      email:
+        targetEntity: Sudoux\Cms\MessageBundle\Entity\Email
+        cascade: ["persist", "remove"]
+        orderBy:
+          created: DESC
+        joinColumns:
+          email_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      client_user:
+        targetEntity: Sudoux\Cms\UserBundle\Entity\User
+        cascade: { }
+        joinColumns:
+          client_user_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      pricing_scenario:
+        targetEntity: Sudoux\MortgageBundle\Entity\PricingScenario
+        cascade: ["persist", "remove"]
+        joinColumns:
+          pricing_scenario_id:
+            referencedColumnName: id
+      referral_source:
+        targetEntity: Sudoux\Cms\FormBundle\Entity\ReferralSource
+        cascade: { }
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          referral_source_id:
+            referencedColumnName: id
+        orphanRemoval: false
         indexes:
             losid_idx:
               columns: [ los_id ]

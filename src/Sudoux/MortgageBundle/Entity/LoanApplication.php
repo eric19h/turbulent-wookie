@@ -29,139 +29,139 @@ class LoanApplication
      * @Expose()
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $sale_price;
+    protected $sale_price;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $loan_amount;
+    protected $loan_amount;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $loan_term;
+    protected $loan_term;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $loan_type;
+    protected $loan_type;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $num_units;
+    protected $num_units;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $property_type;
+    protected $property_type;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $residency_type;
+    protected $residency_type;
 
     /**
      * @var string
      * @Expose()
      */
-    private $title_company1;
+    protected $title_company1;
 
     /**
      * @var string
      * @Expose()
      */
-    private $title_company2;
+    protected $title_company2;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $title_manner;
+    protected $title_manner;
 
     /**
      * @var boolean
      * @Expose()
      */
-    private $has_realtor;
+    protected $has_realtor;
 
     /**
      * @var string
      * @Expose()
      */
-    private $realtor_name;
+    protected $realtor_name;
 
     /**
      * @var string
      * @Expose()
      */
-    private $realtor_company;
+    protected $realtor_company;
 
     /**
      * @var string
      * @Expose()
      */
-    private $realtor_phone;
+    protected $realtor_phone;
 
     /**
      * @var \Sudoux\Cms\LocationBundle\Entity\Location
      * @Expose()
      */
-    private $property_location;
+    protected $property_location;
 
     /**
      * @var \Sudoux\Cms\UserBundle\Entity\User
      * @Expose()
      */
-    private $user;
+    protected $user;
 
     /**
      * @var \Sudoux\MortgageBundle\Entity\Borrower
      * @Expose()
      */
-    private $borrower;
+    protected $borrower;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $co_borrower;
+    protected $co_borrower;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $asset_account;
+    protected $asset_account;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $asset_real_estate;
+    protected $asset_real_estate;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $income_monthly;
+    protected $income_monthly;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $income_other;
+    protected $income_other;
 
     /**
      * @var array
@@ -1116,19 +1116,19 @@ class LoanApplication
      * @var boolean
      * @Expose()
      */
-    private $completed;
+    protected $completed;
 
     /**
      * @var \DateTime
      * @Expose()
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      * @Expose()
      */
-    private $modified;
+    protected $modified;
 
 
     /**
@@ -1222,7 +1222,7 @@ class LoanApplication
      * @var boolean
      * @Expose()
      */
-    private $is_prequal;
+    protected $is_prequal;
 
 
     /**
@@ -1251,7 +1251,7 @@ class LoanApplication
     /**
      * @var \DateTime
      */
-    private $completed_date;
+    protected $completed_date;
 
     /**
      * Set completed_date
@@ -1279,19 +1279,19 @@ class LoanApplication
      * @var boolean
      * @Expose()
      */
-    private $agreement_one;
+    protected $agreement_one;
 
     /**
      * @var boolean
      * @Expose()
      */
-    private $agreement_two;
+    protected $agreement_two;
 
     /**
      * @var boolean
      * @Expose()
      */
-    private $agreement_three;
+    protected $agreement_three;
 
 
     /**
@@ -1365,7 +1365,7 @@ class LoanApplication
     /**
      * @var \Sudoux\MortgageBundle\Entity\ExpenseHousing
      */
-    private $expense_housing;
+    protected $expense_housing;
 
 
     /**
@@ -1394,7 +1394,7 @@ class LoanApplication
      * @var string
      * @Expose()
      */
-    private $comments;
+    protected $comments;
 
 
     /**
@@ -1423,7 +1423,7 @@ class LoanApplication
      * @var \Sudoux\Cms\SiteBundle\Entity\Site
      * @Expose()
      */
-    private $site;
+    protected $site;
 
 
     /**
@@ -1453,7 +1453,7 @@ class LoanApplication
      * @var \Sudoux\MortgageBundle\Entity\LoanOfficer
      * @Expose()
      */
-    private $loan_officer;
+    protected $loan_officer;
 
 
     /**
@@ -1487,7 +1487,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $document;
+    protected $document;
 
 
     /**
@@ -1544,7 +1544,7 @@ class LoanApplication
     /**
      * @var \Sudoux\Cms\MessageBundle\Entity\Thread
      */
-    private $message_thread;
+    protected $message_thread;
 
 
     /**
@@ -1574,7 +1574,7 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $status;
+    protected $status;
 
 
     /**
@@ -1599,7 +1599,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $email;
+    protected $email;
 
 
     /**
@@ -1640,7 +1640,7 @@ class LoanApplication
      * @Expose()
      *
      */
-    private $deleted;
+    protected $deleted;
 
 
     /**
@@ -1670,7 +1670,7 @@ class LoanApplication
      * @var \DateTime
      * @Expose()
      */
-    private $status_date;
+    protected $status_date;
 
 
     /**
@@ -1699,37 +1699,37 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $refinance_year_aquired;
+    protected $refinance_year_aquired;
 
     /**
      * @var float
      * @Expose()
      */
-    private $refinance_original_cost;
+    protected $refinance_original_cost;
 
     /**
      * @var float
      * @Expose()
      */
-    private $refinance_existing_liens;
+    protected $refinance_existing_liens;
 
     /**
      * @var float
      * @Expose()
      */
-    private $refinance_current_rate;
+    protected $refinance_current_rate;
 
     /**
      * @var string
      * @Expose()
      */
-    private $refinance_current_loan_type;
+    protected $refinance_current_loan_type;
 
     /**
      * @var integer
      * @Expose()
      */
-    private $refinance_purpose;
+    protected $refinance_purpose;
 
 
     /**
@@ -1882,7 +1882,7 @@ class LoanApplication
      * @var string
      * @Expose()
      */
-    private $refinance_current_lender;
+    protected $refinance_current_lender;
 
 
     /**
@@ -1911,7 +1911,7 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $lock_status;
+    protected $lock_status;
 
 
     /**
@@ -1940,7 +1940,7 @@ class LoanApplication
      * @var \Sudoux\MortgageBundle\Entity\LoanMilestoneGroup
      * @Expose()
      */
-    private $milestone_group;
+    protected $milestone_group;
 
 
     /**
@@ -1969,7 +1969,7 @@ class LoanApplication
      * @var \Sudoux\MortgageBundle\Entity\LoanMilestone
      * @Expose()
      */
-    private $milestone;
+    protected $milestone;
 
 
     /**
@@ -1998,7 +1998,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $client_user;
+    protected $client_user;
 
     public function setClientUser(\Sudoux\Cms\UserBundle\Entity\User $clientUser)
     {
@@ -2041,7 +2041,7 @@ class LoanApplication
      * @var string
      * @Expose()
      */
-    private $los_id;
+    protected $los_id;
 
 
     /**
@@ -2070,7 +2070,7 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $last_step_completed;
+    protected $last_step_completed;
 
 
     /**
@@ -2115,7 +2115,7 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $property_year_built;
+    protected $property_year_built;
 
 
     /**
@@ -2144,7 +2144,7 @@ class LoanApplication
      * @var \DateTime
      * @Expose()
      */
-    private $los_modified;
+    protected $los_modified;
 
 
     /**
@@ -2204,7 +2204,7 @@ class LoanApplication
      * @var boolean
      * @Expose()
      */
-    private $sent_to_los;
+    protected $sent_to_los;
 
     /**
      * @param User $user
@@ -2229,7 +2229,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $pricing_scenario;
+    protected $pricing_scenario;
 
 
     /**
@@ -2273,7 +2273,7 @@ class LoanApplication
      * @var integer
      * @Expose()
      */
-    private $source;
+    protected $source;
 
 
     /**
@@ -2307,7 +2307,7 @@ class LoanApplication
      * @var guid
      * @Expose()
      */
-    private $guid;
+    protected $guid;
 
 
     /**
@@ -2374,7 +2374,7 @@ class LoanApplication
      * @var string
      * @Expose()
      */
-    private $los_loan_number;
+    protected $los_loan_number;
 
 
     /**
@@ -2403,7 +2403,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $additional_site;
+    protected $additional_site;
 
 
     /**
@@ -2442,7 +2442,7 @@ class LoanApplication
      * @var \Doctrine\Common\Collections\Collection
      * @Expose()
      */
-    private $referral_source;
+    protected $referral_source;
 
 
     /**
@@ -2482,7 +2482,7 @@ class LoanApplication
      * @var \Sudoux\Cms\UserBundle\Entity\User
      * @Expose()
      */
-    private $admin_user;
+    protected $admin_user;
 
 
     /**
@@ -2556,7 +2556,7 @@ class LoanApplication
     /**
      * @var boolean
      */
-    private $no_property_location;
+    protected $no_property_location;
 
 
     /**
