@@ -1,0 +1,36 @@
+Sudoux\EagleBundle\Entity\EagleBorrowerLocation:
+    type: entity
+    table: eagle_borrower_location
+    manyToOne:
+      location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+            nullable: true
+        orphanRemoval: false
+    indexes:
+      created_idx:
+        columns: [ created ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        created:
+            type: datetime
+        years_at_location:
+            type: integer
+            nullable: true
+        months_at_location:
+            type: integer
+            nullable: true
+        own_residence:
+            type: boolean
+            nullable: true
+        has_foreign_address:
+            type: boolean
+            nullable: true
+    lifecycleCallbacks: {  }

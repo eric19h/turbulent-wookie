@@ -1,0 +1,28 @@
+Sudoux\EagleBundle\Entity\EagleIncomeOther:
+    type: entity
+    table: eagle_income_other
+    manyToOne:
+      borrower:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleBorrower
+        inversedBy: income_other
+        cascade: ["persist"]
+        joinColumns:
+          borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      income_idx:
+        columns: [ income ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+            nullable: true
+        income:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

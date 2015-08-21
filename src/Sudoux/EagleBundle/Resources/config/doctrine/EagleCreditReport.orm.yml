@@ -1,0 +1,48 @@
+Sudoux\EagleBundle\Entity\EagleCreditReport:
+    type: entity
+    table: eagle_credit_report
+    repositoryClass: Sudoux\MortgageBundle\Entity\EagleCreditReportRepository
+    manyToOne:
+      report_file:
+        targetEntity: Sudoux\Cms\FileBundle\Entity\File
+        cascade: ["persist", "remove"]
+        mappedBy: null
+        inversedBy: null
+        joinColumns:
+          report_file_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      credit_provider:
+        targetEntity: Sudoux\MortgageBundle\Entity\CreditProvider
+        cascade: {}
+        joinColumns:
+          credit_provider_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+    indexes:
+      created_idx:
+        columns: [ created ]
+      modified_idx:
+        columns: [ modified ]
+    oneToMany:
+      borrower:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleBorrower
+        mappedBy: credit_report
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        experian_score:
+            type: integer
+        transunion_score:
+            type: integer
+        equifax_score:
+            type: integer
+        created:
+            type: datetime
+        modified:
+            type: datetime
+    lifecycleCallbacks: {  }

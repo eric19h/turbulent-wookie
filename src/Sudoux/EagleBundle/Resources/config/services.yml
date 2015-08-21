@@ -41,7 +41,7 @@ services:
         - { name: doctrine.event_listener, event: postPersist, method: postPersist, priority: 1 }
         - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
   sudoux_mortgage.loan_listener:
-      class: Sudoux\EagleBundle\EventListener\LoanApplicationFullListener
+      class: Sudoux\EagleBundle\EventListener\EagleLoanApplicationListener
       arguments:
         - @service_container
       tags:

@@ -221,7 +221,7 @@ class LoanApplicationAdminController extends BaseController
 		$site = $siteRequest->getSite();
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$application = $em->getRepository('SudouxMortgageBundle:LoanApplication')->findOneBySite($site, $id);
+		$application = $em->getRepository('SudouxEagleBundle:LoanApplicationFull')->findOneBySite($site, $id);
 	
 		if(!isset($application)) {
 			throw $this->createNotFoundException($this::LOAN_NOT_FOUND_MESSAGE);
@@ -233,7 +233,7 @@ class LoanApplicationAdminController extends BaseController
 			return $this->redirect($this->generateUrl('sudoux_mortgage_admin_loan_member', array('id' => $id)));
 		}	
 		 
-		$form = $this->createForm(new LoanApplicationType($site, $application), $application, array('validation_groups' => array('step2')));
+		$form = $this->createForm(new LoanApplicationFullType($site, $application), $application, array('validation_groups' => array('step2')));
 		 
 		if($request->getMethod() == 'POST') {
 	
@@ -257,7 +257,7 @@ class LoanApplicationAdminController extends BaseController
 			}
 		}
 	
-		return $this->render('SudouxMortgageBundle:LoanApplicationAdmin:applyStep2.html.twig', array(
+		return $this->render('SudouxEagleBundle:LoanApplicationFullAdmin:applyStep2.html.twig', array(
 				'form' => $form->createView(),
 				'application' => $application,
 		));
@@ -277,7 +277,7 @@ class LoanApplicationAdminController extends BaseController
 		$site = $siteRequest->getSite();
 		
 		$em = $this->getDoctrine()->getEntityManager();
-		$application = $em->getRepository('SudouxMortgageBundle:LoanApplication')->findOneBySite($site, $id);
+		$application = $em->getRepository('SudouxEagleBundle:LoanApplicationFull')->findOneBySite($site, $id);
 		 
 		if(!isset($application)) {
 			throw $this->createNotFoundException($this::LOAN_NOT_FOUND_MESSAGE);
@@ -344,7 +344,7 @@ class LoanApplicationAdminController extends BaseController
 			}
 		}
 	
-		return $this->render('SudouxMortgageBundle:LoanApplicationAdmin:applyStep3.html.twig', array(
+		return $this->render('SudouxEagleBundle:LoanApplicationFullAdmin:applyStep3.html.twig', array(
 				'form' => $form->createView(),
 				'application' => $application,
 		));

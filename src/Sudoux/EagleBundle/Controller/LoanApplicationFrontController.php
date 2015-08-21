@@ -2,6 +2,8 @@
 
 namespace Sudoux\EagleBundle\Controller;
 
+use Sudoux\EagleBundle\Entity\EagleLoanApplication;
+use Sudoux\EagleBundle\Form\EagleLoanApplicationType;
 use Sudoux\MortgageBundle\Controller\LoanApplicationFrontController as BaseController;
 use Sudoux\Cms\SiteBundle\Controller\FrontController;
 use Sudoux\Cms\SiteBundle\DependencyInjection\StringUtil;
@@ -205,7 +207,7 @@ class LoanApplicationFrontController extends BaseController
     	$newApplication = true;
     	
     	if(isset($id)) {
-    		$application = $em->getRepository('SudouxMortgageBundle:LoanApplication')->findOneBy(array('id' => $id, 'user' => $user));
+    		$application = $em->getRepository('SudouxEagleBundle:EagleLoanApplication')->findOneBy(array('id' => $id, 'user' => $user));
     		if(!isset($application)) {
     			throw $this->createNotFoundException($this::LOAN_NOT_FOUND_MESSAGE);
     		}
@@ -218,7 +220,7 @@ class LoanApplicationFrontController extends BaseController
     		
 	    	$newApplication = false;
     	} else {
-	    	$application = new LoanApplication();
+	    	$application = new EagleLoanApplication();
 	    	$siteLoanOfficer = $site->getSettings()->getLoanOfficer();
 	    	if(isset($siteLoanOfficer)) {
 	    		$application->setLoanOfficer($siteLoanOfficer);
@@ -236,7 +238,7 @@ class LoanApplicationFrontController extends BaseController
 			$showReferralSources = true;
 		}
     	 
-    	$form = $this->createForm(new LoanApplicationType($site, $application), $application, array('validation_groups' => array('step1')));
+    	$form = $this->createForm(new EagleLoanApplicationType($site, $application), $application, array('validation_groups' => array('step1')));
     	
     	if($request->getMethod() == 'POST') {
     		
@@ -310,7 +312,7 @@ class LoanApplicationFrontController extends BaseController
     		}
     	}
     	 
-    	return $this->render('SudouxMortgageBundle:LoanApplicationFront:applyStep1.html.twig', array(
+    	return $this->render('SudouxEagleBundle:EagleLoanApplicationFront:applyStep1.html.twig', array(
     		'form' => $form->createView(),
     		'application' => $application,
 			'showReferralSources' => $showReferralSources,
@@ -332,7 +334,7 @@ class LoanApplicationFrontController extends BaseController
     	
     	
     	$em = $this->getDoctrine()->getEntityManager();
-    	$application = $em->getRepository('SudouxMortgageBundle:LoanApplication')->findOneBy(array('id' => $id, 'user' => $user));
+    	$application = $em->getRepository('SudouxEagleBundle:EagleLoanApplication')->findOneBy(array('id' => $id, 'user' => $user));
 
     	if(!isset($application)) {
     		throw $this->createNotFoundException($this::LOAN_NOT_FOUND_MESSAGE);
@@ -350,7 +352,7 @@ class LoanApplicationFrontController extends BaseController
 	    	$hasLoanOfficer = true;
     	}
     	
-    	$form = $this->createForm(new LoanApplicationType($site, $application), $application, array('validation_groups' => array('step2')));
+    	$form = $this->createForm(new EagleLoanApplicationType($site, $application), $application, array('validation_groups' => array('step2')));
     	
     	if($request->getMethod() == 'POST') {
     		$form->bindRequest($request);
@@ -376,10 +378,11 @@ class LoanApplicationFrontController extends BaseController
     		}
     	} 
     	 
-    	return $this->render('SudouxMortgageBundle:LoanApplicationFront:applyStep2.html.twig', array(
+    	return $this->render('SudouxEagleBundle:EagleLoanApplicationFront:applyStep2.html.twig', array(
     		'form' => $form->createView(),
     		'application' => $application,
     		'hasLoanOfficer' => $hasLoanOfficer,
+			'site'	=> $site
     	));
     }
 

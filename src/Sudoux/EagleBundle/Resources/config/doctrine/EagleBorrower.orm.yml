@@ -1,0 +1,260 @@
+Sudoux\EagleBundle\Entity\EagleBorrower:
+    type: entity
+    table: eagle_borrower
+    repositoryClass: Sudoux\EagleBundle\Entity\EagleBorrowerRepository
+    manyToOne:
+      location:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleBorrowerLocation
+        cascade: ["persist", "remove"]
+        joinColumns:
+          location_id:
+            referencedColumnName: id
+            nullable: false
+        orphanRemoval: false
+      mailing_location:
+        targetEntity: Sudoux\Cms\LocationBundle\Entity\Location
+        cascade: ["persist", "remove"]
+        joinColumns:
+          mailing_location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    manyToMany:
+      previous_location:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleBorrowerLocation
+        cascade: ["persist", "remove"]
+        joinColumns:
+          previous_location_id:
+            referencedColumnName: id
+        orphanRemoval: false
+      employment:
+        targetEntity: Sudoux\MortgageBundle\Entity\Employment
+        cascade: ["persist", "remove"]
+        joinColumns:
+          employment_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    oneToMany:
+      loan:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleLoanApplication
+        mappedBy: borrower
+      loan_coborrower:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleLoanApplication
+        mappedBy: co_borrower
+      asset_account:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleAssetAccount
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      asset_realestate:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleAssetRealEstate
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      income_monthly:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleIncomeMonthly
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+      income_other:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleIncomeOther
+        mappedBy: borrower
+        cascade: ["persist","remove"]
+    oneToOne:
+      credit_report:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleCreditReport
+        cascade: ["persist", "remove"]
+        inversedBy: borrower
+        joinColumns:
+          credit_report_id:
+            referencedColumnName: id
+            onDelete: SET NULL
+        orphanRemoval: false
+    indexes:
+      first_name_idx:
+        columns: [ first_name ]
+      last_name_idx:
+        columns: [ last_name ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        first_name:
+            type: string
+            length: '255'
+            nullable: true
+        last_name:
+            type: string
+            length: '255'
+            nullable: true
+        email:
+            type: string
+            length: '255'
+            nullable: true
+        middle_name:
+            type: string
+            length: '255'
+            nullable: true
+        suffix:
+            type: string
+            length: '255'
+            nullable: true
+        phone_home:
+            type: string
+            length: '255'
+            nullable: true
+        phone_mobile:
+            type: string
+            length: '255'
+            nullable: true
+        ssn:
+            type: text
+        birth_date:
+            type: datetime
+            nullable: true
+        years_of_school:
+            type: smallint
+            nullable: true
+        marital_status:
+            type: smallint
+            nullable: true
+        ethnicity:
+            type: smallint
+            nullable: true
+        race:
+            type: smallint
+            nullable: true
+        is_male:
+            type: boolean
+            nullable: true
+        employed:
+            type: boolean
+            nullable: true
+        dependents:
+            type: boolean
+            nullable: true
+        dependents_number:
+            type: smallint
+            nullable: true
+        dependents_ages:
+            type: string
+            length: '255'
+            nullable: true
+        govt_monitoring_opt_out:
+            type: boolean
+            nullable: true
+        declaration_outstanding_judgement:
+            type: boolean
+            nullable: true
+        declaration_outstanding_judgement_details:
+            type: text
+            nullable: true
+        declaration_bankruptcy:
+            type: boolean
+            nullable: true
+        declaration_bankruptcy_details:
+            type: text
+            nullable: true
+        declaration_forclosure:
+            type: boolean
+            nullable: true
+        declaration_forclosure_details:
+            type: text
+            nullable: true
+        declaration_lawsuit:
+            type: boolean
+            nullable: true
+        declaration_lawsuit_details:
+            type: text
+            nullable: true
+        declaration_forclosure_obligation:
+            type: boolean
+            nullable: true
+        declaration_forclosure_obligation_details:
+            type: text
+            nullable: true
+        declaration_in_default:
+            type: boolean
+            nullable: true
+        declaration_in_default_details:
+            type: text
+            nullable: true
+        declaration_alimony_child_support:
+            type: boolean
+            nullable: true
+        declaration_alimony_child_support_details:
+            type: text
+            nullable: true
+        declaration_alimony_child_support_alimony:
+            type: integer
+            nullable: true
+        declaration_alimony_child_support_child_support:
+            type: integer
+            nullable: true
+        declaration_alimony_child_support_separate_maintenance:
+            type: integer
+            nullable: true
+        declaration_down_payment_borrowed:
+            type: boolean
+            nullable: true
+        declaration_down_payment_borrowed_details:
+            type: text
+            nullable: true
+        declaration_note_endorser:
+            type: boolean
+            nullable: true
+        declaration_note_endorser_details:
+            type: text
+            nullable: true
+        declaration_us_citizen:
+            type: boolean
+            nullable: true
+        declaration_resident_alien:
+            type: boolean
+            nullable: true
+        declaration_primary_residence:
+            type: boolean
+            nullable: true
+        declaration_ownership_within_three_years:
+            type: boolean
+            nullable: true
+        declaration_ownership_within_three_years_property_type:
+            type: smallint
+            nullable: true
+        declaration_ownership_within_three_years_property_title:
+            type: smallint
+            nullable: true
+        initials:
+            type: string
+            length: '255'
+            nullable: true
+        signature:
+            type: text
+            nullable: true
+        los_id:
+            type: string
+            length: '255'
+            nullable: true
+        citizen_status:
+            type: smallint
+            nullable: true
+        preferred_contact_time:
+            type: smallint
+            nullable: true
+        preferred_contact_method:
+            type: smallint
+            nullable: true
+        credit_report_authorized:
+            type: boolean
+            nullable: true
+        consent_to_contact:
+            type: boolean
+            nullable: true
+        electronic_delivery_consent:
+            type: boolean
+            nullable: true
+        consent_to_share_info:
+            type: boolean
+            nullable: true
+        living_status:
+            type: smallint
+            nullable: true
+    lifecycleCallbacks: {  }

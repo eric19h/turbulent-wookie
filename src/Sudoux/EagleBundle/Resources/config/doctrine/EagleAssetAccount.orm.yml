@@ -1,0 +1,38 @@
+Sudoux\EagleBundle\Entity\EagleAssetAccount:
+    type: entity
+    table: eagle_asset_account
+    manyToOne:
+      borrower:
+        targetEntity: Sudoux\EagleBundle\Entity\EagleBorrower
+        inversedBy: asset_account
+        cascade: ["persist"]
+        joinColumns:
+          borrower_id:
+            referencedColumnName: id
+        orphanRemoval: false
+    indexes:
+      institution_name_idx:
+        columns: [ institution_name ]
+      account_number_idx:
+        columns: [ account_number ]
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        institution_name:
+            type: string
+            length: 255
+            nullable: true
+        type:
+            type: smallint
+            nullable: true
+        account_number:
+            type: string
+            length: 255
+            nullable: true
+        balance:
+            type: float
+            nullable: true
+    lifecycleCallbacks: {  }

@@ -1,0 +1,13 @@
+{% extends site.getThemeTemplate %}
+
+{% block title %}Loan Application{% endblock %}
+
+{% block body_class %}page-loan-apply{% endblock %}
+
+{% block content %}
+	{% if app.user %}
+		<p><a href="{{ path('sudoux_mortgage_loan_apply_step1') }}">Get Started</a></p>
+	{% else %}
+		<p>Please <a href="{{ path('login') }}">login</a> or <a href="{{ path('sudoux_cms_member_register') }}">register</a> with us before you start your application.</p>
+	{% endif %}
+{% endblock %}

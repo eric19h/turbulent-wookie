@@ -1,4 +1,4 @@
-Sudoux\EagleBundle\Entity\LoanApplicationFull:
+Sudoux\EagleBundle\Entity\EagleLoanApplication:
   properties:
     loan_type:
       - NotBlank:  { groups: [step1] }
@@ -20,7 +20,7 @@ Sudoux\EagleBundle\Entity\LoanApplicationFull:
       - NotBlank: { groups: [step2] }
     status:
       - NotBlank: { groups: [status] }
-Sudoux\EagleBundle\Entity\BorrowerFull:
+Sudoux\EagleBundle\Entity\EagleBorrower:
   properties:
     first_name:
       - NotBlank: ~
